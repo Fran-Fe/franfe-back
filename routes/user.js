@@ -20,7 +20,7 @@ router.post('', async function (req, res, next) {
     console.log(created.uuid);
     res.send('ok');
   } catch (e) {
-    // throw new ApiError(e.message);
+    throw new ApiError(e.message);
   }
 })
 router.get('/test', function (req, res, next) {
