@@ -1,6 +1,7 @@
 import Router from "express";
 import {createUser} from "../domain/userService.js";
 import {ApiError} from "../errors/apiError.js";
+import {UserDto} from "./dtos/userDto.js";
 
 
 export const router = Router();
@@ -8,7 +9,7 @@ export const router = Router();
 router.get('', async function (req, res, next) {
   try {
     const created = await createUser("firstname" );
-    res.send('ok');
+    res.json(new UserDto.Request());
   } catch (e) {
     // throw new ApiError(e.message);
   }
