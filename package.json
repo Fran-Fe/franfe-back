@@ -4,13 +4,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node bin/www.js"
+    "start": "node bin/www.js",
+    "test": "mocha"
   },
   "dependencies": {
+    "chai": "^4.3.7",
+    "chai-http": "^4.4.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "^4.18.2",
     "http-errors": "~1.6.3",
+    "mocha": "^10.2.0",
     "morgan": "~1.9.1",
     "mysql2": "^3.5.2",
     "pug": "^3.0.2",
