@@ -12,7 +12,7 @@ export async function createUser(firstName ,age ) {
         console.log("user created");
         return res;
     } catch (err) {
-        throw new ApiError("user not created");
+        throw new ApiError("just for example");
     }
 }
 
