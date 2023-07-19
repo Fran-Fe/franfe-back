@@ -1,4 +1,5 @@
-const chai = require('chai');
+import chai from "chai";
+
 const expect = chai.expect;
 const mysql = require('mysql2');
 const chaiHttp = require('chai-http');

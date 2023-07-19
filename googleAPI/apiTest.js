@@ -1,8 +1,4 @@
-import express from "express";
 import axios from "axios";
-
-const app = express();
-const port = 3000;
 
 const apiKey = process.env.GOOGLE_API_KEY;
 
@@ -20,16 +16,11 @@ async function getCafePlaceIds(){
 
         const placeIds = response.data.results.map((result) => result.place_id);
 
-
         console.log('Cafe Name : ' , (await getCafeInfo(placeIds[0])).name);
         console.log('Reviews Num : ',(await getCafeInfo(placeIds[0])).reviews.length);
         for(const review of (await getCafeInfo(placeIds[0])).reviews){
-
             console.log(review.text,`\n`);
-
         }
-
-
 
         /*for(const placesId of placeIds){
 
@@ -38,8 +29,8 @@ async function getCafePlaceIds(){
             console.log('Cafe Name : ', cafeInfo.name);
             console.log('Cafe Address : ', cafeInfo.address);
         }*/
-
     }
+
     catch (error){
         console.log('Error fetching data from Google Places API: ', error.message);
     }
