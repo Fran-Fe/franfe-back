@@ -1,3 +1,3 @@
 export class GoogleMap {
-    BAD_CONNECTION = "Bad connection";
+    static BAD_CONNECTION = "Bad connection";
 }
