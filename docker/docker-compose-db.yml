@@ -7,7 +7,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: franfe
-      MYSQL_USER: root
     ports:
       - "33060:3306"
     command:
