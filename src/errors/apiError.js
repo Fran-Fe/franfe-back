@@ -1,5 +1,5 @@
-export class ApiError extends Error {
-    constructor() {
-        super("api error");
-    }
+export default class ApiError extends Error {
+  constructor() {
+    super('api error');
+  }
 }
