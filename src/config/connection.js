@@ -16,8 +16,8 @@ export const sequelize = new Sequelize(
 
 export function connect() {
   sequelize.authenticate().then(() => {
-    console.log('Connection has been established successfully.'); // eslint-disable-line no-console
+    console.log('Connection has been established successfully.');
   }).catch((error) => {
-    console.error('Unable to connect to the database: ', error); // eslint-disable-line no-console
+    console.error('Unable to connect to the database: ', error);
   });
 }
