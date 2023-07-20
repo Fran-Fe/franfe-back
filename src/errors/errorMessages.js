@@ -1,3 +1,3 @@
-export class GoogleMap {
-    static BAD_CONNECTION = "Bad connection";
+export default class GoogleMapBadConnection {
+  static BAD_CONNECTION = 'Bad connection';
 }
