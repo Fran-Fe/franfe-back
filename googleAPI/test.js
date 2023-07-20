@@ -3,7 +3,7 @@ import chai from "chai";
 const expect = chai.expect;
 const mysql = require('mysql2');
 const chaiHttp = require('chai-http');
-const app = require('./apiTest.js');//app.js가 이미 있어서 apiTest로 몀명함
+const app = require('./getAPI.js');
 chai.use(chaiHttp);
 
 describe('Google API Test', function(){
