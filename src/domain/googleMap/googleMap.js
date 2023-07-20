@@ -21,15 +21,17 @@ export const GoogleMap = sequelize.define("google-map", {
   age: {
     type: DataTypes.INTEGER,
     defaultValue: 1
+  },
+  deleted: {
+    type: DataTypes.BOOLEAN,
   }
 });
 
 export function findByUuid(uuid, booleanDeleted, booleanValidate) {
     return GoogleMap.findOne({
         where: {
-        uuid,
-        booleanDeleted,
-          booleanValidate
+        uuid: uuid,
+        Deleted: booleanDeleted,
         }
     });
 }
