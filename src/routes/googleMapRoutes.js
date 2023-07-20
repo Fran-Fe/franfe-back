@@ -1,10 +1,10 @@
-import { Router } from "express";
-import { bcd } from "../domain/googleMap/googleMapTransactionService.js";
+import { Router } from 'express';
+import { bcd } from '../domain/googleMap/googleMapTransactionService';
 
-export const router = Router();
+let router;
+export default router = Router();
 
-router.get('/googleMap', (req, res) => {
+router.get('/googleMap', (req) => {
   const response = bcd(req);
-
-  res.json('Hello World!');
+  response.json(response);
 });

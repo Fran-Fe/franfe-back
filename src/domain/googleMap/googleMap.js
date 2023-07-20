@@ -23,3 +23,13 @@ export const GoogleMap = sequelize.define("google-map", {
     defaultValue: 1
   }
 });
+
+export function findByUuid(uuid, booleanDeleted, booleanValidate) {
+    return GoogleMap.findOne({
+        where: {
+        uuid,
+        booleanDeleted,
+          booleanValidate
+        }
+    });
+}
