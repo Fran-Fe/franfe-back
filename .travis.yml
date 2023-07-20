@@ -7,7 +7,7 @@ deploy:
   local-dir: ./dist
   provider: pages
   skip-cleanup: true
-  github-token: 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  # Set in the settings page of your repository, as a secure variable
+  github-token: ${GITHUB_TOKEN}  # Set in the settings page of your repository, as a secure variable
   keep-history: true
   on:
     branch: master
