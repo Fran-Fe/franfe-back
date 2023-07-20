@@ -7,7 +7,7 @@
 import app from '../app.js';
 import debug from 'debug';
 import http from 'http';
-import {connect} from "../config/connection.js";
+import { connect } from "../src/config/connection.js";
 
 /**
  * Get port from environment and store in Express.
@@ -26,7 +26,7 @@ const server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port,() => {
+server.listen(port, () => {
   connect();
 })
 server.on('error', onError);
@@ -37,16 +37,16 @@ server.on('listening', onListening);
  */
 
 function normalizePort(val) {
-  const port = parseInt(val, 10);
+  const normalizedPort = parseInt(val, 10);
 
-  if (isNaN(port)) {
+  if (isNaN(normalizedPort)) {
     // named pipe
     return val;
   }
 
-  if (port >= 0) {
+  if (normalizedPort >= 0) {
     // port number
-    return port;
+    return normalizedPort;
   }
 
   return false;
