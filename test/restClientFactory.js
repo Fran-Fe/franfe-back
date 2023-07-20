@@ -8,10 +8,6 @@ export function restGet(url){
     return chai.request(app).get(url);
 }
 
-export function restGetAssertFail(url, message){
-    expect(restGet(url)).to.be.throw(message);
-}
-
 export function restPost(url){
     return chai.request(app).get(url);
 }

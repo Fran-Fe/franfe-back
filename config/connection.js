@@ -2,7 +2,7 @@ import mysql from 'mysql2';
 import {Sequelize} from "sequelize";
 
 export const sequelize = new Sequelize(
-    'test',
+    'franfe',
     process.env.DB_USERNAME,
     process.env.DB_PASSWORD,
     {

@@ -2,8 +2,6 @@ import express from "express";
 import chai, {expect} from "chai";
 import chaiHttp from "chai-http";
 import {restGet} from "./restClientFactory.js";
-import {ApiError} from "../errors/apiError.js";
-import {User} from "../errors/errorMessages.js";
 
 chai.use(chaiHttp);
 
