@@ -1,15 +1,9 @@
 import express from 'express';
 import mysql from 'mysql2';
+import { sequelize } from '../../config/connection.js';
 
 const app = express();
-
-// 데이터베이스 연결 설정
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'sam',
-  password: '1234',
-  database: 'testDB',
-});
+const connection = sequelize.connect();
 
 connection.connect((err) => {
   if (err) {

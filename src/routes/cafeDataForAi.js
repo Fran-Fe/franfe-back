@@ -4,7 +4,7 @@ let router;
 export default router = Router();
 
 router.get('/api/data', (req, res) => {
-  const query = 'SELECT * FROM your_table_name'; // 데이터베이스에서 원하는 데이터를 가져오는 SQL 쿼리
+  const query = 'SELECT * FROM cafes'; // 데이터베이스에서 원하는 데이터를 가져오는 SQL 쿼리
   connection.query(query, (err, results) => {
     if (err) {
       console.error('Error executing query: ', err); // eslint-disable-line no-console
