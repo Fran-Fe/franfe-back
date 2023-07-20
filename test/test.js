@@ -1,21 +1,23 @@
-import express from 'express';
-import chai, { expect } from 'chai';
+import chai, {expect} from 'chai';
 import chaiHttp from 'chai-http';
-import { restGet } from './restClientFactory.js';
+import app from "../app.js";
+import { resetTestDb } from "./baseTest.js";
 
 chai.use(chaiHttp);
 
-export const app = express();
+beforeEach(() => {
+  resetTestDb();
+});
 
 describe('Connect Success Test', function () {
   it('Server Connected Complete', function (done) {
-    restGet('/index').end(function (err, res) {
+    chai.request(app).get('/googleMap').end(function (err, res) {
       expect(res).to.have.status(200);
       done();
     })
   });
   it('should fail', function () {
-    restGet('/index').end(function (err, res) {
+    chai.request(app).get('/index').end(function (err, res) {
       expect(res).to.have.status(404);
       done();
     })
