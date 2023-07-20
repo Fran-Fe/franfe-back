@@ -7,7 +7,7 @@
 import app from '../app.js';
 import debug from 'debug';
 import http from 'http';
-import {connect} from "../config/connection.js";
+import {connect} from "../src/config/connection.js";
 
 /**
  * Get port from environment and store in Express.
