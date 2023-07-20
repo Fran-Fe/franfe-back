@@ -25,7 +25,6 @@ fs
     && file.indexOf('.test.js') === -1
   ))
   .forEach((file) => {
-    // eslint-disable-next-line global-require, import/no-dynamic-require
     const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
   });
