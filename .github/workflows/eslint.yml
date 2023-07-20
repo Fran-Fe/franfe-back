@@ -22,4 +22,4 @@ jobs:
         run: npm install  # 또는 yarn을 사용하는 경우 'yarn install'
 
       - name: Run ESLint
-        run: npm run lint .  # npx eslint . 은 프로젝트 루트 디렉토리에서 ESLint를 실행합니다. 또는 yarn을 사용하는 경우 'yarn eslint .'
+        run: npm run lint  # npx eslint . 은 프로젝트 루트 디렉토리에서 ESLint를 실행합니다. 또는 yarn을 사용하는 경우 'yarn eslint .'
