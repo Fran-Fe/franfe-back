@@ -1,45 +1,61 @@
 import axios from "axios";
+import {URL_TEXT_SEARCH_IN_JSON} from "../urls/googleMapUrls.js";
+import {URL_PLACE_DETAILS_IN_JSON} from "../urls/googleMapUrls.js";
+import {googleAPIFetchedError} from "../errors/googleAPIError.js";
 
 const apiKey = process.env.GOOGLE_API_KEY;
 
-async function getCafePlaceIds(){
+async function getCafePlaceIds(pageToken){
     try{
-        const response = await axios.get(
-            'https://maps.googleapis.com/maps/api/place/textsearch/json',
-            {
-                params: {
-                    key: apiKey,
-                    query: 'cafe'
-                },
+        const allPlaceIds = [];
+        let nextPageToken = pageToken;
+        let tmpPageToken = nextPageToken;
+
+        do{
+            const response = await axios.get(
+                URL_TEXT_SEARCH_IN_JSON,
+                {
+                    params:{
+                        key: apiKey,
+                        query: 'cafe',
+                        location: '37.7749,-122.4194', //San Francisco latitude , longitude
+                        radius: 5000, //meters
+                        pagetoken: nextPageToken,
+                    }
+                }
+            )
+            const results = response.data.results;
+            const placeIds = results.map((result) => result.place_id);
+            allPlaceIds.push(...placeIds);
+            nextPageToken = response.data.next_page_token;
+
+            //console.log('page : ', nextPageToken, '\n');
+
+            // Add a delay before fetching next page
+            if(nextPageToken){
+                await new Promise(resolve => setTimeout(resolve, 3000)); //wait for 3 seconds
             }
-        );
+            if(nextPageToken != null) tmpPageToken === nextPageToken;
 
-        const placeIds = response.data.results.map((result) => result.place_id);
+        }while(nextPageToken);
 
-        console.log('Cafe Name : ' , (await getCafeInfo(placeIds[0])).name);
-        console.log('Reviews Num : ',(await getCafeInfo(placeIds[0])).reviews.length);
-        for(const review of (await getCafeInfo(placeIds[0])).reviews){
-            console.log(review.text,`\n`);
-        }
+        //console.log(allPlaceIds);
+        //console.log(allPlaceIds.length);
 
-        /*for(const placesId of placeIds){
-
-            console.log('Cafe place_id : ' ,placesId);
-            const cafeInfo = await getCafeInfo(placesId);
-            console.log('Cafe Name : ', cafeInfo.name);
-            console.log('Cafe Address : ', cafeInfo.address);
-        }*/
+        return {
+             allPlaceIds : allPlaceIds,
+            currentPageToken : tmpPageToken,
+        };
     }
-
     catch (error){
-        console.log('Error fetching data from Google Places API: ', error.message);
+        console.error(googleAPIFetchedError,error);
     }
 }
 
 async function getCafeInfo(placeId){
     try{
         const response = await axios.get(
-            'https://maps.googleapis.com/maps/api/place/details/json',
+            URL_PLACE_DETAILS_IN_JSON,
             {
                 params: {
                     key: apiKey,
@@ -48,18 +64,34 @@ async function getCafeInfo(placeId){
                 }
             }
         );
+
         const placeTempInfo = response.data.result;
 
         return {
             name : placeTempInfo.name,
             address : placeTempInfo.formatted_address,
             reviews : placeTempInfo.reviews,
-
         }
     }
     catch (error){
-        console.error('Error fetching cafe info from Google Places API: ',error);
+        console.error(googleAPIFetchedError,error);
     }
 }
 
+function getAllCafePlaceIds(){
+    const totalPlaceIds = [];
+    let currentPageToken = null;
+
+    do{
+        const tempPlaceIds = getCafePlaceIds(currentPageToken);
+
+        totalPlaceIds.push(...tempPlaceIds.allPlaceIds);
+        currentPageToken = tempPlaceIds.currentPageToken;
+
+    }while(currentPageToken)
+
+    return totalPlaceIds;
+}
+
 getCafePlaceIds();
+

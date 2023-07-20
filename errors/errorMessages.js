@@ -3,5 +3,6 @@ export class User {
 }
 
 export class GoogleMap {
-    static NOT_CONNECTED = "Google map is not connected"
+    static NOT_CONNECTED = "Google API is not connected"
+    static NOT_FETCHED = "Error fetching data from Google Places API"
 }
