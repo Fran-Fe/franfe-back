@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { bcd } from '../domain/googleMap/googleMapTransactionService';
+import { bcd } from '../domain/googleMap/googleMapTransactionService.js';
 
 let router;
 export default router = Router();

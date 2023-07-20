@@ -3,8 +3,11 @@ import express from 'express';
 import ApiError from "./src/errors/apiError.js";
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './src/swagger/swagger_output.json' assert { type: 'json' };
+import router from './src/routes/googleMapRoutes.js';
 
 const app = express();
+
+app.use(router);
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
