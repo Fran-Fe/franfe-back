@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node bin/www.js",
     "test": "mocha",
-    "lint": "eslint src/**/*.js"
+    "lint": "eslint src/**/*.js",
+    "migration": "sequelize db:migration -e development"
   },
   "dependencies": {
     "chai": "^4.3.7",
