@@ -12,6 +12,7 @@
     "testDbUp": "docker compose -f ./docker/docker-compose-test-db.yml -p db up -d",
     "testDbDown": "docker compose -f ./docker/docker-compose-test-db.yml -p db down",
     "createTestDbScript": "./test/script/create_test_db_script.sh"
+    "swagger-autogen": "node src/swagger/swagger.js"
   },
   "dependencies": {
     "chai": "^4.3.7",
@@ -26,6 +27,8 @@
     "process": "^0.11.10",
     "pug": "^3.0.2",
     "sequelize": "^6.32.1",
-    "sequelize-cli": "^6.6.1"
+    "sequelize-cli": "^6.6.1",
+    "swagger-autogen": "^2.23.5",
+    "swagger-ui-express": "^5.0.0"
   }
 }
