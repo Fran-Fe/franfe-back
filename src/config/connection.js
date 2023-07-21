@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
 
 export const sequelize = new Sequelize(
-  'franfe',
+  'testDB', //need to change 'franfe'
   process.env.DB_USERNAME,
   process.env.DB_PASSWORD,
   {

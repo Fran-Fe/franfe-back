@@ -8,6 +8,7 @@ import app from '../app.js';
 import debug from 'debug';
 import http from 'http';
 import { connect } from "../src/config/connection.js";
+import {router} from '../src/routes/cafeDataForAi.js';
 
 /**
  * Get port from environment and store in Express.
@@ -15,13 +16,11 @@ import { connect } from "../src/config/connection.js";
 
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-
 /**
  * Create HTTP server.
  */
 
 const server = http.createServer(app);
-
 /**
  * Listen on provided port, on all network interfaces.
  */
