@@ -8,7 +8,7 @@ import app from '../app.js';
 import debug from 'debug';
 import http from 'http';
 import { connect } from "../src/config/connection.js";
-import {router} from '../src/routes/cafeDataForAi.js';
+import {router} from '../src/routes/googleAPIRoutes.js';
 
 /**
  * Get port from environment and store in Express.

@@ -1,6 +1,5 @@
 import axios from "axios";
-import { URL_TEXT_SEARCH_IN_JSON } from "../../../urls/googleMapUrls.js";
-import { URL_PLACE_DETAILS_IN_JSON } from "../../../urls/googleMapUrls.js";
+import { URL_TEXT_SEARCH_IN_JSON, URL_PLACE_DETAILS_IN_JSON  } from "../../../urls/googleMapUrls.js"
 import googleAPIFetchedError from "../../errors/googleAPIError.js";
 
 const apiKey = process.env.GOOGLE_API_KEY;
@@ -29,8 +28,6 @@ async function getCafePlaceIds(pageToken) {
       allPlaceIds.push(...placeIds);
       nextPageToken = response.data.next_page_token;
 
-      //console.log('page : ', nextPageToken, '\n');
-
       // Add a delay before fetching next page
       if (nextPageToken) {
         await new Promise(resolve => setTimeout(resolve, 3000)); //wait for 3 seconds
@@ -38,9 +35,6 @@ async function getCafePlaceIds(pageToken) {
       if (nextPageToken != null) tmpPageToken === nextPageToken;
 
     } while (nextPageToken);
-
-    //console.log(allPlaceIds);
-    //console.log(allPlaceIds.length);
 
     return {
       allPlaceIds: allPlaceIds,

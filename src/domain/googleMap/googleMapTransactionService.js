@@ -8,6 +8,7 @@ export async function bcd(request) {
   try {
 
     transaction = await sequelize.transaction();
+
     const res = abc(request);
 
     await transaction.commit();

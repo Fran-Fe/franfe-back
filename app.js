@@ -1,7 +1,6 @@
 import createError from 'http-errors';
 import express from 'express';
-import { router } from './src/routes/cafeDataForAi.js';
-// const aa = require('/src/routes/cafeDataForAi.js');
+import { router } from './src/routes/googleAPIRoutes.js';
 
 const app = express();
 
