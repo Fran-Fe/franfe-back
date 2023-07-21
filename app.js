@@ -8,7 +8,6 @@ import router from './src/routes/googleMapRoutes.js';
 const app = express();
 
 app.use(router);
-
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
