@@ -1,5 +1,6 @@
 import createError from 'http-errors';
 import express from 'express';
+import ApiError from "./src/errors/apiError.js";
 
 const app = express();
 
@@ -16,7 +17,12 @@ app.use(function (err, req, res, next) {
   res.error = req.app.get('env') === 'development' ? err : {};
 
   res.status(err.status || 500);
-  res.json({error});
+
+  if (res instanceof ApiError) {
+    res.json({error});
+  } else {
+    res.send(res.message);
+  }
 });
 
 export default app;
