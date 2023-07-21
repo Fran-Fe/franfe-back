@@ -1,7 +1,7 @@
 import createError from 'http-errors';
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './swagger_output.json' assert { type: 'json' };;
+import swaggerDocument from './src/swagger/swagger_output.json' assert { type: 'json' };;
 
 const app = express();
 

@@ -12,11 +12,6 @@ router.get('/googleMap/:id', (req) => {
 
 router.post('/googleMap/:id', (req) => {
   const requestUuid = req.query.uuid;
-  /* #swagger.parameters['obj'] = {
-          in: 'body',
-          description: 'Informações do usuário',
-          schema: { $ref: "#/definitions/AddUser" }
-   } */
   const request = req.body;
   const response = bcd(req);
   response.json(response);
