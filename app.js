@@ -1,13 +1,15 @@
 import createError from 'http-errors';
 import express from 'express';
-import { router } from './src/routes/googleAPIRoutes.js';
+import { router as apiRouter} from './src/routes/googleAPIRoutes.js';
+import { router as getPlaceIdsRouter} from './src/routes/getPlaceIdsRoutes.js';
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
-app.use('/',router);
+app.use('/',apiRouter);
+app.use('/',getPlaceIdsRouter);
 app.use(function (req, res, next) {
   next(createError(404));
 });

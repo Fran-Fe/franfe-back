@@ -1,8 +1,7 @@
 import axios from "axios";
 import { URL_TEXT_SEARCH_IN_JSON, URL_PLACE_DETAILS_IN_JSON  } from "../../../urls/googleMapUrls.js"
 import googleAPIFetchedError from "../../errors/googleAPIError.js";
-
-const apiKey = process.env.GOOGLE_API_KEY;
+import { placeIdsConfig } from './getPlaceIds.js';
 
 async function getCafePlaceIds(pageToken) {
   try {

@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { transactioinGoogleAPI } from '../domain/googleAPI/googleAPITransactionService.js';
+import { transactionGoogleAPI } from '../domain/googleAPI/googleAPITransactionService.js';
 
 export const router = Router();
 router.get('/api/data', async (req, res) => {
-  const response = await transactioinGoogleAPI(req)
+  const response = await transactionGoogleAPI(req)
     .then((data) => {
       return data;
     })

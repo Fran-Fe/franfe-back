@@ -1,4 +1,5 @@
 import { sequelize } from '../../config/connection.js';
+import ApiError from '../../errors/apiError.js';
 
 export async function googleAPIService() {
   const query = 'SELECT * FROM cafes';
@@ -11,9 +12,11 @@ export async function googleAPIService() {
 
     return result;
 
-  } catch (error) {
-    console.error('Error fetching data from the database:', error);
-    throw error; // 에러를 상위 호출자로 던집니다.
+  } catch (error){
+    if (error instanceof ApiError){
+      throw error;
+    }
+    throw new ApiError(error.message);
   }
 }
 // 함수를 호출하여 데이터 가져오기

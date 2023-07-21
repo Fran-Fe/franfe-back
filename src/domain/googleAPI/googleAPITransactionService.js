@@ -2,17 +2,14 @@ import { sequelize } from '../../config/connection.js';
 import { googleAPIService } from './googleAPIService.js';
 import ApiError from '../../errors/apiError.js';
 
-export async function transactioinGoogleAPI(request){
+export async function transactionGoogleAPI(request){
   let transaction;
   try{
 
     transaction = await sequelize.transaction();
 
-    let res;
     const response = await googleAPIService().then((data) => {
-      res = data;
-
-      return res;
+      return data;
     });
 
     await transaction.commit();
