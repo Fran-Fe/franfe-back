@@ -5,7 +5,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './src/swagger/swagger_output.json' assert { type: 'json' };
 import { jobGenerator } from "./src/schedule/scheduler.js";
 
-jobGenerator('* * * * *');
+// jobGenerator('* * * * *');
 
 const app = express();
 app.use(express.json());
