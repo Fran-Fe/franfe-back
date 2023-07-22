@@ -6,7 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import router from './src/routes/googleMapRoutes.js';
 import { router as cafeRouter } from './src/routes/forAI/cafesRoutes.js'
 
-jobGenerator('* * * * *');
+// jobGenerator('* * * * *');
 
 const app = express();
 
