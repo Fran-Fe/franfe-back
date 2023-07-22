@@ -3,11 +3,8 @@ import express from 'express';
 import ApiError from "./src/errors/apiError.js";
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './src/swagger/swagger_output.json' assert { type: 'json' };
-<<<<<<< Updated upstream
 import router from './src/routes/googleMapRoutes.js';
-=======
 import { router as cafeRouter } from './src/routes/forAI/cafesRoutes.js'
->>>>>>> Stashed changes
 
 const app = express();
 

@@ -33,6 +33,6 @@ export const router = Router();
  */
 router.get('', (req) => {
   const response = getAllCafes();
-  response.json(response);
 
+  response.json(response);
 });

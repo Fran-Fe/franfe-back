@@ -1,25 +1,24 @@
-import swaggerAutogen from 'swagger-autogen';
+import {swaggerUi} from './swagger.js';
+import swaggereJsdoc from './swagger.js';
 
-const outputFile = './swagger_output.json'
-const endpointsFiles = ['../routes/forAI/cafesRoutes.js']
-
-const doc = {
-  info: {
-    version: "1.0.0",
-    title: "Franfe Backend",
-    description: "Franfe Backend <b>Api</b>."
+const options = {
+  swaggerDefinition: {
+    openapi: "3.0.0",
+    info: {
+      version: "1.0.0",
+      title: "Franfe Backend Api",
+      description:
+        "Node.js Swaager Franfe Backend Api 통신 방식 RestFul API 클라이언트 UI",
+    },
+    servers: [
+      {
+        url: "http://localhost:3000",
+      },
+    ],
   },
-  host: "localhost:3000",
-  basePath: "/",
-  schemes: ['http'],
-  consumes: ['application/json'],
-  produces: ['application/json'],
-  tags: [
-    {
-      "name": "User",
-      "description": "Endpoints"
-    }
-  ],
+  apis: ["../routes/forAI/*.js", "./routes/forFront/*.js"],
 }
 
-swaggerAutogen(outputFile, endpointsFiles, doc);
+const specs = swaggereJsdoc(options)
+
+module.exports = { swaggerUi, specs }
