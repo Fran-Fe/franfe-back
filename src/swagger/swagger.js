@@ -1,7 +1,7 @@
 import swaggerAutogen from 'swagger-autogen';
 
 const outputFile = './swagger_output.json'
-const endpointsFiles = ['../routes/googleMapRoutes.js']
+const endpointsFiles = ['../routes/forAi.js']
 
 
 const doc = {
