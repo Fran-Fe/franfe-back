@@ -1,8 +1,23 @@
 'use strict';
+import fs from 'fs';
+import { getRealQueryFileName } from './fileName.js';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
+
+    const filePath = getRealQueryFileName(__filename);
+
+    fs.readFile(filePath, 'utf-8', async (err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        await queryInterface.query(data);
+        console.log(data);
+      }
+    })
+
+
     /**
      * Add altering commands here.
      *
@@ -20,7 +35,7 @@ module.exports = {
      */
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
 
     /**
      * Add reverting commands here.
