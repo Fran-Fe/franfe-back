@@ -4,10 +4,13 @@ import ApiError from "./src/errors/apiError.js";
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './src/swagger/swagger_output.json' assert { type: 'json' };
 import { jobGenerator } from "./src/schedule/scheduler.js";
+import router from './src/routes/googleMapRoutes.js';
 
 // jobGenerator('* * * * *');
 
 const app = express();
+app.use(router);
+
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
