@@ -1,7 +1,7 @@
 import swaggerAutogen from 'swagger-autogen';
 
 const outputFile = './swagger_output.json'
-const endpointsFiles = ['../routes/forAi/cafesRoutes.js']
+const endpointsFiles = ['../routes/forAI/cafesRoutes.js']
 
 const doc = {
   info: {
@@ -14,10 +14,6 @@ const doc = {
   schemes: ['http'],
   consumes: ['application/json'],
   produces: ['application/json'],
-  contact: {
-    name: "Rogan Oh",
-    email: "fdscbjdcnhd@gmail.com",
-  },
   tags: [
     {
       "name": "User",

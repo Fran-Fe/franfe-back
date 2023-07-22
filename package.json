@@ -11,7 +11,7 @@
     "dbDown": "docker compose -f ./docker/docker-compose-db.yml -p db down",
     "testDbUp": "docker compose -f ./docker/docker-compose-test-db.yml -p db up -d",
     "testDbDown": "docker compose -f ./docker/docker-compose-test-db.yml -p db down",
-    "createTestDbScript": "./test/script/create_test_db_script.sh"
+    "createTestDbScript": "./test/script/create_test_db_script.sh",
     "swagger-autogen": "node src/swagger/swagger.js"
   },
   "dependencies": {
