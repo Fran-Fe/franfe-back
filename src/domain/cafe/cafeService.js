@@ -1,5 +1,5 @@
-import { findAll } from './cafe';
+import { findAll as findAllEntities } from './cafe.js';
 
-export function getAllCafes() {
-  return findAll();
+export function findAll() {
+  return findAllEntities();
 }
