@@ -14,7 +14,6 @@ export async function getCafePlaceIds(pageToken){
         placeIdsConfig(nextPageToken),
       )
 
-
       await pushPlaceIds(allPlaceIds,response);
       nextPageToken = response.data.next_page_token;
 

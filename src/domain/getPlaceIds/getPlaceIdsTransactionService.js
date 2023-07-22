@@ -1,10 +1,11 @@
 import { sequelize } from '../../config/connection.js';
 import { getCafePlaceIds, getCafeInfo } from './getPlaceIdsService.js';
 import { throwError } from '../../errors/apiError.js';
+import { googleAPIDto } from '../../routes/dtos/googleAPIDtos.js';
 
-export async function getPlaceIdsTransactionService(){
+export async function getPlaceIdsTransactionService() {
   let transaction;
-  try{
+  try {
     transaction = await sequelize.transaction();
 
     const allPlaceIds = await getCafePlaceIds('')
@@ -13,16 +14,18 @@ export async function getPlaceIdsTransactionService(){
       });
 
     const allCafeInfos = [];
-    for(let pid of allPlaceIds){
-        allCafeInfos.push(await getCafeInfo(pid));
+    for (let pid of allPlaceIds) {
+      allCafeInfos.push(await getCafeInfo(pid));
     }
+
     await transaction.commit();
 
     console.log(allCafeInfos.length);
 
-    return allCafeInfos;
+    return allCafeInfos
+      //.forEach(cafeInfo => cafeInfo.map(new googleAPIDto.Response(cafeInfo.placeId, cafeInfo.name)));
 
-  }catch (error){
+  } catch (error) {
     throwError(error);
   }
 }

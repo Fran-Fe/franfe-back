@@ -1,12 +1,8 @@
 export class googleAPIDto {
-  Request = class {
-
-  }
-
   Response = class {
-    constructor(place_id, name, address) {
+    constructor(place_id, name) {
       this.place_id = place_id;
-
+      this.name = name;
     }
   }
 }

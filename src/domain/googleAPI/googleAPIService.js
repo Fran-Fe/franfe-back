@@ -2,12 +2,11 @@ import { sequelize } from '../../config/connection.js';
 import ApiError from '../../errors/apiError.js';
 
 export async function googleAPIService() {
-  const query = 'SELECT * FROM cafes';
+  const query = 'SELECT * FROM cafes'
   try {
-    let result;
-    await sequelize.query(query)
+    const result = await sequelize.query(query)
       .then((data) => {
-        result = data;
+        return data[0];
       });
 
     return result;
