@@ -1,0 +1,14 @@
+version: '3'
+services:
+  mysql:
+    container_name: franfe-test-db
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: franfe
+    ports:
+      - "33070:3306"
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
