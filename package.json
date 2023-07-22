@@ -19,6 +19,7 @@
     "mocha": "^10.2.0",
     "morgan": "~1.9.1",
     "mysql2": "^3.5.2",
+    "node-schedule": "^2.1.1",
     "process": "^0.11.10",
     "pug": "^3.0.2",
     "sequelize": "^6.32.1",
