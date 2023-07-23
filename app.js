@@ -6,10 +6,14 @@ import swaggerUi from 'swagger-ui-express';
 import router from './src/routes/googleMapRoutes.js';
 import { router as cafeRouter } from './src/routes/forAI/cafesRoutes.js'
 import { router as cafeRankingRouter } from './src/routes/forFront/cafeRankingRoutes.js'
+import { jobGenerator } from "./src/schedule/scheduler.js";
 
 const app = express();
+// jobGenerator('* * * * *', abc);
 
+const app = express();
 app.use(router);
+
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
