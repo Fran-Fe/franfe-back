@@ -1,30 +1,21 @@
-import swaggerAutogen from 'swagger-autogen';
+import swaggereJsdoc from 'swagger-jsdoc';
 
-const outputFile = './swagger_output.json'
-const endpointsFiles = ['../routes/googleMapRoutes.js']
-
-
-const doc = {
-  info: {
-    version: "1.0.0",
-    title: "Franfe Backend",
-    description: "Franfe Backend <b>Api</b>."
+const options = {
+  swaggerDefinition: {
+    openapi: "3.0.0",
+    info: {
+      version: "1.0.0",
+      title: "Franfe Backend Api",
+      description:
+        "Node.js Swaager Franfe Backend Api 통신 방식 RestFul API 클라이언트 UI",
+    },
+    servers: [
+      {
+        url: "http://localhost:3000",
+      },
+    ],
   },
-  host: "localhost:3000",
-  basePath: "/",
-  schemes: ['http'],
-  consumes: ['application/json'],
-  produces: ['application/json'],
-  contact: {
-    name: "Rogan Oh",
-    email: "fdscbjdcnhd@gmail.com",
-  },
-  tags: [
-    {
-      "name": "User",
-      "description": "Endpoints"
-    }
-  ],
+  apis: ["./src/routes/forAI/*.js", "./src/routes/forFront/*.js"],
 }
 
-swaggerAutogen(outputFile, endpointsFiles, doc);
+export const specs = swaggereJsdoc(options)
