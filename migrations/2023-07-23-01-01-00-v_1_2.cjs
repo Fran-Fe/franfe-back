@@ -36,7 +36,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('cafes');
+    await queryInterface.dropTable('cafe_click_counts');
     /**
      * Add reverting commands here.
      *

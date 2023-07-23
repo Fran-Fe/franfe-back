@@ -1,7 +1,7 @@
 import { findAll } from './cafeClickCount.js';
 
-export function getCafeRankings() {
-  const cafeClickCounts = findAll();
+export async function getCafeRankings() {
+  const cafeClickCounts = await findAll();
 
   return {
     sortedByUserComparisonCount: cafeClickCounts.sort(sortDescByUserComparisonCount),
