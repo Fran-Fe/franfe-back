@@ -5,7 +5,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './src/swagger/swagger_output.json' assert { type: 'json' };
 import router from './src/routes/googleMapRoutes.js';
 import { router as cafeRouter } from './src/routes/forAI/cafesRoutes.js'
-
+import {router as cafeLocationRouter} from './src/routes/forFront/getCafeLocationsRoutes.js'
 const app = express();
 
 app.use(router);
@@ -13,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 app.use('/cafes', cafeRouter);
+app.use('/', cafeLocationRouter);
 
 app.use(
   '/swagger-html',

@@ -3,3 +3,11 @@ export default class ApiError extends Error {
     super(`api error : ${message}`);
   }
 }
+
+export function throwApiError(error){
+  if (error instanceof ApiError) {
+    throw error;
+  }
+
+  throw new ApiError(error.message);
+}
