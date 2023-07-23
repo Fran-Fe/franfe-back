@@ -5,16 +5,11 @@ import { CafeDto } from "../../routes/dtos/cafeDto.js";
 
 
 export async function getAllCafes() {
-  let transaction;
   try {
-
-    transaction = await sequelize.transaction();
 
     const cafes = findAll();
     const res = (await (cafes))
       .map((cafe) => new CafeDto.Response(cafe))
-
-    await transaction.commit();
 
     return res;
 
