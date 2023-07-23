@@ -40,7 +40,7 @@ export const router = Router();
 router.get('', async (req,res, next) => {
   try{
 
-    const response = await getAllCafes();
+    const response = await getRankings();
 
     res.json(response);
   } catch (error) {

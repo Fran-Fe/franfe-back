@@ -1,4 +1,4 @@
-CREATE TABLE `cafes` (
+CREATE TABLE if not EXISTS `cafes` (
   `uuid` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `address` varchar(100) NOT NULL,
   `lat` decimal(10,7) NOT NULL DEFAULT '123.1234567',
@@ -7,5 +7,13 @@ CREATE TABLE `cafes` (
   `overview` varchar(150) DEFAULT NULL,
   `rating` decimal(2,1) NOT NULL DEFAULT '5.0',
   PRIMARY KEY (`uuid`)
+);
+
+CREATE TABLE if not EXISTS `cafe_click_counts` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `cafe_uuid` varchar(45) NOT NULL,
+  `user_comparison_count` bigint NOT NULL DEFAULT '0',
+  `user_compare_win_count` bigint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 );
 
