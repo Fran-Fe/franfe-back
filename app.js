@@ -5,6 +5,7 @@ import { specs } from "./src/swagger/swagger.js";
 import swaggerUi from 'swagger-ui-express';
 import router from './src/routes/googleMapRoutes.js';
 import { router as cafeRouter } from './src/routes/forAI/cafesRoutes.js'
+import { router as cafeRankingRouter } from './src/routes/forFront/cafeRankingRoutes.js'
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 app.use('/cafes', cafeRouter);
+app.use('/cafe-rankings', cafeRankingRouter);
 
 app.use('/swagger-html', swaggerUi.serve, swaggerUi.setup(specs));
 
