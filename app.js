@@ -5,10 +5,13 @@ import { specs } from "./src/swagger/swagger.js";
 import swaggerUi from 'swagger-ui-express';
 import router from './src/routes/googleMapRoutes.js';
 import { router as cafeRouter } from './src/routes/forAI/cafesRoutes.js'
+import { jobGenerator } from "./src/schedule/scheduler.js";
+
+// jobGenerator('* * * * *', abc);
 
 const app = express();
-
 app.use(router);
+
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
