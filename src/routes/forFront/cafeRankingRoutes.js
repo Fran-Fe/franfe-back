@@ -12,29 +12,38 @@ export const router = Router();
 /**
  * @swagger
  * paths:
- *   /cafes:
+ *   /cafe-rankings:
  *     get:
- *       summary: get cafe ranking info for front
+ *       summary: get all cafe rankings for front
  *       tags: [CafeRankings]
  *       responses:
  *         "200":
- *           description: A list of cafes.
+ *           description: Lists of Cafe Rankings .
  *           content:
  *             application/json:
  *               schema:
- *                 type: array
+ *                 type: object
  *                 properties:
- *                   uuid:
- *                     type: string
- *                   address:
- *                     type: string
- *                   placeName:
- *                     type: string
- *                 example:
- *                   [
- *                     {"uuid": "uuid1", "address": "address1", "placeName": "placeName1"},
- *                     {"uuid": "uuid2", "address": "address2", "placeName": "placeName2"},
- *                   ]
+ *                   userComparisonRank:
+ *                     type: object
+ *                     properties:
+ *                       list:
+ *                         type: array
+ *                         properties:
+ *                           rank:
+ *                             type: integer
+ *                           cafeUuid:
+ *                             type: string
+ *                   userCompareWinRank:
+ *                     type: object
+ *                     properties:
+ *                       list:
+ *                         type: array
+ *                         properties:
+ *                           rank:
+ *                             type: integer
+ *                           cafeUuid:
+ *                             type: string
  *
  */
 router.get('', async (req,res, next) => {
