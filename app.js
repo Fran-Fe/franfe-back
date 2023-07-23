@@ -9,8 +9,8 @@ import { router as cafeRouter } from './src/routes/forAI/cafesRoutes.js'
 // jobGenerator('* * * * *');
 
 const app = express();
-
 app.use(router);
+
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
