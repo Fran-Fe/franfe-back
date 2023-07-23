@@ -1,9 +1,7 @@
 import nodeSchedule from 'node-schedule';
 
-export function jobGenerator(cron) {
+export function jobGenerator(cron, job) {
   return nodeSchedule.scheduleJob(cron, () => {
-    console.log('Running scheduler');
+    job();
   })
-
 }
-
