@@ -1,5 +1,4 @@
-import {swaggerUi} from './swagger.js';
-import swaggereJsdoc from './swagger.js';
+import swaggereJsdoc from 'swagger-jsdoc';
 
 const options = {
   swaggerDefinition: {
@@ -16,9 +15,7 @@ const options = {
       },
     ],
   },
-  apis: ["../routes/forAI/*.js", "./routes/forFront/*.js"],
+  apis: ["./src/routes/forAI/*.js", "./src/routes/forFront/*.js"],
 }
 
-const specs = swaggereJsdoc(options)
-
-module.exports = { swaggerUi, specs }
+export const specs = swaggereJsdoc(options)

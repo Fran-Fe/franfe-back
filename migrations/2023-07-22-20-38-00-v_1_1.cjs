@@ -1,22 +1,22 @@
 'use strict';
-import fs from 'fs';
-import { getRealQueryFileName } from './fileName.js';
+const fs = require('fs');
+const getRealQueryFileName = require('./fileName.cjs');
+const path = require('path');
+
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
+    const fileName = getRealQueryFileName(__filename);
+    const filePath = path.join(__dirname, fileName);
 
-    const filePath = getRealQueryFileName(__filename);
+    try {
+      const data = fs.readFileSync(filePath, 'utf-8');
+      await queryInterface.sequelize.query(data.toString())
 
-    fs.readFile(filePath, 'utf-8', async (err, data) => {
-      if (err) {
-        console.log(err);
-      } else {
-        await queryInterface.query(data);
-        console.log(data);
-      }
-    })
-
+    } catch (err) {
+      console.error(err);
+    }
 
     /**
      * Add altering commands here.
@@ -36,7 +36,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-
+    await queryInterface.dropTable('cafes');
     /**
      * Add reverting commands here.
      *

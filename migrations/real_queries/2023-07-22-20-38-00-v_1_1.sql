@@ -1,4 +1,4 @@
-CREATE TABLE `cafes` (
+CREATE TABLE if not EXISTS `cafes` (
   `uuid` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `address` varchar(100) NOT NULL,
   `lat` decimal(10,7) NOT NULL DEFAULT '123.1234567',
