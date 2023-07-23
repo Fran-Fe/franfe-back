@@ -1,8 +1,8 @@
 import createError from 'http-errors';
 import express from 'express';
 import ApiError from "./src/errors/apiError.js";
+import { specs } from "./src/swagger/swagger.js";
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './src/swagger/swagger_output.json' assert { type: 'json' };
 import router from './src/routes/googleMapRoutes.js';
 import { router as cafeRouter } from './src/routes/forAI/cafesRoutes.js'
 
@@ -14,11 +14,7 @@ app.use(express.urlencoded({extended: false}));
 
 app.use('/cafes', cafeRouter);
 
-app.use(
-  '/swagger-html',
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerDocument)
-);
+app.use('/swagger-html', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use(function (req, res, next) {
   next(createError(404));
