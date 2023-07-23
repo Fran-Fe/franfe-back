@@ -5,8 +5,7 @@ CREATE TABLE `cafes` (
   `lng` decimal(10,7) NOT NULL DEFAULT '123.1234567',
   `place_name` varchar(45) NOT NULL,
   `overview` varchar(150) DEFAULT NULL,
-  `rating` decimal(2,1) NOT NULL DEFAULT '5.0',
-  `user_comparison_count` int NOT NULL DEFAULT '0',
+  `rating` decimal(2,1) NOT NULL DEFAULT '5.0'
 
   PRIMARY KEY (`uuid`)
 );
