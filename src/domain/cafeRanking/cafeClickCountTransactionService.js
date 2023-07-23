@@ -20,22 +20,18 @@ export async function getRankings() {
 }
 
 async function makeUserCompareWinRank(sortedByUserComparisonCount) {
-  let rank = 1;
-
   const listOfUserCompareWinElement = (await sortedByUserComparisonCount)
-    .map((userCompareWinCount) => {
-      new CafeRankingDto.UserCompareWinElement(rank++, sortedByUserComparisonCount.cafeUuid);
+    .map((userCompareWinCount, index) => {
+      new CafeRankingDto.UserCompareWinElement(index + 1, userCompareWinCount.cafeUuid);
     });
 
   return new CafeRankingDto.UserCompareWinRank(listOfUserCompareWinElement);
 }
 
 async function makeUserComparisonRank(sortedByUserComparisonCount) {
-  let rank = 1;
-
   const listOfUserCompareWinElement = (await sortedByUserComparisonCount)
-    .map((userComparisonCount) => {
-      new CafeRankingDto.UserComparisonElement(rank++, sortedByUserComparisonCount.cafeUuid);
+    .map((userComparisonCount, index) => {
+      new CafeRankingDto.UserComparisonElement(index + 1, userComparisonCount.cafeUuid);
     });
 
   return new CafeRankingDto.UserComparisonRank(listOfUserCompareWinElement);
