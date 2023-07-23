@@ -6,13 +6,12 @@
   "scripts": {
     "start": "node bin/www.js",
     "test": "mocha",
-    "migration": "sequelize db:migration -e development",
+    "migration": "sequelize db:migrate --env development --config ./src/config/config.json",
     "dbUp": "docker compose -f ./docker/docker-compose-db.yml -p db up -d",
     "dbDown": "docker compose -f ./docker/docker-compose-db.yml -p db down",
     "testDbUp": "docker compose -f ./docker/docker-compose-test-db.yml -p db up -d",
     "testDbDown": "docker compose -f ./docker/docker-compose-test-db.yml -p db down",
     "createTestDbScript": "./test/script/create_test_db_script.sh"
-    "swagger-autogen": "node src/swagger/swagger.js"
   },
   "dependencies": {
     "chai": "^4.3.7",
@@ -29,6 +28,7 @@
     "sequelize": "^6.32.1",
     "sequelize-cli": "^6.6.1",
     "swagger-autogen": "^2.23.5",
+    "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0"
   }
 }
