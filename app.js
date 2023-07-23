@@ -11,7 +11,6 @@ import { jobGenerator } from "./src/schedule/scheduler.js";
 const app = express();
 // jobGenerator('* * * * *', abc);
 
-const app = express();
 app.use(router);
 
 app.use(express.json());
@@ -19,7 +18,6 @@ app.use(express.urlencoded({extended: false}));
 
 app.use('/cafes', cafeRouter);
 app.use('/cafe-rankings', cafeRankingRouter);
-
 app.use('/swagger-html', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use(function (req, res, next) {

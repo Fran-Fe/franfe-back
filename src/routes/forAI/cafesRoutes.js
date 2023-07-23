@@ -1,12 +1,6 @@
 import { Router } from 'express';
 import { getAllCafes } from "../../domain/cafe/cafeTransactionService.js";
 
-/**
- * @swagger
- * tags:
- *  name: Cafes For AI
- *  description: Cafe API
- */
 export const router = Router();
 
 /**

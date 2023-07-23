@@ -1,12 +1,6 @@
 import { Router } from 'express';
 import { getRankings } from "../../domain/cafeRanking/cafeClickCountTransactionService.js";
 
-/**
- * @swagger
- * tags:
- *  name: Cafes For AI
- *  description: Cafe API
- */
 export const router = Router();
 
 /**
@@ -18,7 +12,7 @@ export const router = Router();
  *       tags: [CafeRankings]
  *       responses:
  *         "200":
- *           description: Lists of Cafe Rankings .
+ *           description: Lists of Cafe Rankings.
  *           content:
  *             application/json:
  *               schema:
@@ -29,21 +23,25 @@ export const router = Router();
  *                     properties:
  *                       list:
  *                         type: array
- *                         properties:
- *                           rank:
- *                             type: integer
- *                           cafeUuid:
- *                             type: string
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             rank:
+ *                               type: integer
+ *                             cafeUuid:
+ *                               type: string
  *                   userCompareWinRank:
  *                     type: object
  *                     properties:
  *                       list:
  *                         type: array
- *                         properties:
- *                           rank:
- *                             type: integer
- *                           cafeUuid:
- *                             type: string
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             rank:
+ *                               type: integer
+ *                             cafeUuid:
+ *                               type: string
  *
  */
 router.get('', async (req,res, next) => {
