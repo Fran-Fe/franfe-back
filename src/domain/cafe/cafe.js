@@ -35,11 +35,6 @@ export const GoogleMap = sequelize.define("cafes", {
     type: DataTypes.DECIMAL(2, 1),
     allowNull: false,
     defaultValue: 5.0,
-  },
-  userComparisonCount: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    defaultValue: 0,
   }
 });
 
