@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../../config/connection.js";
 
-export const GoogleMap = sequelize.define("cafes", {
+export const Cafe = sequelize.define("cafes", {
   uuid: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -36,8 +36,17 @@ export const GoogleMap = sequelize.define("cafes", {
     allowNull: false,
     defaultValue: 5.0,
   }
+}, {
+  timestamps: false,
+  underscored: true,
 });
 
 export function findAll() {
-  return GoogleMap.findAll();
+  return Cafe.findAll();
+}
+
+export function findByUuid(uuid) {
+  return Cafe.findOne({
+    where: {uuid: uuid}
+  });
 }

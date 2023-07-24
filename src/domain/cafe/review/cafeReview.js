@@ -1,0 +1,39 @@
+import { DataTypes } from "sequelize";
+import { sequelize } from "../../../config/connection.js";
+
+export const CafeReview = sequelize.define("cafe_reviews", {
+  id: {
+    type: DataTypes.BIGINT,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  cafeUuid: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    field: 'cafe_uuid'
+  },
+  authorName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    field: 'author_name'
+  },
+  rating: {
+    type: DataTypes.DECIMAL(2, 1),
+    allowNull: false,
+  },
+  relativeTimeDescription: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+}, {
+  timestamps: false,
+  underscored: true,
+});
+
+export function findAllByCafeUuid(cafeUuid) {
+  return CafeReview.findAll({
+    where: {
+      cafeUuid: cafeUuid,
+    }
+  });
+}
