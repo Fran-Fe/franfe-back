@@ -32,3 +32,10 @@ export function getCafeRankingsResponseAssert(res){
   expect(res.body.userCompareWinRank.list[0]).to.have.property('rank');
   expect(res.body.userCompareWinRank.list[0]).to.have.property('cafeUuid');
 }
+
+export function getAllCafesResponseAssert(res) {
+  expect(res).to.have.status(200);
+  expect(res.body[0]).to.have.property("uuid");
+  expect(res.body[0]).to.have.property("address");
+  expect(res.body[0]).to.have.property("placeName");
+}
