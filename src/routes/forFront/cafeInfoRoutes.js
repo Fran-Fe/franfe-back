@@ -15,7 +15,7 @@ export const router = Router();
  *       parameters:
  *         - in: query
  *           name: isWin
- *           description: is front calling this api after user choose as win? true : 1, false : 0
+ *           description: is front calling this api after user choose as win? true -> 1, false -> 0
  *           required: true
  *           schema:
  *             type: string
@@ -38,16 +38,16 @@ export const router = Router();
  *                   address:
  *                     type: string
  *                   lat:
- *                     type: decimal
+ *                     type: number
  *                   lng:
- *                     type: decimal
+ *                     type: number
  *                   placeName:
  *                     type: string
  *                   overView:
  *                     type: string
  *                   rating:
- *                     type: decimal
- *                   options
+ *                     type: number
+ *                   options:
  *                     type: array
  *                     items:
  *                       type: object
@@ -68,7 +68,7 @@ export const router = Router();
  *                         authorName:
  *                           type: string
  *                         rating:
- *                           type: decimal
+ *                           type: number
  *                         relativeTimeDescription:
  *                           type: string
  *                         text:
