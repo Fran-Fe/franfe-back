@@ -42,7 +42,7 @@ app.use(function (err, req, res, next) {
   if (res instanceof ApiError) {
     res.json(error);
   } else {
-    res.json(new ApiError(message));
+    res.json(new ApiError(error.stackTrace));
   }
 });
 
