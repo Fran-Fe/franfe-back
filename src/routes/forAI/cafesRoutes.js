@@ -1,12 +1,6 @@
 import { Router } from 'express';
 import { getAllCafes } from "../../domain/cafe/cafeTransactionService.js";
 
-/**
- * @swagger
- * tags:
- *  name: Cafes For AI
- *  description: Cafe API
- */
 export const router = Router();
 
 /**
@@ -23,18 +17,15 @@ export const router = Router();
  *             application/json:
  *               schema:
  *                 type: array
- *                 properties:
- *                   uuid:
- *                     type: string
- *                   address:
- *                     type: string
- *                   placeName:
- *                     type: string
- *                 example:
- *                   [
- *                     {"uuid": "uuid1", "address": "address1", "placeName": "placeName1"},
- *                     {"uuid": "uuid2", "address": "address2", "placeName": "placeName2"},
- *                   ]
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     uuid:
+ *                       type: string
+ *                     address:
+ *                       type: string
+ *                     placeName:
+ *                       type: string
  *
  */
 router.get('', async (req,res, next) => {
