@@ -30,8 +30,7 @@ export async function getAllCafes() {
 export async function getCafeDetailInfo(cafeUuid) {
   try {
 
-    const {cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3} = await getCafeDetailInfo();
-
+    const {cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3} = await getCafeDetailDtoInfo(cafeUuid);
 
     return new CafeDto.DetailResponse(cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3);
 
@@ -45,7 +44,7 @@ export async function getCafeDetailInfo(cafeUuid) {
 
 }
 
-async function getCafeDetailInfo(cafeUuid) {
+async function getCafeDetailDtoInfo(cafeUuid) {
   const cafe = await findByUuid(cafeUuid, BooleanValidate.TRUE);
   const cafeOptions = await getCafeOptionsDto(cafeUuid);
   const cafeHashtags = await getCafeHashtags(cafeUuid);

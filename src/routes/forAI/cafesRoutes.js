@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllCafes, getCafeDetailInfo } from "../../domain/cafe/cafeTransactionService.js";
+import { getAllCafes } from "../../domain/cafe/cafeTransactionService.js";
 
 export const router = Router();
 
@@ -38,15 +38,3 @@ router.get('', async (req,res, next) => {
     next(error);
   }
 });
-
-router.get('/:cafeUuid', async (req,res, next) => {
-    try{
-
-    const response = await getCafeDetailInfo(req.params.cafeUuid);
-
-    res.json(response);
-    } catch (error) {
-        next(error);
-    }
-
-}
