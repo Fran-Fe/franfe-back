@@ -29,8 +29,9 @@ export async function getAllCafes() {
 export async function getCafeDetailInfo(cafeUuid) {
     try {
 
-        const {cafe, cafeOption, cafeHashTags, cafeReviews, cafeThumbnailS3} = await getCafeDetailInfo();
-        const res = new CafeDto.DetailResponse(cafe, cafeOption, cafeHashTags, cafeReviews, cafeThumbnailS3);
+        const {cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3} = await getCafeDetailInfo();
+        //cafeOption 은 리스트, cafeHashtags 는 리스트, cafeReviews 는 리스트, cafeThumbnailS3 는 리스트
+        const res = new CafeDto.DetailResponse(cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3);
 
         return res;
 
@@ -46,10 +47,10 @@ export async function getCafeDetailInfo(cafeUuid) {
 
 async function getCafeDetailInfo() {
   const cafe = await findByUuid(cafeUuid, BooleanValidate.TRUE);
-  const cafeOption = await findOptionByCafeUuid(cafeUuid, BooleanValidate.TRUE);
-  const cafeHashTags = await findAllHashtagsByCafeUuid(cafeUuid, BooleanValidate.FALSE);
+  const cafeOptions = await findOptionByCafeUuid(cafeUuid, BooleanValidate.TRUE);
+  const cafeHashtags = await findAllHashtagsByCafeUuid(cafeUuid, BooleanValidate.FALSE);
   const cafeReviews = await findAllReviewsByCafeUuid(cafeUuid, BooleanValidate.FALSE);
   const cafeThumbnailS3 = await findAllThumbnailsByCafeUuid(cafeUuid, BooleanValidate.FALSE);
 
-  return {cafe, cafeOption, cafeHashTags, cafeReviews, cafeThumbnailS3};
+  return {cafe, cafeOptions, cafeHashtags: cafeHashtags, cafeReviews, cafeThumbnailS3};
 }
