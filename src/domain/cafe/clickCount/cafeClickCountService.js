@@ -1,11 +1,18 @@
 import { findAll, findOneByCafeUuid, createWhenWin } from './cafeClickCount.js';
 import CafeClickCountNotFoundError from "../../../errors/cafeClickCountNotFoundError.js";
+import ApiError from "../../../errors/apiError.js";
 
 export async function getCafeRankings() {
-  const cafeClickCounts = await findAll();
+  let cafeClickCounts;
+  try {
+    cafeClickCounts = await findAll();
+  }
+  catch(error) {
+    throw ApiError(error.message);
+  }
 
   return {
-    sortedByUserComparisonCount: cafeClickCounts.sort(sortDescByUserComparisonCount),
+    sortDescByUserComparisonCount: cafeClickCounts.sort(sortDescByUserComparisonCount),
     sortedDescByUserCompareWinCount: cafeClickCounts.sort(sortDescByUserCompareWinCount)
   };
 }

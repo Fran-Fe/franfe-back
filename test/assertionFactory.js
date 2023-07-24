@@ -20,3 +20,15 @@ export function getCafeDetailResponseAssert(res){
   expect(res.body.thumbnailS3List[0]).to.have.property('bucketUrl');
   expect(res.body.thumbnailS3List[0]).to.have.property('category');
 }
+
+export function getCafeRankingsResponseAssert(res){
+  expect(res).to.have.status(200);
+  expect(res.body).to.have.property('userComparisonRank');
+  expect(res.body.userComparisonRank).to.have.property('list');
+  expect(res.body.userComparisonRank.list[0]).to.have.property('rank');
+  expect(res.body.userComparisonRank.list[0]).to.have.property('cafeUuid');
+  expect(res.body).to.have.property('userCompareWinRank');
+  expect(res.body.userCompareWinRank).to.have.property('list');
+  expect(res.body.userCompareWinRank.list[0]).to.have.property('rank');
+  expect(res.body.userCompareWinRank.list[0]).to.have.property('cafeUuid');
+}

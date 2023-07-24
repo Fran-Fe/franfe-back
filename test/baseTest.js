@@ -24,8 +24,6 @@ export async function resetTestDb() {
   } catch (error) {
     console.error(error);
     throw error;
-  } finally {
-    sequelize.close();
   }
 
 }

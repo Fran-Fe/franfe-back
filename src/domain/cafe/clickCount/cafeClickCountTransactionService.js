@@ -5,9 +5,9 @@ import { CafeRankingDto } from "../../../routes/dtos/CafeRankingDto.js";
 export async function getRankings() {
   try {
 
-    const {sortedByUserComparisonCount, sortedDescByUserCompareWinCount} = getCafeRankings();
-    const userCompareWinRank = makeUserCompareWinRank(sortedByUserComparisonCount);
-    const userComparisonRank = makeUserComparisonRank(sortedByUserComparisonCount);
+    const {sortDescByUserComparisonCount, sortedDescByUserCompareWinCount} = await getCafeRankings();
+    const userComparisonRank = await makeUserComparisonRank(sortDescByUserComparisonCount);
+    const userCompareWinRank = await makeUserCompareWinRank(sortedDescByUserCompareWinCount);
     return new CafeRankingDto.Response(userComparisonRank, userCompareWinRank);
 
   } catch (error) {
@@ -20,19 +20,18 @@ export async function getRankings() {
 }
 
 async function makeUserCompareWinRank(sortedByUserComparisonCount) {
-  const listOfUserCompareWinElement = (await sortedByUserComparisonCount)
+  const listOfUserCompareWinList = (await sortedByUserComparisonCount)
     .map((userCompareWinCount, index) => {
-      new CafeRankingDto.UserCompareWinElement(index + 1, userCompareWinCount.cafeUuid);
+      return new CafeRankingDto.UserCompareWinElement(index + 1, userCompareWinCount.cafeUuid);
     });
 
-  return new CafeRankingDto.UserCompareWinRank(listOfUserCompareWinElement);
+  return new CafeRankingDto.UserCompareWinRank(listOfUserCompareWinList);
 }
 
 async function makeUserComparisonRank(sortedByUserComparisonCount) {
-  const listOfUserCompareWinElement = (await sortedByUserComparisonCount)
+  const listOfUserCompareWinList = (await sortedByUserComparisonCount)
     .map((userComparisonCount, index) => {
-      new CafeRankingDto.UserComparisonElement(index + 1, userComparisonCount.cafeUuid);
+      return new CafeRankingDto.UserComparisonElement(index + 1, userComparisonCount.cafeUuid);
     });
-
-  return new CafeRankingDto.UserComparisonRank(listOfUserCompareWinElement);
+  return new CafeRankingDto.UserComparisonRank(listOfUserCompareWinList);
 }

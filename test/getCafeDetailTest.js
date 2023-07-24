@@ -35,10 +35,9 @@ describe('CafeInfos Connect Success Test', function () {
     })
 });
 
-export function getCafeDetailWithWin() {
+export function getCafeDetailWithWin(cafeUuid, isWin) {
   it('is win = true 로 콜을 날리면 user_compare_win_count가 1 늘어야 한다.', function (done) {
-    const cafeUuid = 'abc';
-    const queryMap = {isWin: "1"}
+    const queryMap = {isWin: isWin}
 
     restGet(`/cafe-infos/${cafeUuid}`, queryMap).end(function (err, res) {
 
