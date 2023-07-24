@@ -1,8 +1,8 @@
-import { findAllByCafeUuid } from "./cafeReview.js";
+import { findAllByCafeUuid as findAllEntitiesByCafeUuid} from "./cafeReview.js";
 import CafeHashtagNotFoundError from "../../../errors/c.js";
 
 export async function findAllByCafeUuid(cafeUuid, booleanValidate) {
-  const reviews = await findAllByCafeUuid(cafeUuid);
+  const reviews = await findAllEntitiesByCafeUuid(cafeUuid);
 
   if(booleanValidate && reviews == null) {
     throw new CafeHashtagNotFoundError(cafeUuid);
