@@ -1,5 +1,5 @@
-import ApiError from './apiError';
-import Api from "./errorMessages";
+import ApiError from './apiError.js';
+import {Api} from "./errorMessages.js";
 
 export default class PathParameterIsRequiredError extends ApiError {
   constructor(params) {

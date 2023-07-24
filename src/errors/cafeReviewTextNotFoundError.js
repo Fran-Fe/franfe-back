@@ -1,5 +1,5 @@
-import ApiError from './apiError';
-import Cafe from "./errorMessages";
+import ApiError from './apiError.js';
+import { Cafe } from "./errorMessages.js";
 
 export default class CafeReviewTextNotFoundError extends ApiError {
   constructor(cafeUuid, reviewId) {
