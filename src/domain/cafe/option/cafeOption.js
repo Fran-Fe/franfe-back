@@ -17,12 +17,17 @@ export const CafeOption = sequelize.define("cafe_options", {
     field: 'option_on',
     defaultValue: false,
   },
+}, {
+  timestamps: false,
+  underscored: true,
 });
 
 export function findAllByCafeUuid(cafeUuid) {
   return CafeOption.findAll({
+    attributes: ['cafeUuid', 'option', 'optionOn'],
+
     where: {
-        cafeUuid: cafeUuid,
+      cafeUuid: cafeUuid,
     }
   });
 }

@@ -25,6 +25,9 @@ export const CafeReview = sequelize.define("cafe_reviews", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+}, {
+  timestamps: false,
+  underscored: true,
 });
 
 export function findAllByCafeUuid(cafeUuid) {

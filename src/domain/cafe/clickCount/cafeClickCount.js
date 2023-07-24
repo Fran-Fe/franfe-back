@@ -23,6 +23,9 @@ export const CafeClickCount = sequelize.define("cafe_click_counts", {
     allowNull: false,
     field: 'user_compare_win_count'
   },
+}, {
+  timestamps: false,
+  underscored: true,
 });
 
 export function findAll() {
