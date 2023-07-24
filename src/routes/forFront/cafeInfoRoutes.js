@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getRankings } from "../../domain/cafe/ranking/cafeClickCountTransactionService.js";
+import { getCafeDetailInfo } from "../../domain/cafe/cafeTransactionService.js";
 
 export const router = Router();
 
@@ -47,7 +47,9 @@ export const router = Router();
 router.get('', async (req,res, next) => {
   try{
 
-    const response = await getRankings();
+    const cafeUuid = req.query.cafeUuid;
+
+    const response = await getCafeDetailInfo();
 
     res.json(response);
   } catch (error) {

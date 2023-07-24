@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../../config/connection.js";
+import { sequelize } from "../../../config/connection.js";
 
 export const CafeClickCount = sequelize.define("cafe_click_counts", {
   id: {
