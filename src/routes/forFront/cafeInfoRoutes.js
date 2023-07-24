@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { getCafeDetailInfo } from "../../domain/cafe/cafeTransactionService.js";
-import ParameterIsRequiredError from "../../errors/ParameterIsRequiredError.js";
+import PathParameterIsRequiredError from "../../errors/PathParameterIsRequiredError.js";
+import QueryParameterIsRequiredError from "../../errors/QueryParameterIsRequiredError.js";
 
 export const router = Router();
 
@@ -47,12 +48,14 @@ export const router = Router();
  */
 router.get('/:cafeUuid', async (req, res, next) => {
   if (!req.params.cafeUuid) {
-    throw new ParameterIsRequiredError(['cafeUuid']);
+    throw new PathParameterIsRequiredError(['cafeUuid']);
+
+  } else if (!req.query.isWin) {
+    throw new QueryParameterIsRequiredError(['isWin']);
   }
 
   try {
-
-    const response = await getCafeDetailInfo(req.params.cafeUuid);
+    const response = await getCafeDetailInfo(req.params.cafeUuid, req.query.isWin);
 
     res.json(response);
   } catch (error) {

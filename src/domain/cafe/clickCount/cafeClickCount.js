@@ -28,3 +28,20 @@ export const CafeClickCount = sequelize.define("cafe_click_counts", {
 export function findAll() {
   return CafeClickCount.findAll();
 }
+
+export function findOneByCafeUuid(cafeUuid) {
+  return CafeClickCount.findOne({
+    where: {
+      cafeUuid: cafeUuid,
+    }
+  });
+}
+
+export function createWhenWin(cafeUuid) {
+return CafeClickCount.create({
+    cafeUuid: cafeUuid,
+    userComparisonCount: 0,
+    userCompareWinCount: 1,
+  });
+
+}
