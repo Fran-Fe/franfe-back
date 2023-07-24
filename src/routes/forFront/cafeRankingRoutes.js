@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getRankings } from "../../domain/cafe/ranking/cafeClickCountTransactionService.js";
+import { getRankings } from "../../domain/cafe/clickCount/cafeClickCountTransactionService.js";
 
 export const router = Router();
 

@@ -7,6 +7,8 @@ import { findAllByCafeUuid as findAllHashtagsByCafeUuid } from "./hashtag/cafeHa
 import { findAllByCafeUuid as findAllReviewsByCafeUuid } from "./review/cafeReviewService.js";
 import { findAllByCafeUuid as findAllThumbnailsByCafeUuid } from "./thumbnail/cafeThumbnailS3Service.js";
 import { findOneByCafeReviewId as findOneCafeReviewTextByCafeReviewId } from "./review/text/cafeReviewTextService.js";
+import { sequelize } from "../../config/connection.js";
+import { addCompareWinCount } from "./clickCount/cafeClickCountService.js";
 
 
 export async function getAllCafes() {
@@ -27,10 +29,14 @@ export async function getAllCafes() {
   }
 }
 
-export async function getCafeDetailInfo(cafeUuid) {
+export async function getCafeDetailInfo(cafeUuid, isWin) {
   try {
+    const transaction = await sequelize.transaction();
 
+    await addCompareWinCountOfCafe(cafeUuid, isWin);
     const {cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3} = await getCafeDetailDtoInfo(cafeUuid);
+
+    await transaction.commit();
 
     return new CafeDto.DetailResponse(cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3);
 
@@ -42,6 +48,12 @@ export async function getCafeDetailInfo(cafeUuid) {
     throw new ApiError(error.message);
   }
 
+}
+
+async function addCompareWinCountOfCafe(cafeUuid, isWin) {
+  if (isWin) {
+    await addCompareWinCount(cafeUuid, BooleanValidate.FALSE);
+  }
 }
 
 async function getCafeDetailDtoInfo(cafeUuid) {
