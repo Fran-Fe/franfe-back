@@ -19,8 +19,8 @@ export const CafeOption = sequelize.define("cafe_options", {
   },
 });
 
-export function findByCafeUuid(cafeUuid) {
-  return CafeOption.findOne({
+export function findAllByCafeUuid(cafeUuid) {
+  return CafeOption.findAll({
     where: {
         cafeUuid: cafeUuid,
     }

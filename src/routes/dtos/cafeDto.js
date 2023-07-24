@@ -16,25 +16,36 @@ export class CafeDto {
         this.placeName = cafe.placeName;
         this.overView = cafe.overView;
         this.rating = cafe.rating;
-        this.cafeOption = cafeOption;
+        this.cafeOption = cafeOptions;
         this.cafeHashtags = cafeHashtags;
         this.cafeReviews = cafeReviews;
         this.cafeThumbnailS3 = cafeThumbnailS3;
     }
 
     static CafeOption = class {
-
-    }
-
-    static CafeHashtag = class {
+      constructor(option) {
+        this.option = option.option;
+        this.optionOn = option.optionOn;
+      }
 
     }
 
     static CafeReview = class {
+      constructor(review, text) {
+        this.authorName = review.authorName;
+        this.rating = review.rating;
+        this.relativeTimeDescription = review.relativeTimeDescription;
+        this.text = text;
+      }
+
 
     }
 
     static CafeThumbnailS3 = class {
+      constructor(thumbnailS3) {
+        this.bucketUrl = thumbnailS3.bucketUrl;
+        this.category = thumbnailS3.category;
+      }
 
     }
   }

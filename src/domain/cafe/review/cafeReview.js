@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../../../config/connection.js";
 
-export const CafeReview = sequelize.define("cafe_hashtags", {
+export const CafeReview = sequelize.define("cafe_reviews", {
   id: {
     type: DataTypes.BIGINT,
     primaryKey: true,
@@ -25,10 +25,6 @@ export const CafeReview = sequelize.define("cafe_hashtags", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  text: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  }
 });
 
 export function findAllByCafeUuid(cafeUuid) {
