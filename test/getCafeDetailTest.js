@@ -21,7 +21,7 @@ describe('CafeInfos Connect Success Test', function () {
       done();
     })
   }),
-    it('is win = true 로 콜을 날리면 user_compare_win_count가 1 늘어야 한다.', function (done) {
+    it('is win = true 로 콜을 날리면 user_compare_win_count가 1 느는 콜이 정상적으로 처리 되어야 한다.', function (done) {
       const cafeUuid = 'abc';
       const queryMap = {isWin: "1"}
 
