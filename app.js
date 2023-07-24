@@ -40,9 +40,9 @@ app.use(function (err, req, res, next) {
   console.error(err);
 
   if (res instanceof ApiError) {
-    res.json({error});
+    res.json(error);
   } else {
-    res.send(res.message);
+    res.json(new ApiError(message));
   }
 });
 
