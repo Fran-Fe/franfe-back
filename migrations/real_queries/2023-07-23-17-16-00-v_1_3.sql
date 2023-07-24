@@ -22,6 +22,8 @@ CREATE TABLE `cafe_reviews` (
 CREATE TABLE `cafe_thumbnail_s3` (
   `bucket_url` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `cafe_uuid` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  PRIMARY KEY (`bucket_url`,`cafe_uuid`)
+  `category` int NOT NULL,
+  PRIMARY KEY (`bucket_url`,`cafe_uuid`),
+  UNIQUE KEY `bucket_url` (`bucket_url`)
 );
 
