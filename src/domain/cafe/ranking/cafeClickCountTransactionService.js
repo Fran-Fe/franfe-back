@@ -1,6 +1,6 @@
 import { getCafeRankings } from "./cafeClickCountService.js";
-import ApiError from "../../errors/apiError.js";
-import { CafeRankingDto } from "../../routes/dtos/CafeRankingDto.js";
+import ApiError from "../../../errors/apiError.js";
+import { CafeRankingDto } from "../../../routes/dtos/CafeRankingDto.js";
 
 export async function getRankings() {
   try {
