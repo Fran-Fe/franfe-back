@@ -1,0 +1,23 @@
+import chai, { expect } from 'chai';
+import chaiHttp from 'chai-http';
+import { resetTestDb } from "./baseTest.js";
+import { restGet } from "./restClientFactory.js";
+
+chai.use(chaiHttp);
+
+beforeEach(async () => {
+  await resetTestDb();
+});
+
+describe('Connect Success Test', function () {
+  it('Server Connected Complete', function (done) {
+    const cafeUuid = 'abc';
+    const queryMap = { isWin: "1" }
+
+    restGet(`/cafe-infos/${cafeUuid}`).end(function (err, res) {
+
+      expect(res).to.have.status(200);
+      done();
+    })
+  });
+});

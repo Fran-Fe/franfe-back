@@ -85,14 +85,14 @@ export const router = Router();
  *
  */
 router.get('/:cafeUuid', async (req, res, next) => {
-  if (!req.params.cafeUuid) {
-    throw new PathParameterIsRequiredError(['cafeUuid']);
-
-  } else if (!req.query.isWin || (req.query.isWin !== '0' && req.query.isWin !== '1')) {
-    throw new QueryParameterIsRequiredError(['isWin']);
-  }
-
   try {
+    if (!req.params.cafeUuid) {
+      throw new PathParameterIsRequiredError(['cafeUuid']);
+
+    } else if (!req.query.isWin || (req.query.isWin !== '0' && req.query.isWin !== '1')) {
+      throw new QueryParameterIsRequiredError(['isWin']);
+    }
+
     const response = await getCafeDetailInfo(req.params.cafeUuid, req.query.isWin === '1');
 
     res.json(response);

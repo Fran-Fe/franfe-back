@@ -36,6 +36,9 @@ export const Cafe = sequelize.define("cafes", {
     allowNull: false,
     defaultValue: 5.0,
   }
+}, {
+  timestamps: false,
+  underscored: true,
 });
 
 export function findAll() {

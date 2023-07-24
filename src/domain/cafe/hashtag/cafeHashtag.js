@@ -11,10 +11,15 @@ export const CafeHashtag = sequelize.define("cafe_hashtags", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+}, {
+  timestamps: false,
+  underscored: true,
 });
 
 export function findAllByCafeUuid(cafeUuid) {
   return CafeHashtag.findAll({
+    attributes: ['cafeUuid', 'hashtag'],
+
     where: {
       cafeUuid: cafeUuid,
     }

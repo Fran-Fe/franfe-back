@@ -31,7 +31,7 @@ export async function resetTestDb() {
 }
 
 async function initDb(init_db_sql_string) {
-  await executeQuerySplitedByTwoNewLines(create_tables_sql_string);
+  await executeQuerySplitedByTwoNewLines(init_db_sql_string);
 }
 
 async function dropTables(drop_tables_sql_string) {
@@ -53,7 +53,7 @@ async function executeQuerySplitedByTwoNewLines(sql_string_list)  {
 }
 
 async function executeQuerySplitedByOneNewLines(sql_string_list) {
-  for (const sql_string of sql_string_list.split('\n\n')) {
+  for (const sql_string of sql_string_list.split('\n')) {
     if (!sql_string){
       break;
     }

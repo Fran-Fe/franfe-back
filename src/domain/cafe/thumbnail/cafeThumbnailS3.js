@@ -15,10 +15,15 @@ export const CafeThumbnailS3 = sequelize.define("cafe_hashtags", {
     type: DataTypes.INTEGER,
     allowNull: false,
   }
+}, {
+  timestamps: false,
+  underscored: true,
 });
 
 export function findAllByCafeUuid(cafeUuid) {
   return CafeThumbnailS3.findAll({
+    attributes: ['bucketUrl', 'cafeUuid', 'category'],
+
     where: {
       cafeUuid: cafeUuid,
     }
