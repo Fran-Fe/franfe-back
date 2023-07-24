@@ -34,11 +34,11 @@ export async function getCafeDetailInfo(cafeUuid, isWin) {
     const transaction = await sequelize.transaction();
 
     await addCompareWinCountOfCafe(cafeUuid, isWin);
-    const {cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3} = await getCafeDetailDtoInfo(cafeUuid);
+    const {cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3List} = await getCafeDetailDtoInfo(cafeUuid);
 
     await transaction.commit();
 
-    return new CafeDto.DetailResponse(cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3);
+    return new CafeDto.DetailResponse(cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3List);
 
   } catch (error) {
     if (error instanceof ApiError) {
@@ -61,14 +61,14 @@ async function getCafeDetailDtoInfo(cafeUuid) {
   const cafeOptions = await getCafeOptionsDto(cafeUuid);
   const cafeHashtags = await getCafeHashtags(cafeUuid);
   const cafeReviews = await getCafeReviews(cafeUuid);
-  const cafeThumbnailS3 = await getCafeThumbnailS3(cafeUuid);
+  const cafeThumbnailS3List = await getCafeThumbnailS3(cafeUuid);
 
-  return {cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3};
+  return {cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3List};
 }
 
 async function getCafeOptionsDto(cafeUuid) {
   const options = await findOptionByCafeUuid(cafeUuid);
-  return options.map((option) => new CafeDto.DetailResponse.CafeOption(option));
+  return options.map((option) => new CafeDto.DetailResponse.Option(option));
 }
 
 async function getCafeHashtags(cafeUuid) {
@@ -81,11 +81,11 @@ async function getCafeReviews(cafeUuid) {
   return reviews.map(async (review) => {
     const reviewText = await findOneCafeReviewTextByCafeReviewId(review.id, BooleanValidate.TRUE);
 
-    return new CafeDto.DetailResponse.CafeReview(review, reviewText);
+    return new CafeDto.DetailResponse.Review(review, reviewText);
   });
 }
 
 async function getCafeThumbnailS3(cafeUuid) {
   const thumbnails = await findAllThumbnailsByCafeUuid(cafeUuid);
-  return thumbnails.map((thumbnail) => new CafeDto.DetailResponse.CafeThumbnailS3(thumbnail));
+  return thumbnails.map((thumbnail) => new CafeDto.DetailResponse.thumbnailS3(thumbnail));
 }
