@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../../../config/connection.js";
 
-export const CafeThumbnailS3 = sequelize.define("cafe_hashtags", {
+export const CafeThumbnailS3 = sequelize.define("cafe_thumbnail_s3", {
   bucketUrl: {
     type: DataTypes.STRING,
     unique: true
@@ -18,6 +18,7 @@ export const CafeThumbnailS3 = sequelize.define("cafe_hashtags", {
 }, {
   timestamps: false,
   underscored: true,
+  tableName: 'cafe_thumbnail_s3',
 });
 
 export function findAllByCafeUuid(cafeUuid) {

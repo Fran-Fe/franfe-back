@@ -45,7 +45,7 @@ export async function getCafeDetailInfo(cafeUuid, isWin) {
       throw error;
     }
 
-    throw new ApiError(error.message);
+    throw new ApiError(error.stackTrace);
   }
 
 }
@@ -78,12 +78,14 @@ async function getCafeHashtags(cafeUuid) {
 
 async function getCafeReviews(cafeUuid) {
   const reviews = await findAllReviewsByCafeUuid(cafeUuid);
-  return reviews.map(async (review) => {
-    const reviewText = await findOneCafeReviewTextByCafeReviewId(review.id, BooleanValidate.TRUE);
+  const reviewPromises = reviews.map(async (review) => {
+    const reviewText = await findOneCafeReviewTextByCafeReviewId(review.id, BooleanValidate.TRUE).then(e => e.text);
     //fixme: 만약 여기에서 시간이 많이 걸린다면 caching 을 고려할것
 
     return new CafeDto.DetailResponse.Review(review, reviewText);
   });
+
+  return Promise.all(reviewPromises);
 }
 
 async function getCafeThumbnailS3(cafeUuid) {
