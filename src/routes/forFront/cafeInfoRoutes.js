@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { getCafeDetailInfo } from "../../domain/cafe/cafeTransactionService.js";
+import ParameterIsRequiredError from "../../errors/ParameterIsRequiredError.js";
 
 export const router = Router();
 
@@ -44,12 +45,14 @@ export const router = Router();
  *                               type: string
  *
  */
-router.get('', async (req,res, next) => {
-  try{
+router.get('/:cafeUuid', async (req, res, next) => {
+  if (!req.params.cafeUuid) {
+    throw new ParameterIsRequiredError(['cafeUuid']);
+  }
 
-    const cafeUuid = req.query.cafeUuid;
+  try {
 
-    const response = await getCafeDetailInfo();
+    const response = await getCafeDetailInfo(req.params.cafeUuid);
 
     res.json(response);
   } catch (error) {
