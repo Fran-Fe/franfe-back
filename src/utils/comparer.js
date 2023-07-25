@@ -1,4 +1,4 @@
-class CompareResult {
+export class CompareResult {
   constructor() {
     this.createRequests = [];
     this.ignoreRequests = [];
@@ -21,7 +21,7 @@ class CompareResult {
   }
 }
 
-function compare(entities, requests, comparable) {
+export function compare(entities, requests, comparable) {
   const result = new CompareResult();
 
   result.createRequests.push(...requests);
@@ -29,7 +29,7 @@ function compare(entities, requests, comparable) {
 
   entities.forEach(entity => {
     requests.forEach(request => {
-      if (comparable.equal(entity, request)) {
+      if (comparable(entity, request)) {
         result.createRequests.splice(result.createRequests.indexOf(request), 1);
         result.ignoreRequests.push(entity);
         result.deleteRequests.splice(result.deleteRequests.indexOf(entity), 1);
