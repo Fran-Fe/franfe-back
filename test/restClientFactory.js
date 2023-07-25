@@ -4,8 +4,13 @@ import app from '../app.js';
 
 chai.use(chaiHttp);
 
-export function restGet(url){
-    return chai.request(app).get(url);
+export function restGet(url,queryMap){
+    let req = chai.request(app).get(url);
+    if (queryMap) {
+        req = req.query(queryMap);
+    }
+
+    return req;
 }
 
 export function restPost(url){
