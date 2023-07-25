@@ -1,4 +1,19 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../../config/connection.js';
 
-export const logStatement = sequelize.define('logs')
+export const Rog = sequelize.define('logs', {
+  ip: {
+    type : DataTypes.STRING,
+    allowNull : false,
+  },
+  log: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  time: {
+    type: DataTypes.TIME,
+    allowNull: false,
+  }
+});
+
+

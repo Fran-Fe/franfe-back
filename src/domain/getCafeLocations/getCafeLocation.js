@@ -38,7 +38,7 @@ export const CafeInfo = sequelize.define('cafes', {
   }
 });
 
-export function findByLatAndLng(userLng, userLat, distance) {
+export function findByPosition(userLng, userLat, distance) {
   return CafeInfo.findAll({
     where: sequelize.literal(`ST_Distance_Sphere(POINT(lng, lat), POINT(${userLng},${userLat})) <= ${distance}`
     )

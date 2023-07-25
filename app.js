@@ -7,6 +7,7 @@ import router from './src/routes/googleMapRoutes.js';
 import { router as cafeRouter } from './src/routes/forAI/cafesRoutes.js'
 import { router as cafeRankingRouter } from './src/routes/forFront/cafeRankingRoutes.js'
 import { router as cafeInfoRouter } from './src/routes/forFront/cafeInfoRoutes.js'
+import { router as cafeLocationRouter } from './src/routes/forFront/getCafeLocationsRoutes.js'
 import { jobGenerator } from "./src/schedule/scheduler.js";
 
 const app = express();
@@ -21,7 +22,7 @@ app.use('/cafes', cafeRouter);
 app.use('/cafes', cafeRouter);
 app.use('/cafe-rankings', cafeRankingRouter);
 app.use('/cafe-infos', cafeInfoRouter);
-app.use('/', cafeLocationRouter);
+app.use('/cafeLocation', cafeLocationRouter);
 
 app.use('/swagger-html', swaggerUi.serve, swaggerUi.setup(specs));
 app.get('/swagger-json', (req, res) => {

@@ -1,5 +1,5 @@
-import { findByLatAndLng } from './getCafeLocation.js';
+import { findByPosition } from './getCafeLocation.js';
 
 export function getCafeLocationService(userLng, userLat, distance) {
-  return findByLatAndLng(userLng, userLat, distance);
+  return findByPosition(userLng, userLat, distance);
 }

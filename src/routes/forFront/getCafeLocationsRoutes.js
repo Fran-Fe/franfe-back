@@ -6,7 +6,7 @@ import { CafeLocationDto } from '../dtos/cafeLocationDto.js';
 
 export const router = Router();
 
-router.get('/cafeLocation',(req,res) => {
+router.get('',(req,res) => {
   const request = new CafeLocationDto.Request(req.query);
   const response = getCafeLocations(request);
 
