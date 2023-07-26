@@ -51,3 +51,5 @@ CREATE TABLE `cafe_review_texts` (
   `text` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`)
 );
+
+

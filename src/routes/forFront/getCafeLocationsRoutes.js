@@ -6,10 +6,11 @@ import { CafeLocationDto } from '../dtos/cafeLocationDto.js';
 
 export const router = Router();
 
-router.get('/cafeLocation',(req,res) => {
+router.get('/cafeLocation',async (req,res) => {
   const request = new CafeLocationDto.Request(req.query);
-  const response = getCafeLocations(request);
+  const response = await getCafeLocations(request);
 
   res.json(response);
 })
 
+//swagger , next , path , error 처리 'cafeInfoRoutes' , Dto Response
