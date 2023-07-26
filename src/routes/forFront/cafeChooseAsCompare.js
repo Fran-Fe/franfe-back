@@ -90,9 +90,8 @@ router.post('', async (req, res, next) => {
       throw new PathParameterIsRequiredError(['cafeUuids']);
     }
 
-    const response = await chooseAsCompare(req.body.cafeUuids);
+    await chooseAsCompare(req.body.cafeUuids);
 
-    res.json(response);
   } catch (error) {
     next(error);
   }
