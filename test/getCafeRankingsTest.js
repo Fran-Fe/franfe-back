@@ -31,3 +31,21 @@ describe('getCafeRankings Connect Success Test', function () {
       })
     });
 });
+describe('post cafeRankingsAbout compare Connect Success Test', function () {
+  it('데이터가 없을 때에도 post 가 성공해야 한다.', function () {
+
+  }),
+
+    it('리턴을 했을 때 가장 위의 user_comparison_count가 1이어야 한다.', function () {
+
+    }),
+
+    it('데이터가 있을 때에도 post 가 성공해야 한다.', function () {
+
+    }),
+
+    it('리턴을 했으 ㄹ때 가장 위의 user_coparison_count 가 2이어야 한다.', function () {
+
+    })
+
+});
