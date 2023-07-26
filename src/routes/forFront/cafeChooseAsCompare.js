@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getCafeDetailInfo } from "../../domain/cafe/cafeTransactionService.js";
+import { chooseAsCompare } from "../../domain/cafe/clickCount/cafeClickCountTransactionService.js";
 import PathParameterIsRequiredError from "../../errors/PathParameterIsRequiredError.js";
 import QueryParameterIsRequiredError from "../../errors/QueryParameterIsRequiredError.js";
 
@@ -8,7 +8,7 @@ export const router = Router();
 /**
  * @swagger
  * paths:
- *   /cafe/infos:
+ *   /cafe-infos:
  *     get:
  *       summary: get all cafe rankings for front
  *       tags: [CafeInfo]
@@ -84,16 +84,13 @@ export const router = Router();
  *                           type: integer
  *
  */
-router.get('/:cafeUuid', async (req, res, next) => {
+router.post('', async (req, res, next) => {
   try {
-    if (!req.params.cafeUuid) {
-      throw new PathParameterIsRequiredError(['cafeUuid']);
-
-    } else if (!req.query.isWin || (req.query.isWin !== '0' && req.query.isWin !== '1')) {
-      throw new QueryParameterIsRequiredError(['isWin']);
+    if (!req.body.cafeUuids) {
+      throw new PathParameterIsRequiredError(['cafeUuids']);
     }
 
-    const response = await getCafeDetailInfo(req.params.cafeUuid, req.query.isWin === '1');
+    const response = await chooseAsCompare(req.body.cafeUuids);
 
     res.json(response);
   } catch (error) {
