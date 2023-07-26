@@ -6,7 +6,33 @@ import { CafeLocationDto } from '../dtos/cafeLocationDto.js';
 
 export const router = Router();
 
-router.get('/cafeLocation',async (req,res) => {
+/**
+ * @swagger
+ * paths:
+ *   /cafes:
+ *     get:
+ *       summary: get cafe info for front
+ *       tags: [cafeLocation]
+ *       responses:
+ *         "200":
+ *           description: A list of cafes.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     uuid:
+ *                       type: string
+ *                     address:
+ *                       type: string
+ *                     placeName:
+ *                       type: string
+ *
+ */
+
+router.get('',async (req,res) => {
   const request = new CafeLocationDto.Request(req.query);
   const response = await getCafeLocations(request);
 
