@@ -1,8 +1,8 @@
 export class CafeLocationDto {
   static Request = class{
     constructor(req) {
-      this.userLng = req.userLng;
       this.userLat = req.userLat;
+      this.userLng = req.userLng;
       this.distance = req.distance;
     }
   }

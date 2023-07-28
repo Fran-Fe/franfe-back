@@ -15,12 +15,12 @@ export const CafeInfo = sequelize.define('cafes', {
   lat: {
     type: DataTypes.DECIMAL(10, 7),
     allowNull: false,
-    defaultValue: 123.1234567,
+    defaultValue: 55,
   },
   lng: {
     type: DataTypes.DECIMAL(10, 7),
     allowNull: false,
-    defaultValue: 123.1234567,
+    defaultValue: 55,
   },
   placeName: {
     type: DataTypes.STRING,
@@ -38,7 +38,7 @@ export const CafeInfo = sequelize.define('cafes', {
   }
 });
 
-export function findByPosition(userLng, userLat, distance) {
+export function findByPosition(userLat,userLng, distance) {
   return CafeInfo.findAll({
     where: sequelize.literal(`ST_Distance_Sphere(POINT(lng, lat), POINT(${userLng},${userLat})) <= ${distance}`
     )

@@ -13,6 +13,7 @@ beforeEach(async () => {
 describe('getCafeLocation Connect Success Test', function() {
   it('check all returns', function(done) {
     restGet('/cafeLocation').end(function(err,res){
+      if(err) console.error(err);
       getCafeLotationResponseAssert(res);
       done();
     })

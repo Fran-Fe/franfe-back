@@ -9,7 +9,7 @@ export async function getCafeLocations(req) {
   try {
     transaction = await sequelize.transaction();
 
-    const cafes = await getCafeLocationService(req.userLng, req.userLat, req.distance);
+    const cafes = await getCafeLocationService(req.userLat, req.userLng, req.distance);
 
     const res = await cafes.map((cafe) => new CafeLocationDto.Response(cafe));
 
