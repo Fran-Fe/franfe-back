@@ -37,11 +37,7 @@ export async function getCafeDetailInfo(cafeUuid, isWin) {
     return new CafeDto.DetailResponse(cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3List);
 
   } catch (error) {
-    if (error instanceof ApiError) {
-      throw error;
-    }
-
-    throw new ApiError(error.stackTrace);
+    throwApiError(error);
   }
 
 }
