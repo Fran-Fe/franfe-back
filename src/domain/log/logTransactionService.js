@@ -6,8 +6,10 @@ export async function postUserLogs(req){
   try{
     transaction = await sequelize.transaction();
 
-    const logs = await Log.create(req.body);
+    const { log, time } = req.body;
+    const logs = await Log.create(log);
 
+    await transaction.commit();
 
   }catch (error){
     throwApiError(error);

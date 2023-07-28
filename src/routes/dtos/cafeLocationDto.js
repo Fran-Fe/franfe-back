@@ -1,3 +1,5 @@
+import { static } from 'express';
+
 export class CafeLocationDto {
   static Request = class{
     constructor(req) {
@@ -7,10 +9,17 @@ export class CafeLocationDto {
     }
   }
   static Response = class {
-    constructor(cafe) {
+    constructor(cafe, thumbnails) {
       this.uuid = cafe.uuid;
       this.address = cafe.address;
       this.placeName = cafe.placeName;
+      this.thumbnails = thumbnails;
+      const Thumbnail = class {
+        constructor(uuid,category) {
+          this.category = category;
+          this.uuid = uuid;
+        }
+      }
     }
   }
 }
