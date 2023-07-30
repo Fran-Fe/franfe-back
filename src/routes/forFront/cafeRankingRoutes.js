@@ -1,12 +1,13 @@
 import { Router } from 'express';
-import { getRankings } from "../../domain/cafe/clickCount/cafeClickCountTransactionService.js";
+import { chooseAsCompare, getRankings } from "../../domain/cafe/clickCount/cafeClickCountTransactionService.js";
+import PathParameterIsRequiredError from "../../errors/PathParameterIsRequiredError.js";
 
 export const router = Router();
 
 /**
  * @swagger
  * paths:
- *   /cafe-rankings:
+ *   /cafe/rankings:
  *     get:
  *       summary: get all cafe rankings for front
  *       tags: [CafeRankings]
@@ -54,3 +55,38 @@ router.get('', async (req,res, next) => {
     next(error);
   }
 });
+
+/**
+ * @swagger
+ * paths:
+ *   /cafe/rankings/compare:
+ *     post:
+ *       summary: Post about compare ranking for front
+ *       tags: [CafeRankings]
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 cafeUuids:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *       responses:
+ */
+
+router.post('/compare', async (req, res, next) => {
+  try {
+    if (!req.body.cafeUuids) {
+      throw new PathParameterIsRequiredError(['cafeUuids']);
+    }
+
+    await chooseAsCompare(req.body.cafeUuids);
+
+  } catch (error) {
+    next(error);
+  }
+});
+
