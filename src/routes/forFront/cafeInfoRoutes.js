@@ -8,7 +8,7 @@ export const router = Router();
 /**
  * @swagger
  * paths:
- *   /cafe-infos{cafeUuid}:
+ *   /cafe-infos/{cafeUuid}:
  *     get:
  *       summary: get all cafe rankings for front
  *       tags: [CafeInfo]
