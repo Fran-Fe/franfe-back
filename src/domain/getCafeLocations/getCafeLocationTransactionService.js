@@ -1,7 +1,6 @@
 import { sequelize } from '../../config/connection.js';
 import { throwApiError } from '../../errors/apiError.js';
 import { getCafeLocationService } from './getCafeLocationService.js';
-import { CafeDto } from '../../routes/dtos/cafeDto.js';
 import { CafeLocationDto } from '../../routes/dtos/cafeLocationDto.js';
 
 export async function getCafeLocations(req) {
@@ -11,7 +10,7 @@ export async function getCafeLocations(req) {
 
     const cafes = await getCafeLocationService(req.userLat, req.userLng, req.distance);
 
-    const res = await cafes.map((cafe) => new CafeLocationDto.Response(cafe));
+    const res = cafes.map((cafe) => new CafeLocationDto.Response(cafe));
 
     await transaction.commit();
 
