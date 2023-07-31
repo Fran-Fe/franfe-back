@@ -13,14 +13,14 @@ export function restGet(url,queryMap){
     return req;
 }
 
-export function restPost(url){
-    return chai.request(app).get(url);
+export function restPost(url, body){
+    return chai.request(app).post(url).send(body);
 }
 
 export function restDelete(url){
-    return chai.request(app).get(url);
+    return chai.request(app).delete(url);
 }
 
 export function restPatch(url){
-    return chai.request(app).get(url);
+    return chai.request(app).patch(url);
 }

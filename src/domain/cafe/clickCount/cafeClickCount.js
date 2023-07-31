@@ -48,3 +48,12 @@ return CafeClickCount.create({
   });
 
 }
+
+export function createWhenCompare(cafeUuid) {
+  return CafeClickCount.create({
+    cafeUuid: cafeUuid,
+    userComparisonCount: 1,
+    userCompareWinCount: 0,
+  });
+
+}
