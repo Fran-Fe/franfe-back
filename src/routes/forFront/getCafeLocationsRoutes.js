@@ -13,6 +13,22 @@ export const router = Router();
  *     get:
  *       summary: get cafe info for front
  *       tags: [cafeLocation]
+ *       parameters:
+ *         - in: path
+ *           name: userLat
+ *           description: is user current Latitude
+ *           required: true
+ *           schema:
+ *             type: string
+ *        - in: path
+ *          name: userLng
+ *          description: is user current Longitude
+ *          required: true
+ *          schema:
+ *            type: string
+ *        - in: path
+ *          name: distance
+ *          description: is for detecting around distance as meter
  *       responses:
  *         "200":
  *           description: A list of cafes.
@@ -29,6 +45,22 @@ export const router = Router();
  *                       type: string
  *                     placeName:
  *                       type: string
+ *                     rating:
+ *                       type: decimal
+ *                     countReviews:
+ *                       type: string
+ *                     thumbnails:
+ *                       type: array
+ *                         category:
+ *                           type: integer
+ *                         url:
+ *                           type: string
+ *                     hashTags:
+ *                       type: array
+ *                         hashtag:
+ *                           type: string
+ *
+ *
  *
  */
 

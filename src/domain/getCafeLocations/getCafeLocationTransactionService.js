@@ -4,6 +4,7 @@ import { getCafeLocationService } from './getCafeLocationService.js';
 import { CafeLocationDto } from '../../routes/dtos/cafeLocationDto.js';
 import { findAllThumbnailsByUuid } from '../cafe/thumbnail/cafeThumbnailS3Service.js';
 import { findAllReviewByCafeUuid } from '../cafe/review/cafeReviewService.js';
+import { findAllHashTagByCafeUuid} from '../cafe/hashtag/cafeHashtagService.js';
 
 export async function getCafeLocations(req) {
   let transaction;
@@ -16,9 +17,13 @@ export async function getCafeLocations(req) {
       async (cafe) => {
         const thumbnails = await findAllThumbnailsByUuid(cafe.uuid);
         const thumbnailObjects = thumbnails.map((e) => new CafeLocationDto.Thumbnail(e));
+
         const reviews = await findAllReviewByCafeUuid(cafe.uuid);
         const count = await reviews.length;
-        return new CafeLocationDto.Response(cafe, thumbnailObjects, count);
+
+        const hashTags = await findAllHashTagByCafeUuid(cafe.uuid);
+        const hashTagObjects = hashTags.map((e) => new CafeLocationDto.Hashtag(e));
+        return new CafeLocationDto.Response(cafe, thumbnailObjects, count, hashTagObjects);
       }
     ));
     await transaction.commit();

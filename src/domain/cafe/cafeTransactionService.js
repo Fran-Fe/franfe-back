@@ -3,7 +3,7 @@ import { findAll, findByUuid } from "./cafeService.js";
 import { CafeDto } from "../../routes/dtos/cafeDto.js";
 import BooleanValidate from "../../utils/booleanValidate.js";
 import { findAllByCafeUuid as findOptionByCafeUuid } from "./option/cafeOptionService.js";
-import { findAllByCafeUuid as findAllHashtagsByCafeUuid } from "./hashtag/cafeHashtagService.js";
+import { findAllHashTagByCafeUuid as findAllHashtagsByCafeUuid } from "./hashtag/cafeHashtagService.js";
 import { findAllReviewByCafeUuid as findAllReviewsByCafeUuid } from "./review/cafeReviewService.js";
 import { findAllByCafeUuid as findAllThumbnailsByCafeUuid } from "./thumbnail/cafeThumbnailS3Service.js";
 import { findOneByCafeReviewId as findOneCafeReviewTextByCafeReviewId } from "./review/text/cafeReviewTextService.js";

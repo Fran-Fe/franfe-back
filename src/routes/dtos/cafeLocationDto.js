@@ -7,13 +7,14 @@ export class CafeLocationDto {
     }
   }
   static Response = class {
-    constructor(cafe, thumbnails, countReviews = '0') {
+    constructor(cafe, thumbnails, countReviews = '0', hashTags) {
       this.uuid = cafe.uuid;
       this.address = cafe.address;
       this.placeName = cafe.placeName;
       this.rating = cafe.rating;
       this.countReviews = countReviews;
       this.thumbnails = thumbnails;
+      this.hashTags = hashTags;
 
       //리뷰 개수, 해시태그
     }
@@ -25,8 +26,9 @@ export class CafeLocationDto {
     }
   }
 
-  static Hashtags = class{
-    constructor() {
+  static Hashtag = class{
+    constructor(hashtag) {
+      this.hashtag = hashtag.hashtag;
     }
   }
 }

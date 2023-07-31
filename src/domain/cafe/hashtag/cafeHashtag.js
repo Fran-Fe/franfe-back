@@ -18,8 +18,7 @@ export const CafeHashtag = sequelize.define("cafe_hashtags", {
 
 export function findAllByCafeUuid(cafeUuid) {
   return CafeHashtag.findAll({
-    attributes: ['cafeUuid', 'hashtag'],
-
+    attributes: ['hashtag'],
     where: {
       cafeUuid: cafeUuid,
     }
