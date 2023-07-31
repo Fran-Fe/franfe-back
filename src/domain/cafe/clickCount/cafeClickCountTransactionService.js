@@ -1,6 +1,7 @@
-import { getCafeRankings } from "./cafeClickCountService.js";
+import { addComparisonCount, getCafeRankings } from "./cafeClickCountService.js";
 import ApiError, { throwApiError } from "../../../errors/apiError.js";
 import { CafeRankingDto } from "../../../routes/dtos/CafeRankingDto.js";
+import BooleanValidate from "../../../utils/booleanValidate.js";
 
 export async function getRankings() {
   try {
@@ -12,6 +13,22 @@ export async function getRankings() {
 
   } catch (error) {
     throwApiError(error);
+  }
+}
+
+export async function chooseAsCompare(cafeUuids) {
+  try {
+
+    for (const cafeUuid of cafeUuids) {
+      await addComparisonCount(cafeUuid, BooleanValidate.FALSE);
+    }
+
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    }
+
+    throw new ApiError(error.message);
   }
 }
 

@@ -1,4 +1,4 @@
-import { findAll, findOneByCafeUuid, createWhenWin } from './cafeClickCount.js';
+import { findAll, findOneByCafeUuid, createWhenWin, createWhenCompare } from './cafeClickCount.js';
 import CafeClickCountNotFoundError from "../../../errors/cafeClickCountNotFoundError.js";
 import ApiError from "../../../errors/apiError.js";
 
@@ -15,6 +15,19 @@ export async function getCafeRankings() {
     sortDescByUserComparisonCount: cafeClickCounts.sort(sortDescByUserComparisonCount),
     sortedDescByUserCompareWinCount: cafeClickCounts.sort(sortDescByUserCompareWinCount)
   };
+}
+
+export async function addComparisonCount(cafeUuid, booleanValidate) {
+  const cafeClickCount = await findOneByCafeUuid(cafeUuid);
+
+  if (booleanValidate && cafeClickCount == null) {
+    throw new CafeClickCountNotFoundError(cafeUuid);
+  } else if (!booleanValidate && cafeClickCount == null) {
+    await createWhenCompare(cafeUuid);
+    return;
+  }
+
+  await cafeClickCount.increment('userComparisonCount');
 }
 
 export async function addCompareWinCount(cafeUuid, booleanValidate) {
