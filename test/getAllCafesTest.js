@@ -22,3 +22,13 @@ describe('getAllCafes Connect Success Test', function () {
     })
   });
 });
+
+describe('getPhotos of each Cafe Connect Success Test', function () {
+  it('', function (err, res) {
+    restGet('/cafes/photos').end(function (err, res) {
+
+
+    })
+
+  });
+});

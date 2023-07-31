@@ -5,10 +5,12 @@ import BooleanValidate from "../../utils/booleanValidate.js";
 import { findAllByCafeUuid as findOptionByCafeUuid } from "./option/cafeOptionService.js";
 import { findAllByCafeUuid as findAllHashtagsByCafeUuid } from "./hashtag/cafeHashtagService.js";
 import { findAllByCafeUuid as findAllReviewsByCafeUuid } from "./review/cafeReviewService.js";
-import { findAllByCafeUuid as findAllThumbnailsByCafeUuid } from "./thumbnail/cafeThumbnailS3Service.js";
+import { findAllByCafeUuid as findAllThumbnailsByCafeUuid } from "./photo/thumbnail/cafeThumbnailS3Service.js";
 import { findOneByCafeReviewId as findOneCafeReviewTextByCafeReviewId } from "./review/text/cafeReviewTextService.js";
 import { sequelize } from "../../config/connection.js";
 import { addCompareWinCount } from "./clickCount/cafeClickCountService.js";
+import { findAllByCafeUuid } from "./photo/cafePhotoService.js";
+import { CafePhotoDto } from "../../routes/dtos/CafePhotoDto.js";
 
 
 export async function getAllCafes() {
@@ -48,6 +50,32 @@ export async function getCafeDetailInfo(cafeUuid, isWin) {
     throw new ApiError(error.stackTrace);
   }
 
+}
+
+export async function getAllCafesPhotos(cafeUuid) {
+  try {
+    const transaction = await sequelize.transaction();
+
+    const cafeUuids = (await findAllByCafeUuid(cafeUuid)).map((cafe) => cafe.uuid);
+
+    const res = [];
+
+    for (const cafeUuid of cafeUuids) {
+      const photoS3List = await findAllByCafeUuid(cafeUuid);
+      res.push(new CafePhotoDto.Response(cafeUuid, photoS3List));
+      }
+
+    await transaction.commit();
+
+    return res;
+
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    }
+
+    throw new ApiError(error.stackTrace);
+  }
 }
 
 async function addCompareWinCountOfCafe(cafeUuid, isWin) {
