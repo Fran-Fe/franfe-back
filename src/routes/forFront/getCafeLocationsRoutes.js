@@ -1,7 +1,5 @@
 import { Router } from 'express';
-import {
-  getCafeLocations
-} from '../../domain/getCafeLocations/getCafeLocationTransactionService.js';
+import { getCafeLocations } from '../../domain/getCafeLocations/getCafeLocationTransactionService.js';
 import { CafeLocationDto } from '../dtos/cafeLocationDto.js';
 
 export const router = Router();
@@ -20,15 +18,17 @@ export const router = Router();
  *           required: true
  *           schema:
  *             type: string
- *        - in: path
- *          name: userLng
- *          description: is user current Longitude
- *          required: true
- *          schema:
- *            type: string
- *        - in: path
- *          name: distance
- *          description: is for detecting around distance as meter
+ *         - in: path
+ *           name: userLng
+ *           description: is user current Longitude
+ *           required: true
+ *           schema:
+ *             type: string
+ *         - in: path
+ *           name: distance
+ *           description: is for detecting around distance as meter
+ *           schema:
+ *             type: string
  *       responses:
  *         "200":
  *           description: A list of cafes.
@@ -46,19 +46,25 @@ export const router = Router();
  *                     placeName:
  *                       type: string
  *                     rating:
- *                       type: decimal
+ *                       type: number
  *                     countReviews:
  *                       type: string
  *                     thumbnails:
  *                       type: array
- *                         category:
- *                           type: integer
- *                         url:
- *                           type: string
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           category:
+ *                             type: integer
+ *                           url:
+ *                             type: string
  *                     hashTags:
  *                       type: array
- *                         hashtag:
- *                           type: string
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           hashtag:
+ *                             type: string
  *
  *
  *

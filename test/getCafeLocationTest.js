@@ -4,7 +4,7 @@ import {resetTestDb} from './baseTest.js';
 import {restGet } from './restClientFactory.js';
 import { getCafeLotationResponseAssert } from './assertionFactory.js';
 
-
+chai.use(chaiHttp);
 
 beforeEach(async () => {
   await resetTestDb();
