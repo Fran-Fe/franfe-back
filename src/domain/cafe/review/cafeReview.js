@@ -32,6 +32,7 @@ export const CafeReview = sequelize.define("cafe_reviews", {
 
 export function findAllByCafeUuid(cafeUuid) {
   return CafeReview.findAll({
+    attributes:['id'],
     where: {
       cafeUuid: cafeUuid,
     }

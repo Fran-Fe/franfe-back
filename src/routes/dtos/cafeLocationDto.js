@@ -7,10 +7,26 @@ export class CafeLocationDto {
     }
   }
   static Response = class {
-    constructor(cafe) {
+    constructor(cafe, thumbnails, countReviews = '0') {
       this.uuid = cafe.uuid;
       this.address = cafe.address;
       this.placeName = cafe.placeName;
+      this.rating = cafe.rating;
+      this.countReviews = countReviews;
+      this.thumbnails = thumbnails;
+
+      //리뷰 개수, 해시태그
+    }
+  }
+  static Thumbnail = class {
+    constructor(thumb) {
+      this.category = thumb.category;
+      this.url= thumb.bucketUrl;
+    }
+  }
+
+  static Hashtags = class{
+    constructor() {
     }
   }
 }
