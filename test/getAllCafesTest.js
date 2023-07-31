@@ -1,8 +1,8 @@
-import chai, {expect} from 'chai';
+import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import { resetTestDb } from "./baseTest.js";
 import { restGet } from "./restClientFactory.js";
-import { getAllCafesResponseAssert } from "./assertionFactory.js";
+import { getAllCafesResponseAssert, getAllPhotosForCafesAssert } from "./assertionFactory.js";
 
 chai.use(chaiHttp);
 
@@ -24,11 +24,13 @@ describe('getAllCafes Connect Success Test', function () {
 });
 
 describe('getPhotos of each Cafe Connect Success Test', function () {
-  it('', function (err, res) {
+  it('해당하는 카페에 대한 url 을 적절하게 가져와야 한다.', function (done) { // Use done parameter
     restGet('/cafes/photos').end(function (err, res) {
 
+      getAllPhotosForCafesAssert(res);
+      expect(res.body[0].bucketUrlList[0]).equal("abcUrl");
 
-    })
-
+      done();
+    });
   });
 });

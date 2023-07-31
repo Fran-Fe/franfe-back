@@ -19,6 +19,7 @@ export const CafePhotoS3 = sequelize.define("cafe_photos_s3", {
 
 export function findAllByCafeUuid(cafeUuid) {
   return CafePhotoS3.findAll({
+    attributes: ['bucketUrl', 'cafeUuid'],
 
     where: {
       cafeUuid: cafeUuid,

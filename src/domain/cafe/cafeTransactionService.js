@@ -52,18 +52,20 @@ export async function getCafeDetailInfo(cafeUuid, isWin) {
 
 }
 
-export async function getAllCafesPhotos(cafeUuid) {
+export async function getAllCafesPhotos() {
   try {
     const transaction = await sequelize.transaction();
 
-    const cafeUuids = (await findAllByCafeUuid(cafeUuid)).map((cafe) => cafe.uuid);
+    const cafeUuids = (await findAll())
+      .map((cafe) => cafe.uuid);
 
     const res = [];
 
     for (const cafeUuid of cafeUuids) {
       const photoS3List = await findAllByCafeUuid(cafeUuid);
-      res.push(new CafePhotoDto.Response(cafeUuid, photoS3List));
-      }
+      const photoS3UrlList = photoS3List.map((photo) => photo.bucketUrl);
+      res.push(new CafePhotoDto.Response(cafeUuid, photoS3UrlList));
+    }
 
     await transaction.commit();
 

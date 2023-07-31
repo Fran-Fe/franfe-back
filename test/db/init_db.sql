@@ -37,3 +37,7 @@ INSERT INTO `franfe`.`cafe_hashtags` (`cafe_uuid`, `hashtag`) VALUES ('abcabc', 
 INSERT INTO `franfe`.`cafe_click_counts` (`id`, `cafe_uuid`, `user_comparison_count`, `user_compare_win_count`) VALUES (2, 'abcabc', 0, 0);
 
 INSERT INTO `franfe`.`cafe_click_counts` (`id`, `cafe_uuid`, `user_comparison_count`, `user_compare_win_count`) VALUES (1, 'abc', 0, 0);
+
+INSERT INTO `franfe`.`cafe_photos_s3` (`bucket_url`, `cafe_uuid`) VALUES ('abcUrl', 'abc');
+
+INSERT INTO `franfe`.`cafe_photos_s3` (`bucket_url`, `cafe_uuid`) VALUES ('bcdUrl', 'bcdUrl');
