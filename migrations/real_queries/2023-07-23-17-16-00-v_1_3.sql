@@ -1,20 +1,21 @@
 CREATE TABLE `cafe_options` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `cafe_uuid` varchar(45) NOT NULL,
   `option` varchar(45) NOT NULL,
-  `option_on` tinyint(1) NOT NULL DEFAULT '0'
+  `option_on` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
 );
 
 CREATE TABLE `cafe_hashtags` (
-  `cafe_uuid` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `hashtag` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `cafe_uuid` varchar(32) NOT NULL,
+  `hashtag` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `cafe_reviews` (
   `id` bigint NOT NULL,
   `cafe_uuid` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `author_name` varchar(45) NOT NULL,
-  `rating` decimal(2,1) NOT NULL,
-  `relative_time_description` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
