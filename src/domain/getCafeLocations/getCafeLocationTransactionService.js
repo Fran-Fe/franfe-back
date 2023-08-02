@@ -5,6 +5,7 @@ import { CafeLocationDto } from '../../routes/dtos/cafeLocationDto.js';
 import { findAll as findAllThumbnails } from '../cafe/thumbnail/cafeThumbnailS3Service.js';
 import { findAll as findAllCafeReviews } from '../cafe/review/cafeReviewService.js';
 import { findAll as findAllHashTags } from '../cafe/hashtag/cafeHashtagService.js';
+import _ from 'lodash';
 
 export async function getCafeLocations(req) {
   let transaction;
@@ -13,17 +14,17 @@ export async function getCafeLocations(req) {
 
     const cafes = await findByPosition(req.userLat, req.userLng, req.distance);
 
-    const allThumbnails = await findAllThumbnails().group(({cafeUuid}) => cafeUuid);
-    const allReviews = await findAllCafeReviews().group(({cafeUuid}) => cafeUuid);
-    const allHashtags = await findAllHashTags().group(({cafeUuid}) => cafeUuid);
+    const allThumbnails = _.groupBy(await findAllThumbnails(), "cafeUuid");
+    const allReviews = _.groupBy(await findAllCafeReviews(), "cafeUuid");
+    const allHashtags = _.groupBy(await findAllHashTags(), "cafeUuid");
 
     const res = await Promise.all(cafes.map(
       async (cafe) => {
-        const thumbnails = allThumbnails.get(cafe.uuid);
+        const thumbnails = allThumbnails[cafe.uuid];
         const thumbnailObjects = thumbnails.map((thumbnail) => new CafeLocationDto.Thumbnail(thumbnail));
 
-        const reviewCount = allReviews.get(cafe.uuid).length;
-        const hashtags = allHashtags.get(cafe.uuid)
+        const reviewCount = allReviews[cafe.uuid].length;
+        const hashtags = allHashtags[cafe.uuid]
           .map((hashtag) => hashtag.hashtag);
 
         return new CafeLocationDto.Response(cafe, thumbnailObjects, reviewCount, hashtags);

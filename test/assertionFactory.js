@@ -39,12 +39,15 @@ export function getAllCafesResponseAssert(res) {
   expect(res.body[0]).to.have.property("address");
   expect(res.body[0]).to.have.property("placeName");
 }
-export function getCafeLotationResponseAssert(res) {
+export function getCafeLocationResponseAssert(res) {
   expect(res).to.have.status(200);
-  expect(res.body);
-  console.log(res.body);
-  // expect(res.body).to.have.property('uuid');
-  // expect(res.body).to.have.property('address');
-  // expect(res.body).to.have.property('placeName');
-
+  expect(res.body[0]).to.have.property('uuid');
+  expect(res.body[0]).to.have.property('address');
+  expect(res.body[0]).to.have.property('placeName');
+  expect(res.body[0]).to.have.property('rating');
+  expect(res.body[0]).to.have.property('reviewCount');
+  expect(res.body[0]).to.have.property('thumbnails');
+  expect(res.body[0].thumbnails[0]).to.have.property('category');
+  expect(res.body[0].thumbnails[0]).to.have.property('bucketUrl');
+  expect(res.body[0]).to.have.property('hashTags');
 }

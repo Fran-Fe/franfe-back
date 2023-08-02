@@ -1,4 +1,4 @@
-INSERT INTO `franfe`.`cafes` (`uuid`, `address`, `lat`, `lng`, `place_name`, `overview`, `rating`) VALUES ('abc', 'aa', 123, 123, '11111', 'good', 5);
+INSERT INTO `franfe`.`cafes` (`uuid`, `address`, `lat`, `lng`, `place_name`, `overview`, `rating`) VALUES ('abc', 'aa', 84, 123, '11111', 'good', 5);
 
 INSERT INTO `franfe`.`cafe_thumbnail_s3` (`bucket_url`, `cafe_uuid`, `category`) VALUES ('urlurlurl', 'abc', 1);
 
@@ -14,7 +14,7 @@ INSERT INTO `franfe`.`cafe_hashtags` (`cafe_uuid`, `hashtag`) VALUES ('abc', '12
 
 INSERT INTO `franfe`.`cafe_hashtags` (`cafe_uuid`, `hashtag`) VALUES ('abc', '41');
 
-INSERT INTO `franfe`.`cafes` (`uuid`, `address`, `lat`, `lng`, `place_name`, `overview`, `rating`) VALUES ('abcabc', 'aa', 123, 123, '11111', 'good', 5);
+INSERT INTO `franfe`.`cafes` (`uuid`, `address`, `lat`, `lng`, `place_name`, `overview`, `rating`) VALUES ('abcabc', 'aa', 84, 123, '11111', 'good', 5);
 
 INSERT INTO `franfe`.`cafe_thumbnail_s3` (`bucket_url`, `cafe_uuid`, `category`) VALUES ('urlurl', 'abcabc', 1);
 

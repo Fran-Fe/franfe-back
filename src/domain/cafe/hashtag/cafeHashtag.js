@@ -25,7 +25,8 @@ export function findAllByCafeUuid(cafeUuid) {
   });
 }
 
-export function findAll(){
+export function findAll() {
   return CafeHashtag.findAll({
+    attributes: ['cafeUuid', 'hashtag']
   })
 }

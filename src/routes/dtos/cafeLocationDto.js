@@ -1,9 +1,9 @@
 export class CafeLocationDto {
   static Request = class{
     constructor(req) {
-      this.userLat = req.userLat;
-      this.userLng = req.userLng;
-      this.distance = req.distance;
+      this.userLat = Number(req.userLat);
+      this.userLng = Number(req.userLng);
+      this.distance = req.distance === "" ? Number.MAX_SAFE_INTEGER : Number(req.distance);
     }
   }
   static Response = class {
@@ -21,7 +21,7 @@ export class CafeLocationDto {
   static Thumbnail = class {
     constructor(thumb) {
       this.category = thumb.category;
-      this.url= thumb.bucketUrl;
+      this.bucketUrl= thumb.bucketUrl;
     }
   }
 

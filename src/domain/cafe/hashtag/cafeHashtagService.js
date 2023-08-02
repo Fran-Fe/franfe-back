@@ -5,5 +5,5 @@ export async function findAllHashTagByCafeUuid(cafeUuid) {
 }
 
 export async function findAll() {
-  return await findAll()
+  return await findAllEntities()
 }

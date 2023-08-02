@@ -1,13 +1,14 @@
 import { Router } from 'express';
 import { getCafeLocations } from '../../domain/getCafeLocations/getCafeLocationTransactionService.js';
 import { CafeLocationDto } from '../dtos/cafeLocationDto.js';
+import QueryParameterIsRequiredError from "../../errors/QueryParameterIsRequiredError.js";
 
 export const router = Router();
 
 /**
  * @swagger
  * paths:
- *   /cafes:
+ *   /cafe/location:
  *     get:
  *       summary: get cafe info for front
  *       tags: [cafeLocation]
@@ -56,7 +57,7 @@ export const router = Router();
  *                         properties:
  *                           category:
  *                             type: integer
- *                           url:
+ *                           bucketUrl:
  *                             type: string
  *                     hashTags:
  *                       type: array
@@ -70,11 +71,18 @@ export const router = Router();
  *
  */
 
-router.get('',async (req,res) => {
-  const request = new CafeLocationDto.Request(req.query);
-  const response = await getCafeLocations(request);
+router.get('', async (req, res, next) => {
+  try {
 
-  res.json(response);
+    if (!req.query.userLat || !req.query.userLng) {
+      throw new QueryParameterIsRequiredError(['userLat', 'userLng', 'distance']);
+    }
+
+    const request = new CafeLocationDto.Request(req.query);
+    const response = await getCafeLocations(request);
+
+    res.json(response);
+  } catch (e) {
+    next(e);
+  }
 })
-
-//swagger , next , path , error 처리 'cafeInfoRoutes' , Dto Response
