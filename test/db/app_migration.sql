@@ -24,14 +24,14 @@ CREATE TABLE `cafe_options` (
   `option` varchar(45) NOT NULL,
   `option_on` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-)
+);
 
 CREATE TABLE `cafe_hashtags` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `cafe_uuid` varchar(32) NOT NULL,
   `hashtag` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-)
+);
 
 CREATE TABLE `cafe_reviews` (
   `id` bigint NOT NULL,
