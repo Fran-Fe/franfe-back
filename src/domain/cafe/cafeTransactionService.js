@@ -1,4 +1,4 @@
-import ApiError, { throwApiError } from '../../errors/apiError.js';
+import { throwApiError } from '../../errors/apiError.js';
 import { findAll, findByUuid } from "./cafeService.js";
 import { CafeDto } from "../../routes/dtos/cafeDto.js";
 import BooleanValidate from "../../utils/booleanValidate.js";
@@ -6,7 +6,6 @@ import { findAllByCafeUuid as findOptionByCafeUuid } from "./option/cafeOptionSe
 import { findAllHashTagByCafeUuid as findAllHashtagsByCafeUuid } from "./hashtag/cafeHashtagService.js";
 import { findAllReviewByCafeUuid as findAllReviewsByCafeUuid } from "./review/cafeReviewService.js";
 import { findAllByCafeUuid as findAllThumbnailsByCafeUuid } from "./thumbnail/cafeThumbnailS3Service.js";
-import { findOneByCafeReviewId as findOneCafeReviewTextByCafeReviewId } from "./review/text/cafeReviewTextService.js";
 import { sequelize } from "../../config/connection.js";
 import { addCompareWinCount } from "./clickCount/cafeClickCountService.js";
 
@@ -71,10 +70,7 @@ async function getCafeHashtags(cafeUuid) {
 async function getCafeReviews(cafeUuid) {
   const reviews = await findAllReviewsByCafeUuid(cafeUuid);
   const reviewPromises = reviews.map(async (review) => {
-    const reviewText = await findOneCafeReviewTextByCafeReviewId(review.id, BooleanValidate.TRUE).then(e => e.text);
-    //fixme: 만약 여기에서 시간이 많이 걸린다면 caching 을 고려할것
-
-    return new CafeDto.DetailResponse.Review(review, reviewText);
+    return new CafeDto.DetailResponse.Review(review);
   });
 
   return Promise.all(reviewPromises);

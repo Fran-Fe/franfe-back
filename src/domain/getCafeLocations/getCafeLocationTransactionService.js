@@ -1,29 +1,32 @@
 import { sequelize } from '../../config/connection.js';
 import { throwApiError } from '../../errors/apiError.js';
-import { getCafeLocationService } from './getCafeLocationService.js';
+import { findByPosition } from './findByPosition.js';
 import { CafeLocationDto } from '../../routes/dtos/cafeLocationDto.js';
-import { findAllThumbnailsByUuid } from '../cafe/thumbnail/cafeThumbnailS3Service.js';
-import { findAllReviewByCafeUuid } from '../cafe/review/cafeReviewService.js';
-import { findAllHashTagByCafeUuid} from '../cafe/hashtag/cafeHashtagService.js';
+import { findAll as findAllThumbnails } from '../cafe/thumbnail/cafeThumbnailS3Service.js';
+import { findAll as findAllCafeReviews } from '../cafe/review/cafeReviewService.js';
+import { findAll as findAllHashTags } from '../cafe/hashtag/cafeHashtagService.js';
 
 export async function getCafeLocations(req) {
   let transaction;
   try {
     transaction = await sequelize.transaction();
 
-    const cafes = await getCafeLocationService(req.userLat, req.userLng, req.distance);
+    const cafes = await findByPosition(req.userLat, req.userLng, req.distance);
+
+    const allThumbnails = await findAllThumbnails().group(({cafeUuid}) => cafeUuid);
+    const allReviews = await findAllCafeReviews().group(({cafeUuid}) => cafeUuid);
+    const allHashtags = await findAllHashTags().group(({cafeUuid}) => cafeUuid);
 
     const res = await Promise.all(cafes.map(
       async (cafe) => {
-        const thumbnails = await findAllThumbnailsByUuid(cafe.uuid);
-        const thumbnailObjects = thumbnails.map((e) => new CafeLocationDto.Thumbnail(e));
+        const thumbnails = allThumbnails.get(cafe.uuid);
+        const thumbnailObjects = thumbnails.map((thumbnail) => new CafeLocationDto.Thumbnail(thumbnail));
 
-        const reviews = await findAllReviewByCafeUuid(cafe.uuid);
-        const count = await reviews.length;
+        const reviewCount = allReviews.get(cafe.uuid).length;
+        const hashtags = allHashtags.get(cafe.uuid)
+          .map((hashtag) => hashtag.hashtag);
 
-        const hashTags = await findAllHashTagByCafeUuid(cafe.uuid);
-        const hashTagObjects = hashTags.map((e) => new CafeLocationDto.Hashtag(e));
-        return new CafeLocationDto.Response(cafe, thumbnailObjects, count, hashTagObjects);
+        return new CafeLocationDto.Response(cafe, thumbnailObjects, reviewCount, hashtags);
       }
     ));
     await transaction.commit();

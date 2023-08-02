@@ -30,11 +30,11 @@ export class CafeDto {
     }
 
     static Review = class {
-      constructor(review, text) {
+      constructor(review) {
         this.authorName = review.authorName;
         this.rating = review.rating;
         this.relativeTimeDescription = review.relativeTimeDescription;
-        this.text = text;
+        this.text = review.text;
       }
     }
 

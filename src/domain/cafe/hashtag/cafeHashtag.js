@@ -24,3 +24,8 @@ export function findAllByCafeUuid(cafeUuid) {
     }
   });
 }
+
+export function findAll(){
+  return CafeHashtag.findAll({
+  })
+}

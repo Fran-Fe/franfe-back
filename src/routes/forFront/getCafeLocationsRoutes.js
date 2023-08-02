@@ -47,8 +47,8 @@ export const router = Router();
  *                       type: string
  *                     rating:
  *                       type: number
- *                     countReviews:
- *                       type: string
+ *                     reviewCount:
+ *                       type: number
  *                     thumbnails:
  *                       type: array
  *                       items:

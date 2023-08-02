@@ -31,12 +31,8 @@ export function findAllByCafeUuid(cafeUuid) {
   });
 }
 
-export function findAllThumbnailsByUuid(cafeUuid){
-  console.log("h");
+export function findAll() {
   return CafeThumbnailS3.findAll({
-    attributes: ['bucketUrl','category'],
-    where: {
-      cafeUuid: cafeUuid
-    }
+
   })
 }

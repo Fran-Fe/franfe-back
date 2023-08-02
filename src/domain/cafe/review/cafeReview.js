@@ -12,19 +12,10 @@ export const CafeReview = sequelize.define("cafe_reviews", {
     allowNull: false,
     field: 'cafe_uuid'
   },
-  authorName: {
+  text: {
     type: DataTypes.STRING,
-    allowNull: false,
-    field: 'author_name'
-  },
-  rating: {
-    type: DataTypes.DECIMAL(2, 1),
-    allowNull: false,
-  },
-  relativeTimeDescription: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+    allowNull: false
+  }
 }, {
   timestamps: false,
   underscored: true,
@@ -32,9 +23,14 @@ export const CafeReview = sequelize.define("cafe_reviews", {
 
 export function findAllByCafeUuid(cafeUuid) {
   return CafeReview.findAll({
-    attributes:['id'],
+    attributes:['id', 'cafeUuid', 'text'],
     where: {
       cafeUuid: cafeUuid,
     }
   });
+}
+
+export function findAll() {
+  return CafeReview.findAll({
+  })
 }

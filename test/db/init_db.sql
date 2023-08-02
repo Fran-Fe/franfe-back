@@ -2,9 +2,7 @@ INSERT INTO `franfe`.`cafes` (`uuid`, `address`, `lat`, `lng`, `place_name`, `ov
 
 INSERT INTO `franfe`.`cafe_thumbnail_s3` (`bucket_url`, `cafe_uuid`, `category`) VALUES ('urlurlurl', 'abc', 1);
 
-INSERT INTO `franfe`.`cafe_reviews` (`id`, `cafe_uuid`, `author_name`, `rating`, `relative_time_description`) VALUES (1, 'abc', 'rogan', 4, 'sdfasfsafdsa');
-
-INSERT INTO `franfe`.`cafe_review_texts` (`id`, `cafe_review_id`, `text`) VALUES (1, 1, 'asdfsadfsdafsda');
+INSERT INTO `franfe`.`cafe_reviews` (`id`, `cafe_uuid`, `text`) VALUES (1, 'abc', 'sadfadsf');
 
 INSERT INTO `franfe`.`cafe_options` (`cafe_uuid`, `option`, `option_on`) VALUES ('abc', 'asdf', 1);
 
@@ -20,9 +18,7 @@ INSERT INTO `franfe`.`cafes` (`uuid`, `address`, `lat`, `lng`, `place_name`, `ov
 
 INSERT INTO `franfe`.`cafe_thumbnail_s3` (`bucket_url`, `cafe_uuid`, `category`) VALUES ('urlurl', 'abcabc', 1);
 
-INSERT INTO `franfe`.`cafe_reviews` (`id`, `cafe_uuid`, `author_name`, `rating`, `relative_time_description`) VALUES (2, 'abcabc', 'rogan', 4, 'sdfasfsafdsa');
-
-INSERT INTO `franfe`.`cafe_review_texts` (`id`, `cafe_review_id`, `text`) VALUES (2, 2, 'asdfsadfsdafsda');
+INSERT INTO `franfe`.`cafe_reviews` (`id`, `cafe_uuid`, `text`) VALUES (2, 'abcabc', 'rasfsafdsa');
 
 INSERT INTO `franfe`.`cafe_options` (`cafe_uuid`, `option`, `option_on`) VALUES ('abcabc', 'asdf', 1);
 
