@@ -57,17 +57,9 @@ export async function getCafeLocations(req) {
 
     const res = await Promise.all(cafes.map(
       async (cafe) => {
-        if (!await validatePageable(req, cafe)) {
-          return;
+        if (await validatePageable(req, cafe)) {
+          return createDto(cafe, req, allThumbnails, allReviews, allHashtags);
         }
-
-        const distance = getDistance(cafe, req);
-        const thumbnailObjects = getThumbnailObjects(allThumbnails, cafe);
-        const reviewCount = allReviews[cafe.uuid].length;
-        const hashtags = allHashtags[cafe.uuid]
-          .map((hashtag) => hashtag.hashtag);
-
-        return new CafeListDto.Response(cafe, thumbnailObjects, hashtags, distance, reviewCount);
       }
     ));
 
@@ -76,6 +68,16 @@ export async function getCafeLocations(req) {
   } catch (error) {
     throwApiError(error);
   }
+}
+
+async function createDto(cafe, req, allThumbnails, allReviews, allHashtags) {
+  const distance = getDistance(cafe, req);
+  const thumbnailObjects = getThumbnailObjects(allThumbnails, cafe);
+  const reviewCount = allReviews[cafe.uuid].length;
+  const hashtags = allHashtags[cafe.uuid]
+    .map((hashtag) => hashtag.hashtag);
+
+  return new CafeListDto.Response(cafe, thumbnailObjects, hashtags, distance, reviewCount);
 }
 
 async function validatePageable(req, cafe) {
