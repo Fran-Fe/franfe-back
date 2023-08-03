@@ -50,3 +50,10 @@ export function findByUuid(uuid) {
     where: {uuid: uuid}
   });
 }
+
+export function findEntityByPosition(userLat, userLng, distance) {
+  return Cafe.findAll({
+    where: sequelize.literal(`ST_Distance_Sphere(POINT(lng, lat), POINT(${userLng},${userLat})) <= ${distance}`
+    )
+  });
+}

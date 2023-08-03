@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getCafeLocations } from '../../domain/getCafeLocations/getCafeLocationTransactionService.js';
+import { getCafeLocations } from '../../domain/cafe/cafeTransactionService.js';
 import { CafeLocationDto } from '../dtos/cafeLocationDto.js';
 import QueryParameterIsRequiredError from "../../errors/QueryParameterIsRequiredError.js";
 

@@ -1,5 +1,5 @@
 export class CafeLocationDto {
-  static Request = class{
+  static Request = class {
     constructor(req) {
       this.userLat = Number(req.userLat);
       this.userLng = Number(req.userLng);
@@ -7,7 +7,7 @@ export class CafeLocationDto {
     }
   }
   static Response = class {
-    constructor(cafe, thumbnails, reviewCount = 0, hashTags) {
+    constructor(cafe, thumbnails, hashTags, distance, reviewCount = 0,) {
       this.uuid = cafe.uuid;
       this.address = cafe.address;
       this.placeName = cafe.placeName;
@@ -15,13 +15,14 @@ export class CafeLocationDto {
       this.reviewCount = reviewCount;
       this.thumbnails = thumbnails;
       this.hashTags = hashTags;
+      this.distance = distance;
 
     }
   }
   static Thumbnail = class {
     constructor(thumb) {
       this.category = thumb.category;
-      this.bucketUrl= thumb.bucketUrl;
+      this.bucketUrl = thumb.bucketUrl;
     }
   }
 

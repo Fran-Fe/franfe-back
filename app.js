@@ -6,7 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import { router as cafeRouter } from './src/routes/forAI/cafesRoutes.js'
 import { router as cafeRankingRouter } from './src/routes/forFront/cafeRankingRoutes.js'
 import { router as cafeInfoRouter } from './src/routes/forFront/cafeInfoRoutes.js'
-import { router as cafeLocationRouter } from './src/routes/forFront/getCafeLocationsRoutes.js'
+import { router as cafeLocationRouter } from './src/routes/forFront/cafeRoutes.js'
 import { jobGenerator } from "./src/schedule/scheduler.js";
 
 const app = express();

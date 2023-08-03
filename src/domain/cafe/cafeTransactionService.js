@@ -1,13 +1,25 @@
 import { throwApiError } from '../../errors/apiError.js';
-import { findAll, findByUuid } from "./cafeService.js";
+import { findAll, findByUuid } from "./findByPosition.js";
 import { CafeDto } from "../../routes/dtos/cafeDto.js";
 import BooleanValidate from "../../utils/booleanValidate.js";
 import { findAllByCafeUuid as findOptionByCafeUuid } from "./option/cafeOptionService.js";
-import { findAllHashTagByCafeUuid as findAllHashtagsByCafeUuid } from "./hashtag/cafeHashtagService.js";
-import { findAllReviewByCafeUuid as findAllReviewsByCafeUuid } from "./review/cafeReviewService.js";
-import { findAllByCafeUuid as findAllThumbnailsByCafeUuid } from "./thumbnail/cafeThumbnailS3Service.js";
+import {
+  findAll as findAllHashTags,
+  findAllHashTagByCafeUuid as findAllHashtagsByCafeUuid
+} from "./hashtag/cafeHashtagService.js";
+import {
+  findAll as findAllCafeReviews,
+  findAllReviewByCafeUuid as findAllReviewsByCafeUuid
+} from "./review/cafeReviewService.js";
+import {
+  findAll as findAllThumbnails,
+  findAllByCafeUuid as findAllThumbnailsByCafeUuid
+} from "./thumbnail/cafeThumbnailS3Service.js";
 import { sequelize } from "../../config/connection.js";
 import { addCompareWinCount } from "./clickCount/cafeClickCountService.js";
+import { findByPosition } from "./findByPosition.js";
+import { CafeLocationDto } from "../../routes/dtos/cafeLocationDto.js";
+import _ from "lodash";
 
 
 export async function getAllCafes() {
@@ -38,7 +50,31 @@ export async function getCafeDetailInfo(cafeUuid, isWin) {
   } catch (error) {
     throwApiError(error);
   }
+}
 
+export async function getCafeLocations(req) {
+  try {
+    const cafes = await findByPosition(req.userLat, req.userLng, req.distance);
+
+    const {allThumbnails, allReviews, allHashtags} = getCachesForCafe();
+
+    const res = await Promise.all(cafes.map(
+      async (cafe) => {
+        const distance = getDistance(cafe, req);
+
+        const thumbnailObjects = getThumbnailObjects(allThumbnails, cafe);
+        const reviewCount = allReviews[cafe.uuid].length;
+        const hashtags = allHashtags[cafe.uuid]
+          .map((hashtag) => hashtag.hashtag);
+
+        return new CafeLocationDto.Response(cafe, thumbnailObjects, hashtags, distance, reviewCount);
+      }
+    ));
+    return res;
+
+  } catch (error) {
+    throwApiError(error);
+  }
 }
 
 async function addCompareWinCountOfCafe(cafeUuid, isWin) {
@@ -79,4 +115,21 @@ async function getCafeReviews(cafeUuid) {
 async function getCafeThumbnailS3(cafeUuid) {
   const thumbnails = await findAllThumbnailsByCafeUuid(cafeUuid);
   return thumbnails.map((thumbnail) => new CafeDto.DetailResponse.thumbnailS3(thumbnail));
+}
+
+function getDistance(cafe, req) {
+  return Math.sqrt(((req.userLat - cafe.lat) ** 2) + ((req.userLng - cafe.lng) ** 2));
+}
+
+async function getCachesForCafe() {
+  const allThumbnails = _.groupBy(await findAllThumbnails(), "cafeUuid");
+  const allReviews = _.groupBy(await findAllCafeReviews(), "cafeUuid");
+  const allHashtags = _.groupBy(await findAllHashTags(), "cafeUuid");
+
+  return {allThumbnails, allReviews, allHashtags};
+}
+
+function getThumbnailObjects(allThumbnails, cafe) {
+  const thumbnails = allThumbnails[cafe.uuid];
+  return thumbnails.map((thumbnail) => new CafeLocationDto.Thumbnail(thumbnail));
 }
