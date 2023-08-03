@@ -15,7 +15,6 @@ import {
   findAll as findAllThumbnails,
   findAllByCafeUuid as findAllThumbnailsByCafeUuid
 } from "./thumbnail/cafeThumbnailS3Service.js";
-import { sequelize } from "../../config/connection.js";
 import { addCompareWinCount } from "./clickCount/cafeClickCountService.js";
 import { CafeListDto } from "../../routes/dtos/cafeListDto.js";
 import _ from "lodash";
@@ -35,12 +34,8 @@ export async function getAllCafes() {
 
 export async function getCafeDetailInfo(cafeUuid, isWin) {
   try {
-    const transaction = await sequelize.transaction();
-
     await addCompareWinCountOfCafe(cafeUuid, isWin);
     const {cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3List} = await getCafeDetailDtoInfo(cafeUuid);
-
-    await transaction.commit();
 
     return new CafeDto.DetailResponse(cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3List);
 
