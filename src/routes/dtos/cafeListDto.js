@@ -1,4 +1,4 @@
-export class CafeLocationDto {
+export class CafeListDto {
   static Request = class {
     constructor(req) {
       this.userLat = Number(req.userLat);

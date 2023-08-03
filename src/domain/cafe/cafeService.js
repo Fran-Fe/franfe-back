@@ -17,8 +17,8 @@ export function findByUuid(uuid, booleanValidate) {
   return cafe;
 }
 
-export function findPageableList(req) {
+export function cafeService(req) {
   const {doPage, firstId, lastId} = page(req);
 
-  return findEntityByPosition(req.userLat, req.userLng, req.radius, doPage, firstId, lastId, req.options, req.hashtags);
+  return findEntityByPosition(req.userLat, req.userLng, req.radius, doPage, firstId, lastId, req.options, req.hashtags, req.search);
 }

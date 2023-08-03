@@ -1,5 +1,5 @@
 import { throwApiError } from '../../errors/apiError.js';
-import { findAll, findByUuid, findPageableList } from "./findPageableList.js";
+import { findAll, findByUuid, cafeService } from "./cafeService.js";
 import { CafeDto } from "../../routes/dtos/cafeDto.js";
 import BooleanValidate from "../../utils/booleanValidate.js";
 import { findAllByCafeUuid as findOptionByCafeUuid, validateOptionList } from "./option/cafeOptionService.js";
@@ -17,7 +17,7 @@ import {
 } from "./thumbnail/cafeThumbnailS3Service.js";
 import { sequelize } from "../../config/connection.js";
 import { addCompareWinCount } from "./clickCount/cafeClickCountService.js";
-import { CafeLocationDto } from "../../routes/dtos/cafeLocationDto.js";
+import { CafeListDto } from "../../routes/dtos/cafeListDto.js";
 import _ from "lodash";
 
 
@@ -51,11 +51,11 @@ export async function getCafeDetailInfo(cafeUuid, isWin) {
 
 export async function getCafeLocations(req) {
   try {
-    const cafes = await findPageableList(req);
+    const cafes = await cafeService(req);
 
     const {allThumbnails, allReviews, allHashtags} = getCachesForCafe();
 
-    return await Promise.all(cafes.map(
+    const res = await Promise.all(cafes.map(
       async (cafe) => {
         if (!await validatePageable(req, cafe)) {
           return;
@@ -67,9 +67,11 @@ export async function getCafeLocations(req) {
         const hashtags = allHashtags[cafe.uuid]
           .map((hashtag) => hashtag.hashtag);
 
-        return new CafeLocationDto.Response(cafe, thumbnailObjects, hashtags, distance, reviewCount);
+        return new CafeListDto.Response(cafe, thumbnailObjects, hashtags, distance, reviewCount);
       }
     ));
+
+    return res.sort((a, b) => a.distance - b.distance);
 
   } catch (error) {
     throwApiError(error);
@@ -146,5 +148,5 @@ async function getCachesForCafe() {
 
 function getThumbnailObjects(allThumbnails, cafe) {
   const thumbnails = allThumbnails[cafe.uuid];
-  return thumbnails.map((thumbnail) => new CafeLocationDto.Thumbnail(thumbnail));
+  return thumbnails.map((thumbnail) => new CafeListDto.Thumbnail(thumbnail));
 }

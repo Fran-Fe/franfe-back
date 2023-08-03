@@ -55,12 +55,18 @@ export function findByUuid(uuid) {
   });
 }
 
-export function findEntityByPosition(userLat, userLng, distance, doPage, firstId, lastId) {
+export function findEntityByPosition(userLat, userLng, distance, doPage, firstId, lastId, search) {
   const condition = {};
 
   if (doPage) {
     condition.id = {
       [Op.between]: [firstId, lastId]
+    }
+  }
+
+  if (!search) {
+    condition.placeName = {
+      [Op.like]: `%${search}%`
     }
   }
 

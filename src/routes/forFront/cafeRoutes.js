@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getCafeLocations } from '../../domain/cafe/cafeTransactionService.js';
-import { CafeLocationDto } from '../dtos/cafeLocationDto.js';
+import { CafeListDto } from '../dtos/cafeListDto.js';
 import QueryParameterIsRequiredError from "../../errors/QueryParameterIsRequiredError.js";
 
 export const router = Router();
@@ -110,7 +110,7 @@ router.get('', async (req, res, next) => {
       throw new QueryParameterIsRequiredError(['userLat', 'userLng', 'radius']);
     }
 
-    const request = new CafeLocationDto.Request(req.query);
+    const request = new CafeListDto.Request(req.query);
     const response = await getCafeLocations(request);
 
     res.json(response);
