@@ -3,12 +3,12 @@ export class CafeLocationDto {
     constructor(req) {
       this.userLat = Number(req.userLat);
       this.userLng = Number(req.userLng);
-      this.distance = req.distance === "" ? Number.MAX_SAFE_INTEGER : Number(req.distance);
-      this.search = req.search == null ? "" : req.search;
-      this.options = req.options == null ? [] : req.options.split(",");
-      this.hashtags = req.hashtags == null ? [] : req.hashtags.split(",");
-      this.pageNumber = req.pageNumber == null ? null : Number(req.pageNumber);
-      this.pageSize = req.pageSize == null ? null : Number(req.pageSize);
+      this.radius = req.radius === undefined ? Number.MAX_SAFE_INTEGER : Number(req.radius);
+      this.search = req.search === undefined ? "" : req.search;
+      this.options = req.options === undefined ? [] : req.options.split(",");
+      this.hashtags = req.hashtags === undefined ? [] : req.hashtags.split(",");
+      this.pageNumber = req.pageNumber === undefined ? null : Number(req.pageNumber);
+      this.pageSize = req.pageSize === undefined ? null : Number(req.pageSize);
     }
   }
   static Response = class {

@@ -6,7 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import { router as cafeRouter } from './src/routes/forAI/cafesRoutes.js'
 import { router as cafeRankingRouter } from './src/routes/forFront/cafeRankingRoutes.js'
 import { router as cafeInfoRouter } from './src/routes/forFront/cafeInfoRoutes.js'
-import { router as cafeLocationRouter } from './src/routes/forFront/cafeRoutes.js'
+import { router as cafeListRouter } from './src/routes/forFront/cafeRoutes.js'
 import { jobGenerator } from "./src/schedule/scheduler.js";
 
 const app = express();
@@ -18,7 +18,7 @@ app.use(express.urlencoded({extended: false}));
 app.use('/cafes', cafeRouter);
 app.use('/cafe/rankings', cafeRankingRouter);
 app.use('/cafe/infos', cafeInfoRouter);
-app.use('/cafe/location', cafeLocationRouter);
+app.use('/cafe/list', cafeListRouter);
 app.use('/swagger-html', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.get('/swagger-json', (req, res) => {

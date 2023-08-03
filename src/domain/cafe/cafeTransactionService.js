@@ -62,7 +62,6 @@ export async function getCafeLocations(req) {
         }
 
         const distance = getDistance(cafe, req);
-
         const thumbnailObjects = getThumbnailObjects(allThumbnails, cafe);
         const reviewCount = allReviews[cafe.uuid].length;
         const hashtags = allHashtags[cafe.uuid]

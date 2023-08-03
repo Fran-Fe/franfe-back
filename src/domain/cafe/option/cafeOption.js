@@ -22,7 +22,19 @@ export const CafeOption = sequelize.define("cafe_options", {
   underscored: true,
 });
 
-export function findAllByCafeUuid(cafeUuid) {
+export function findAllByCafeUuidAndOptionOnIsTrue(cafeUuid) {
+  return CafeOption.findAll({
+    attributes: ['cafeUuid', 'option', 'optionOn'],
+
+    where: {
+      cafeUuid: cafeUuid,
+      optionOn: true
+    }
+  });
+}
+
+
+export function findOneByCafeUuid(cafeUuid) {
   return CafeOption.findAll({
     attributes: ['cafeUuid', 'option', 'optionOn'],
 

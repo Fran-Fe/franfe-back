@@ -8,26 +8,26 @@ export const router = Router();
 /**
  * @swagger
  * paths:
- *   /cafe/location:
+ *   /cafe/list:
  *     get:
  *       summary: get cafe info for front
- *       tags: [cafeLocation]
+ *       tags: [cafe]
  *       parameters:
- *         - in: path
+ *         - in: query
  *           name: userLat
  *           description: is user current Latitude
  *           required: true
  *           schema:
  *             type: string
- *         - in: path
+ *         - in: query
  *           name: userLng
  *           description: is user current Longitude
  *           required: true
  *           schema:
  *             type: string
- *         - in: path
- *           name: distance
- *           description: is for detecting around distance as meter
+ *         - in: query
+ *           name: radius
+ *           description: is for detecting around radius as meter
  *           schema:
  *             type: string
  *         - in: query
@@ -42,21 +42,23 @@ export const router = Router();
  *           required: false
  *           schema:
  *             type: array
- *             items: string
+ *             items:
+ *               type: string
  *         - in: query
  *           name: hashtags
  *           description: hashtag list with string
  *           required: false
  *           schema:
  *             type: array
- *             items: string
- *          - in: query
+ *             items:
+ *               type: string
+ *         - in: query
  *           name: pageNumber
  *           description: pageNumber with string
  *           required: false
  *           schema:
  *             type: string
- *          - in: query
+ *         - in: query
  *           name: pageSize
  *           description: pageSize with string
  *           required: false
@@ -98,16 +100,14 @@ export const router = Router();
  *                         properties:
  *                           hashtag:
  *                             type: string
- *
- *
- *
  */
+
 
 router.get('', async (req, res, next) => {
   try {
 
     if (!req.query.userLat || !req.query.userLng) {
-      throw new QueryParameterIsRequiredError(['userLat', 'userLng', 'distance']);
+      throw new QueryParameterIsRequiredError(['userLat', 'userLng', 'radius']);
     }
 
     const request = new CafeLocationDto.Request(req.query);

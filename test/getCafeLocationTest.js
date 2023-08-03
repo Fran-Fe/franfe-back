@@ -12,8 +12,8 @@ beforeEach(async () => {
 
 describe('getCafeLocation Connect Success Test', function() {
   it('check all returns', function(done) {
-    const queryMap = {userLat: "13", userLng: "13", distance: ""}
-    restGet('/cafe/location', queryMap).end(function(err,res){
+    const queryMap = {userLat: "13", userLng: "13", radius: "", options: "wifi, consent", hashtags: "good"}
+    restGet('/cafe/list', queryMap).end(function(err,res){
       getCafeLocationResponseAssert(res);
 
       done();

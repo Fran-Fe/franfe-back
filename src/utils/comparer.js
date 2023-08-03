@@ -39,8 +39,3 @@ export function compare(entities, requests, comparable) {
 
   return result;
 }
-
-module.exports = {
-  compare,
-  CompareResult,
-};

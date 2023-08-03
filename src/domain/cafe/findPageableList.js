@@ -20,9 +20,5 @@ export function findByUuid(uuid, booleanValidate) {
 export function findPageableList(req) {
   const {doPage, firstId, lastId} = page(req);
 
-  if (doPage) {
-    return findEntityByPosition(req.userLat, req.userLng, req.distance, doPage, firstId, lastId, req.options, req.hashtags);
-  } else {
-    return findEntityByPosition(req.userLat, req.userLng, req.distance);
-  }
+  return findEntityByPosition(req.userLat, req.userLng, req.radius, doPage, firstId, lastId, req.options, req.hashtags);
 }

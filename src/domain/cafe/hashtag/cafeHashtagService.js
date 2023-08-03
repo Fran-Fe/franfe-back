@@ -1,5 +1,5 @@
 import { findAllByCafeUuid as findAllEntitiesByCafeUuid, findAll as findAllEntities} from "./cafeHashtag.js";
-import { findAllByCafeUuid as findOneEntityByCafeUuid } from "../option/cafeOption.js";
+import { findAllByCafeUuidAndOptionOnIsTrue as findOneEntityByCafeUuid } from "../option/cafeOption.js";
 import { compare } from "../../../utils/comparer.js";
 
 export async function findAllHashTagByCafeUuid(cafeUuid) {
