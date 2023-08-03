@@ -2,10 +2,14 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../../config/connection.js";
 
 export const Cafe = sequelize.define("cafes", {
+  id: {
+    type: DataTypes.BIGINT,
+    autoIncrement: true,
+    primaryKey: true,
+  },
   uuid: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
     allowNull: false
   },
   address: {
