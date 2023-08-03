@@ -1,21 +1,21 @@
 export class CompareResult {
   constructor() {
-    this.createRequests = [];
+    this.newRequests = [];
     this.ignoreRequests = [];
-    this.deleteRequests = [];
+    this.oldEntities = [];
   }
 
   execute(createFunction, deleteFunction) {
     const result = [];
 
     result.push(
-      ...this.createRequests.map(createFunction)
+      ...this.newRequests.map(createFunction)
         .filter((item) => item !== null)
     );
 
     result.push(...this.ignoreRequests);
 
-    this.deleteRequests.forEach(deleteFunction);
+    this.oldEntities.forEach(deleteFunction);
 
     return result;
   }
@@ -24,15 +24,15 @@ export class CompareResult {
 export function compare(entities, requests, comparable) {
   const result = new CompareResult();
 
-  result.createRequests.push(...requests);
-  result.deleteRequests.push(...entities);
+  result.newRequests.push(...requests);
+  result.oldEntities.push(...entities);
 
   entities.forEach(entity => {
     requests.forEach(request => {
       if (comparable(entity, request)) {
-        result.createRequests.splice(result.createRequests.indexOf(request), 1);
+        result.newRequests.splice(result.newRequests.indexOf(request), 1);
         result.ignoreRequests.push(entity);
-        result.deleteRequests.splice(result.deleteRequests.indexOf(entity), 1);
+        result.oldEntities.splice(result.oldEntities.indexOf(entity), 1);
       }
     });
   });

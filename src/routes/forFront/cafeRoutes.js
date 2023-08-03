@@ -30,6 +30,38 @@ export const router = Router();
  *           description: is for detecting around distance as meter
  *           schema:
  *             type: string
+ *         - in: query
+ *           name: search
+ *           description: search value
+ *           required: false
+ *           schema:
+ *             type: string
+ *         - in: query
+ *           name: options
+ *           description: option list with string
+ *           required: false
+ *           schema:
+ *             type: array
+ *             items: string
+ *         - in: query
+ *           name: hashtags
+ *           description: hashtag list with string
+ *           required: false
+ *           schema:
+ *             type: array
+ *             items: string
+ *          - in: query
+ *           name: pageNumber
+ *           description: pageNumber with string
+ *           required: false
+ *           schema:
+ *             type: string
+ *          - in: query
+ *           name: pageSize
+ *           description: pageSize with string
+ *           required: false
+ *           schema:
+ *             type: string
  *       responses:
  *         "200":
  *           description: A list of cafes.
@@ -86,3 +118,5 @@ router.get('', async (req, res, next) => {
     next(e);
   }
 })
+
+//search, hashtag, option

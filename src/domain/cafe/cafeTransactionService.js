@@ -1,11 +1,11 @@
 import { throwApiError } from '../../errors/apiError.js';
-import { findAll, findByUuid } from "./findByPosition.js";
+import { findAll, findByUuid, findPageableList } from "./findPageableList.js";
 import { CafeDto } from "../../routes/dtos/cafeDto.js";
 import BooleanValidate from "../../utils/booleanValidate.js";
-import { findAllByCafeUuid as findOptionByCafeUuid } from "./option/cafeOptionService.js";
+import { findAllByCafeUuid as findOptionByCafeUuid, validateOptionList } from "./option/cafeOptionService.js";
 import {
   findAll as findAllHashTags,
-  findAllHashTagByCafeUuid as findAllHashtagsByCafeUuid
+  findAllHashTagByCafeUuid as findAllHashtagsByCafeUuid, validateHashtagList
 } from "./hashtag/cafeHashtagService.js";
 import {
   findAll as findAllCafeReviews,
@@ -17,7 +17,6 @@ import {
 } from "./thumbnail/cafeThumbnailS3Service.js";
 import { sequelize } from "../../config/connection.js";
 import { addCompareWinCount } from "./clickCount/cafeClickCountService.js";
-import { findByPosition } from "./findByPosition.js";
 import { CafeLocationDto } from "../../routes/dtos/cafeLocationDto.js";
 import _ from "lodash";
 
@@ -26,10 +25,8 @@ export async function getAllCafes() {
   try {
 
     const cafes = await findAll();
-    const res = (await (cafes))
-      .map((cafe) => new CafeDto.Response(cafe))
-
-    return res;
+    return (await (cafes))
+      .map((cafe) => new CafeDto.Response(cafe));
 
   } catch (error) {
     throwApiError(error);
@@ -54,12 +51,16 @@ export async function getCafeDetailInfo(cafeUuid, isWin) {
 
 export async function getCafeLocations(req) {
   try {
-    const cafes = await findByPosition(req.userLat, req.userLng, req.distance);
+    const cafes = await findPageableList(req);
 
     const {allThumbnails, allReviews, allHashtags} = getCachesForCafe();
 
-    const res = await Promise.all(cafes.map(
+    return await Promise.all(cafes.map(
       async (cafe) => {
+        if (!await validatePageable(req, cafe)) {
+          return;
+        }
+
         const distance = getDistance(cafe, req);
 
         const thumbnailObjects = getThumbnailObjects(allThumbnails, cafe);
@@ -70,10 +71,25 @@ export async function getCafeLocations(req) {
         return new CafeLocationDto.Response(cafe, thumbnailObjects, hashtags, distance, reviewCount);
       }
     ));
-    return res;
 
   } catch (error) {
     throwApiError(error);
+  }
+}
+
+async function validatePageable(req, cafe) {
+  return await validateWithOption(req, cafe) && await validateWithHashtag(req, cafe);
+}
+
+async function validateWithOption(req, cafe) {
+  if (req.options.length > 0) {
+    return await validateOptionList(req.options, cafe.uuid);
+  }
+}
+
+async function validateWithHashtag(req, cafe) {
+  if (req.hashtags.length > 0) {
+    return await validateHashtagList(req.hashtags, cafe.uuid);
   }
 }
 
