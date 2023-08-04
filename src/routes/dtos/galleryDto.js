@@ -1,4 +1,11 @@
 export class galleryDto{
+  static Request = class{
+    constructor(req) {
+      this.pageNum = req.query.pageNum;
+      this.pageSize = req.query.pageSize;
+      this.category = req.query.category;
+    }
+  }
   static Response = class{
     constructor(category, thumbnails) {
       this.category = category;

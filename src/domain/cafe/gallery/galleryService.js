@@ -1,5 +1,7 @@
-import { findAllByCategory } from '../thumbnail/cafeThumbnailS3.js';
+import { findAllByCategoryInPagination } from '../thumbnail/cafeThumbnailS3.js';
 
-export async function findAllByCategoryForGallery(category){
-  return await findAllByCategory(category);
+export async function findAllByCategoryForGallery(category,pageSize,offset){
+  return await findAllByCategoryInPagination(category,pageSize,offset);
 }
+
+
