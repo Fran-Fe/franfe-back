@@ -8,9 +8,10 @@ export async function getGalleryThumbnails(req){
     const transaction = await sequelize.transaction();
 
     const request = await new galleryDto.Request(req);
-    const res = await findAllByCategoryForGallery(request);
-    const response = await new galleryDto.Response();
-    
+    const data = await findAllByCategoryForGallery(request);
+    const thumbnails = await data.map((d) => new galleryDto.thumbnail(d));
+    const response = await new galleryDto.Response(req.category, thumbnails);
+
     await transaction.commit();
 
     return response

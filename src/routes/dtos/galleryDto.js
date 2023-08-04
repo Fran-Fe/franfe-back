@@ -1,9 +1,9 @@
 export class galleryDto{
   static Request = class{
     constructor(req) {
-      this.pageNum = req.query.pageNum;
-      this.pageSize = req.query.pageSize;
-      this.category = req.query.category;
+      this.pageNum = Number(req.query.pageNum);
+      this.pageSize = Number(req.query.pageSize);
+      this.category = Number(req.query.category);
     }
   }
   static Response = class{
@@ -15,8 +15,8 @@ export class galleryDto{
 
   static thumbnail = class{
     constructor(data) {
-      this.uuid = data.uuid;
-      this.url = data.url;
+      this.uuid = data.dataValues.cafeUuid;
+      this.url = data.dataValues.bucketUrl;
     }
   }
 }
