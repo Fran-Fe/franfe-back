@@ -8,6 +8,8 @@ import { router as cafeRouter } from './src/routes/forAI/cafesRoutes.js'
 import { router as cafeRankingRouter } from './src/routes/forFront/cafeRankingRoutes.js'
 import { router as cafeInfoRouter } from './src/routes/forFront/cafeInfoRoutes.js'
 import { jobGenerator } from "./src/schedule/scheduler.js";
+import {logger} from "./src/logger/winston.js";
+import { Api } from "./src/errors/errorMessages.js";
 
 const app = express();
 // jobGenerator('* * * * *', abc);
@@ -27,6 +29,14 @@ app.get('/swagger-json', (req, res) => {
   res.send(specs);
 });
 
+app.get('', (req, res) => {
+  logger.debug('hello');
+  logger.info('hello');
+  logger.warn('hello');
+  return new ApiError("testsetes");
+
+});
+
 app.use(function (req, res, next) {
   next(createError(404));
 });
@@ -37,12 +47,12 @@ app.use(function (err, req, res, next) {
 
   res.status(err.status || 500);
 
-  console.error(err);
+  logger.error(err.stack);
 
-  if (res instanceof ApiError) {
-    res.json(error);
+  if (err instanceof ApiError) {
+    res.json(err.toString());
   } else {
-    res.json(new ApiError(error.stackTrace));
+    res.json(new ApiError(err.stack));
   }
 });
 
