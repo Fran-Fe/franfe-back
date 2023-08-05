@@ -30,3 +30,9 @@ export function findAllByCafeUuid(cafeUuid) {
     }
   });
 }
+
+export function findAll() {
+  return CafeThumbnailS3.findAll({
+    attributes: ['bucketUrl', 'cafeUuid', 'category']
+  })
+}

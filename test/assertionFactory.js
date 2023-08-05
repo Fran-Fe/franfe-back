@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-export function getCafeDetailResponseAssert(res){
+export function getCafeDetailResponseAssert(res) {
   expect(res).to.have.status(200);
   expect(res.body).to.have.property('uuid');
   expect(res.body).to.have.property('address');
@@ -21,7 +21,7 @@ export function getCafeDetailResponseAssert(res){
   expect(res.body.thumbnailS3List[0]).to.have.property('category');
 }
 
-export function getCafeRankingsResponseAssert(res){
+export function getCafeRankingsResponseAssert(res) {
   expect(res).to.have.status(200);
   expect(res.body).to.have.property('userComparisonRank');
   expect(res.body.userComparisonRank).to.have.property('list');
@@ -38,6 +38,21 @@ export function getAllCafesResponseAssert(res) {
   expect(res.body[0]).to.have.property("uuid");
   expect(res.body[0]).to.have.property("address");
   expect(res.body[0]).to.have.property("placeName");
+}
+
+export function getCafeLocationResponseAssert(res) {
+  expect(res).to.have.status(200);
+  if (res.body.length > 0) {
+    expect(res.body[0]).to.have.property('uuid');
+    expect(res.body[0]).to.have.property('address');
+    expect(res.body[0]).to.have.property('placeName');
+    expect(res.body[0]).to.have.property('rating');
+    expect(res.body[0]).to.have.property('reviewCount');
+    expect(res.body[0]).to.have.property('thumbnails');
+    expect(res.body[0].thumbnails[0]).to.have.property('category');
+    expect(res.body[0].thumbnails[0]).to.have.property('bucketUrl');
+    expect(res.body[0]).to.have.property('hashTags');
+  }
 }
 
 export function getAllPhotosForCafesAssert(res) {
