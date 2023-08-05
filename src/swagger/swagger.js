@@ -15,7 +15,7 @@ const options = {
       },
     ],
   },
-  apis: ["./src/routes/forAI/*.js", "./src/routes/forFront/*.js","franfe-back/src/routes/forFront/*.js","franfe-back/src/routes/forAI/*.js"],
+  apis: ["./src/routes/forAI/*.js", "./src/routes/forFront/*.js"],
 }
 
 export const specs = swaggereJsdoc(options)
