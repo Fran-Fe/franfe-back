@@ -29,14 +29,6 @@ app.get('/swagger-json', (req, res) => {
   res.send(specs);
 });
 
-app.get('', (req, res) => {
-  logger.debug('hello');
-  logger.info('hello');
-  logger.warn('hello');
-  return new ApiError("testsetes");
-
-});
-
 app.use(function (req, res, next) {
   next(createError(404));
 });
