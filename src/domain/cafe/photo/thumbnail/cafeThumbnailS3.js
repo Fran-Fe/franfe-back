@@ -33,13 +33,13 @@ export function findAllByCafeUuid(cafeUuid) {
 export function findAll() {
   return CafeThumbnailS3.findAll({
     attributes: ['bucketUrl', 'cafeUuid', 'category']
-});
+  });
 }
 
-export function findAllByCategoryInPagination(category,pageSize,offset) {
+export function findAllByCategoryInPagination(category, pageSize, offset) {
   return CafeThumbnailS3.findAll({
     attributes: ['bucketUrl', 'cafeUuid'],
-    where:{
+    where: {
       category: category,
     },
     limit: pageSize,

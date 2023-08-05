@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import QueryParameterIsRequiredError from '../../errors/QueryParameterIsRequiredError.js';
-import { getGalleryThumbnails } from '../../domain/cafe/gallery/galleryTransactionService.js';
-import { checkGalleryRequest } from '../../domain/cafe/gallery/checkGalleryReqService.js';
+import { getGalleryThumbnails, checkGalleryRequest } from '../../domain/cafe/photo/thumbnail/cafeThumbnailTransactionService.js';
 import { throwApiError } from '../../errors/apiError.js';
 
 export const router = Router();
