@@ -75,6 +75,8 @@ router.get('', async (req,res, next) => {
  *                   items:
  *                     type: string
  *       responses:
+ *         '200':
+ *           description: Successful response
  */
 
 router.post('/compare', async (req, res, next) => {

@@ -1,5 +1,5 @@
 import { addComparisonCount, getCafeRankings } from "./cafeClickCountService.js";
-import ApiError from "../../../errors/apiError.js";
+import ApiError, { throwApiError } from "../../../errors/apiError.js";
 import { CafeRankingDto } from "../../../routes/dtos/CafeRankingDto.js";
 import BooleanValidate from "../../../utils/booleanValidate.js";
 
@@ -12,11 +12,7 @@ export async function getRankings() {
     return new CafeRankingDto.Response(userComparisonRank, userCompareWinRank);
 
   } catch (error) {
-    if (error instanceof ApiError) {
-      throw error;
-    }
-
-    throw new ApiError(error.message);
+    throwApiError(error);
   }
 }
 

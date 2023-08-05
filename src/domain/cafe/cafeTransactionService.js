@@ -1,22 +1,112 @@
-import ApiError from "../../errors/apiError.js";
-import { findAll, findByUuid } from "./cafeService.js";
+import { throwApiError } from '../../errors/apiError.js';
+import { findAll, findByUuid, cafeService } from "./cafeService.js";
 import { CafeDto } from "../../routes/dtos/cafeDto.js";
 import BooleanValidate from "../../utils/booleanValidate.js";
-import { findAllByCafeUuid as findOptionByCafeUuid } from "./option/cafeOptionService.js";
-import { findAllByCafeUuid as findAllHashtagsByCafeUuid } from "./hashtag/cafeHashtagService.js";
-import { findAllByCafeUuid as findAllReviewsByCafeUuid } from "./review/cafeReviewService.js";
-import { findAllByCafeUuid as findAllThumbnailsByCafeUuid } from "./thumbnail/cafeThumbnailS3Service.js";
-import { findOneByCafeReviewId as findOneCafeReviewTextByCafeReviewId } from "./review/text/cafeReviewTextService.js";
-import { sequelize } from "../../config/connection.js";
+import { findAllByCafeUuid as findOptionByCafeUuid, validateOptionList } from "./option/cafeOptionService.js";
+import {
+  findAll as findAllHashTags,
+  findAllHashTagByCafeUuid as findAllHashtagsByCafeUuid, validateHashtagList
+} from "./hashtag/cafeHashtagService.js";
+import {
+  findAll as findAllCafeReviews,
+  findAllReviewByCafeUuid as findAllReviewsByCafeUuid
+} from "./review/cafeReviewService.js";
+import {
+  findAll as findAllThumbnails,
+  findAllByCafeUuid as findAllThumbnailsByCafeUuid
+} from "./photo/thumbnail/cafeThumbnailS3Service.js";
 import { addCompareWinCount } from "./clickCount/cafeClickCountService.js";
+import { CafeListDto } from "../../routes/dtos/cafeListDto.js";
+import _ from "lodash";
 
 
 export async function getAllCafes() {
   try {
 
     const cafes = await findAll();
-    const res = (await (cafes))
-      .map((cafe) => new CafeDto.Response(cafe))
+    return (await (cafes))
+      .map((cafe) => new CafeDto.Response(cafe));
+
+  } catch (error) {
+    throwApiError(error);
+  }
+}
+
+export async function getCafeDetailInfo(cafeUuid, isWin) {
+  try {
+    await addCompareWinCountOfCafe(cafeUuid, isWin);
+    const {cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3List} = await getCafeDetailDtoInfo(cafeUuid);
+
+    return new CafeDto.DetailResponse(cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3List);
+
+  } catch (error) {
+    throwApiError(error);
+  }
+}
+
+export async function getCafeLocations(req) {
+  try {
+    const cafes = await cafeService(req);
+
+    const {allThumbnails, allReviews, allHashtags} = getCachesForCafe();
+
+    const res = await Promise.all(cafes.map(
+      async (cafe) => {
+        if (await validatePageable(req, cafe)) {
+          return createDto(cafe, req, allThumbnails, allReviews, allHashtags);
+        }
+      }
+    ));
+
+    return res.sort((a, b) => a.distance - b.distance);
+
+  } catch (error) {
+    throwApiError(error);
+  }
+}
+
+async function createDto(cafe, req, allThumbnails, allReviews, allHashtags) {
+  const distance = getDistance(cafe, req);
+  const thumbnailObjects = getThumbnailObjects(allThumbnails, cafe);
+  const reviewCount = allReviews[cafe.uuid].length;
+  const hashtags = allHashtags[cafe.uuid]
+    .map((hashtag) => hashtag.hashtag);
+
+  return new CafeListDto.Response(cafe, thumbnailObjects, hashtags, distance, reviewCount);
+}
+
+async function validatePageable(req, cafe) {
+  return await validateWithOption(req, cafe) && await validateWithHashtag(req, cafe);
+}
+
+async function validateWithOption(req, cafe) {
+  if (req.options.length > 0) {
+    return await validateOptionList(req.options, cafe.uuid);
+  }
+}
+
+async function validateWithHashtag(req, cafe) {
+  if (req.hashtags.length > 0) {
+    return await validateHashtagList(req.hashtags, cafe.uuid);
+  }
+}
+
+export async function getAllCafesPhotos() {
+  try {
+    const transaction = await sequelize.transaction();
+
+    const cafeUuids = (await findAll())
+      .map((cafe) => cafe.uuid);
+
+    const res = [];
+
+    for (const cafeUuid of cafeUuids) {
+      const photoS3List = await findAllByCafeUuid(cafeUuid);
+      const photoS3UrlList = photoS3List.map((photo) => photo.bucketUrl);
+      res.push(new CafePhotoDto.Response(cafeUuid, photoS3UrlList));
+    }
+
+    await transaction.commit();
 
     return res;
 
@@ -25,29 +115,8 @@ export async function getAllCafes() {
       throw error;
     }
 
-    throw new ApiError(error.message);
-  }
-}
-
-export async function getCafeDetailInfo(cafeUuid, isWin) {
-  try {
-    const transaction = await sequelize.transaction();
-
-    await addCompareWinCountOfCafe(cafeUuid, isWin);
-    const {cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3List} = await getCafeDetailDtoInfo(cafeUuid);
-
-    await transaction.commit();
-
-    return new CafeDto.DetailResponse(cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3List);
-
-  } catch (error) {
-    if (error instanceof ApiError) {
-      throw error;
-    }
-
     throw new ApiError(error.stackTrace);
   }
-
 }
 
 async function addCompareWinCountOfCafe(cafeUuid, isWin) {
@@ -79,10 +148,7 @@ async function getCafeHashtags(cafeUuid) {
 async function getCafeReviews(cafeUuid) {
   const reviews = await findAllReviewsByCafeUuid(cafeUuid);
   const reviewPromises = reviews.map(async (review) => {
-    const reviewText = await findOneCafeReviewTextByCafeReviewId(review.id, BooleanValidate.TRUE).then(e => e.text);
-    //fixme: 만약 여기에서 시간이 많이 걸린다면 caching 을 고려할것
-
-    return new CafeDto.DetailResponse.Review(review, reviewText);
+    return new CafeDto.DetailResponse.Review(review);
   });
 
   return Promise.all(reviewPromises);
@@ -91,4 +157,21 @@ async function getCafeReviews(cafeUuid) {
 async function getCafeThumbnailS3(cafeUuid) {
   const thumbnails = await findAllThumbnailsByCafeUuid(cafeUuid);
   return thumbnails.map((thumbnail) => new CafeDto.DetailResponse.thumbnailS3(thumbnail));
+}
+
+function getDistance(cafe, req) {
+  return Math.sqrt(((req.userLat - cafe.lat) ** 2) + ((req.userLng - cafe.lng) ** 2));
+}
+
+async function getCachesForCafe() {
+  const allThumbnails = _.groupBy(await findAllThumbnails(), "cafeUuid");
+  const allReviews = _.groupBy(await findAllCafeReviews(), "cafeUuid");
+  const allHashtags = _.groupBy(await findAllHashTags(), "cafeUuid");
+
+  return {allThumbnails, allReviews, allHashtags};
+}
+
+function getThumbnailObjects(allThumbnails, cafe) {
+  const thumbnails = allThumbnails[cafe.uuid];
+  return thumbnails.map((thumbnail) => new CafeListDto.Thumbnail(thumbnail));
 }

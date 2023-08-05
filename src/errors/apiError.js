@@ -8,5 +8,6 @@ export function throwApiError(error){
   if (error instanceof ApiError) {
     throw error;
   }
-  throw new ApiError(error.stackTrace);
+
+  throw new ApiError(error.message);
 }

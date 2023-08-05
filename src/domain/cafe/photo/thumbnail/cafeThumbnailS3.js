@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../../../config/connection.js";
+import { sequelize } from "../../../../config/connection.js";
 
 export const CafeThumbnailS3 = sequelize.define("cafe_thumbnail_s3", {
   bucketUrl: {
@@ -30,6 +30,12 @@ export function findAllByCafeUuid(cafeUuid) {
   });
 }
 
+export function findAll() {
+  return CafeThumbnailS3.findAll({
+    attributes: ['bucketUrl', 'cafeUuid', 'category']
+});
+}
+
 export function findAllByCategoryInPagination(category,pageSize,offset) {
   return CafeThumbnailS3.findAll({
     attributes: ['bucketUrl', 'cafeUuid'],
@@ -38,5 +44,5 @@ export function findAllByCategoryInPagination(category,pageSize,offset) {
     },
     limit: pageSize,
     offset: offset
-  })
+  });
 }
