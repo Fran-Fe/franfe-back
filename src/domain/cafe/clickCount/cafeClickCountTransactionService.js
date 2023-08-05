@@ -27,11 +27,7 @@ export async function chooseAsCompare(cafeUuids) {
     }
 
   } catch (error) {
-    if (error instanceof ApiError) {
-      throw error;
-    }
-
-    throw new ApiError(error.message);
+    throwApiError(error);
   }
 }
 

@@ -111,11 +111,7 @@ export async function getAllCafesPhotos() {
     return res;
 
   } catch (error) {
-    if (error instanceof ApiError) {
-      throw error;
-    }
-
-    throw new ApiError(error.stackTrace);
+    throwApiError(error);
   }
 }
 
