@@ -18,6 +18,8 @@ import {
 import { addCompareWinCount } from "./clickCount/cafeClickCountService.js";
 import { CafeListDto } from "../../routes/dtos/cafeListDto.js";
 import _ from "lodash";
+import { CafePhotoDto } from "../../routes/dtos/CafePhotoDto.js";
+import { findAllByCafeUuid } from "./photo/cafePhoto.js";
 
 
 export async function getAllCafes() {
