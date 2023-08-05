@@ -14,7 +14,7 @@ import {
 import {
   findAll as findAllThumbnails,
   findAllByCafeUuid as findAllThumbnailsByCafeUuid
-} from "./thumbnail/cafeThumbnailS3Service.js";
+} from "./photo/thumbnail/cafeThumbnailS3Service.js";
 import { addCompareWinCount } from "./clickCount/cafeClickCountService.js";
 import { CafeListDto } from "../../routes/dtos/cafeListDto.js";
 import _ from "lodash";
