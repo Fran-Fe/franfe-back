@@ -42,7 +42,7 @@ async function createTables(create_tables_sql_string) {
 
 async function executeQuerySplitedByTwoNewLines(sql_string_list)  {
   for (const sql_string of sql_string_list.split('\n\n')) {
-    if (!sql_string){
+    if (sql_string === '\n' | !sql_string ) {
       break;
     }
 

@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../../../config/connection.js";
+import { sequelize } from "../../../../config/connection.js";
 
 export const CafeThumbnailS3 = sequelize.define("cafe_thumbnail_s3", {
   bucketUrl: {
@@ -29,4 +29,10 @@ export function findAllByCafeUuid(cafeUuid) {
       cafeUuid: cafeUuid,
     }
   });
+}
+
+export function findAll() {
+  return CafeThumbnailS3.findAll({
+    attributes: ['bucketUrl', 'cafeUuid', 'category']
+  })
 }
