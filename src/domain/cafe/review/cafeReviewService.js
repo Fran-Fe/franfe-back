@@ -1,5 +1,9 @@
-import { findAllByCafeUuid as findAllEntitiesByCafeUuid} from "./cafeReview.js";
+import { findAllByCafeUuid as findAllEntitiesByCafeUuid, findAll as findAllEntities} from "./cafeReview.js";
 
-export async function findAllByCafeUuid(cafeUuid) {
+export async function findAllReviewByCafeUuid(cafeUuid) {
    return await findAllEntitiesByCafeUuid(cafeUuid);
+}
+
+export async function findAll() {
+   return await findAllEntities()
 }

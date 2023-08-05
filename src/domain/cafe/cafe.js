@@ -1,4 +1,4 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Op, Sequelize } from "sequelize";
 import { sequelize } from "../../config/connection.js";
 
 export const Cafe = sequelize.define("cafes", {
@@ -52,5 +52,26 @@ export function findAll() {
 export function findByUuid(uuid) {
   return Cafe.findOne({
     where: {uuid: uuid}
+  });
+}
+
+export function findEntityByPosition(userLat, userLng, distance, doPage, firstId, lastId, search) {
+  const condition = {};
+
+  if (doPage) {
+    condition.id = {
+      [Op.between]: [firstId, lastId]
+    }
+  }
+
+  if (!search) {
+    condition.placeName = {
+      [Op.like]: `%${search}%`
+    }
+  }
+
+  return Cafe.findAll({
+    where: sequelize.literal(`ST_Distance_Sphere(POINT(lng, lat), POINT(${userLng},${userLat})) <= ${distance}`
+    )
   });
 }
