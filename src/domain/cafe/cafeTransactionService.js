@@ -91,6 +91,34 @@ async function validateWithHashtag(req, cafe) {
   }
 }
 
+export async function getAllCafesPhotos() {
+  try {
+    const transaction = await sequelize.transaction();
+
+    const cafeUuids = (await findAll())
+      .map((cafe) => cafe.uuid);
+
+    const res = [];
+
+    for (const cafeUuid of cafeUuids) {
+      const photoS3List = await findAllByCafeUuid(cafeUuid);
+      const photoS3UrlList = photoS3List.map((photo) => photo.bucketUrl);
+      res.push(new CafePhotoDto.Response(cafeUuid, photoS3UrlList));
+    }
+
+    await transaction.commit();
+
+    return res;
+
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    }
+
+    throw new ApiError(error.stackTrace);
+  }
+}
+
 async function addCompareWinCountOfCafe(cafeUuid, isWin) {
   if (isWin) {
     await addCompareWinCount(cafeUuid, BooleanValidate.FALSE);

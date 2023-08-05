@@ -53,4 +53,9 @@ export function getCafeLocationResponseAssert(res) {
     expect(res.body[0].thumbnails[0]).to.have.property('bucketUrl');
     expect(res.body[0]).to.have.property('hashTags');
   }
+export function getAllPhotosForCafesAssert(res) {
+  expect(res).to.have.status(200);
+  expect(res.body[0]).to.have.property("cafeUuid");
+  expect(res.body[0]).to.have.property("bucketUrlList");
+}
 }
