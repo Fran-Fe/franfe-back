@@ -2,6 +2,7 @@ import { addComparisonCount, getCafeRankings } from "./cafeClickCountService.js"
 import ApiError from "../../../errors/apiError.js";
 import { CafeRankingDto } from "../../../routes/dtos/CafeRankingDto.js";
 import BooleanValidate from "../../../utils/booleanValidate.js";
+import { findByUuid } from "../cafeService.js";
 
 export async function getRankings() {
   try {
@@ -24,6 +25,8 @@ export async function chooseAsCompare(cafeUuids) {
   try {
 
     for (const cafeUuid of cafeUuids) {
+      const _ = await findByUuid(cafeUuid, BooleanValidate.TRUE)
+
       await addComparisonCount(cafeUuid, BooleanValidate.FALSE);
     }
 
