@@ -8,8 +8,6 @@ export async function getGalleryThumbnails(req){
   try{
     const transaction = await sequelize.transaction();
 
-    if(checkGalleryRequest(req)) throwApiError(req);
-
     const request = await new galleryDto.Request(req);
     const data = await findAllByCategoryForGallery(request);
     const thumbnails = await data.map((d) => new galleryDto.thumbnail(d));
