@@ -20,7 +20,7 @@ app.use('/cafes', cafeRouter);
 app.use('/cafe/rankings', cafeRankingRouter);
 app.use('/cafe/infos', cafeInfoRouter);
 app.use('/cafe/list', cafeListRouter);
-app.use('/gallery',galleryRouter);
+app.use('/gallery', galleryRouter);
 app.use('/swagger-html', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.get('/swagger-json', (req, res) => {

@@ -15,7 +15,7 @@ export class galleryDto{
 
   static thumbnail = class{
     constructor(data) {
-      this.uuid = data.dataValues.cafeUuid;
+      this.cafeUuid = data.dataValues.cafeUuid;
       this.url = data.dataValues.bucketUrl;
     }
   }
