@@ -5,3 +5,4 @@ drop table if exists cafe_hashtags;
 drop table if exists cafe_reviews;
 drop table if exists cafe_thumbnail_s3;
 drop table if exists cafe_review_texts;
+drop table if exists cafe_photos_s3;

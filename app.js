@@ -18,7 +18,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 app.use('/cafes', cafeRouter);
-app.use('/cafes', cafeRouter);
 app.use('/cafe/rankings', cafeRankingRouter);
 app.use('/cafe/infos', cafeInfoRouter);
 app.use('/swagger-html', swaggerUi.serve, swaggerUi.setup(specs));

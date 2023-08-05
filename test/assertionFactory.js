@@ -39,3 +39,9 @@ export function getAllCafesResponseAssert(res) {
   expect(res.body[0]).to.have.property("address");
   expect(res.body[0]).to.have.property("placeName");
 }
+
+export function getAllPhotosForCafesAssert(res) {
+  expect(res).to.have.status(200);
+  expect(res.body[0]).to.have.property("cafeUuid");
+  expect(res.body[0]).to.have.property("bucketUrlList");
+}
