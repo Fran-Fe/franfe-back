@@ -1,11 +1,14 @@
 import { sequelize } from '../../../config/connection.js';
-import ApiError from '../../../errors/apiError.js';
+import ApiError, { throwApiError } from '../../../errors/apiError.js';
 import { findAllByCategoryForGallery } from './galleryService.js';
 import { galleryDto } from '../../../routes/dtos/galleryDto.js';
+import { checkGalleryRequest } from './checkGalleryReqService.js';
 
 export async function getGalleryThumbnails(req){
   try{
     const transaction = await sequelize.transaction();
+
+    if(checkGalleryRequest(req)) throwApiError(req);
 
     const request = await new galleryDto.Request(req);
     const data = await findAllByCategoryForGallery(request);
@@ -17,9 +20,6 @@ export async function getGalleryThumbnails(req){
     return response
 
   }catch (error) {
-    if (error instanceof ApiError) {
-      throw error;
-    }
-    throw new ApiError(error.stackTrace);
+    throwApiError(error);
   }
 }
