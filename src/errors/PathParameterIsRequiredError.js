@@ -7,7 +7,6 @@ export default class PathParameterIsRequiredError extends ApiError {
     const message = Api.PATH_PARAMETER_IS_REQUIRED + ` : params = ${paramsString}`;
 
     super(message);
-
     this.message = message
   }
 }
