@@ -8,6 +8,8 @@ import app from '../app.js';
 import debug from 'debug';
 import http from 'http';
 import { connect } from "../src/config/connection.js";
+import { logger } from "../src/logger/winston.js";
+import * as fs from "fs";
 
 /**
  * Get port from environment and store in Express.
@@ -27,6 +29,9 @@ const server = http.createServer(app);
  */
 
 server.listen(port, () => {
+  fs.writeFileSync("./logs/error.log", "");
+  fs.writeFileSync("./logs/combined.log", "");
+
   connect();
 })
 server.on('error', onError);
@@ -58,7 +63,7 @@ function normalizePort(val) {
 
 function onError(error) {
   if (error.syscall !== 'listen') {
-    console.log(error);
+    logger.error(error);
     throw error;
   }
 

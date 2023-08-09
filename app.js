@@ -9,6 +9,7 @@ import { router as cafeInfoRouter } from './src/routes/forFront/cafeInfoRoutes.j
 import { router as cafeListRouter } from './src/routes/forFront/cafeRoutes.js'
 import { router as galleryRouter} from './src/routes/forFront/galleryRoutes.js'
 import { jobGenerator } from "./src/schedule/scheduler.js";
+import {logger} from "./src/logger/winston.js";
 
 const app = express();
 // jobGenerator('* * * * *', abc);
@@ -38,12 +39,12 @@ app.use(function (err, req, res, next) {
 
   res.status(err.status || 500);
 
-  console.error(err);
+  logger.error(err.stack);
 
-  if (res instanceof ApiError) {
-    res.json(error);
+  if (err instanceof ApiError) {
+    res.json(err.toString());
   } else {
-    res.json(new ApiError(error.stackTrace));
+    res.json(new ApiError(err.stack));
   }
 });
 

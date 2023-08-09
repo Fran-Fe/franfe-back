@@ -3,12 +3,12 @@ import CafeNotFoundError from "../../errors/cafeNotFoundError.js";
 import { findEntityByPosition } from "./cafe.js";
 import { page } from "../../utils/pageable.js";
 
-export function findAll() {
-  return findAllEntities();
+export async function findAll() {
+  return await findAllEntities();
 }
 
-export function findByUuid(uuid, booleanValidate) {
-  const cafe = findOneEntityByUuid(uuid);
+export async function findByUuid(uuid, booleanValidate) {
+  const cafe = await findOneEntityByUuid(uuid);
 
   if (booleanValidate && cafe == null) {
     throw new CafeNotFoundError(uuid);
