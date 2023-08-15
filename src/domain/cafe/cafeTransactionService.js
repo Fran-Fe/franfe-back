@@ -1,5 +1,5 @@
 import { throwApiError } from '../../errors/apiError.js';
-import { findAll, findByUuid, cafeService } from "./cafeService.js";
+import { findAll, findByUuid, findAllPageableCafesByPosition } from "./findAllPageableCafesByPosition.js";
 import { CafeDto } from "../../routes/dtos/cafeDto.js";
 import BooleanValidate from "../../utils/booleanValidate.js";
 import { findAllByCafeUuid as findOptionByCafeUuid, validateOptionList } from "./option/cafeOptionService.js";
@@ -48,33 +48,53 @@ export async function getCafeDetailInfo(cafeUuid, isWin) {
 
 export async function getCafeLocations(req) {
   try {
-    const cafes = await cafeService(req);
+    const cafes = await findAllPageableCafesByPosition(req);
 
     const {allThumbnails, allReviews, allHashtags} = getCachesForCafe();
 
-    const res = await Promise.all(cafes.map(
+    const topCountHashtags = [];
+    const cafeInfos = await Promise.all(cafes.map(
       async (cafe) => {
         if (await validatePageable(req, cafe)) {
-          return createDto(cafe, req, allThumbnails, allReviews, allHashtags);
+          return createCafeInfoDtos(cafe, req, allThumbnails, allReviews, allHashtags, topCountHashtags);
         }
       }
     ));
 
-    return res.sort((a, b) => a.distance - b.distance);
+    cafeInfos.sort((a, b) => a.distance - b.distance);
+
+    return new CafeListDto.Response(cafeInfos, topCountHashtags);
 
   } catch (error) {
     throwApiError(error);
   }
 }
 
-async function createDto(cafe, req, allThumbnails, allReviews, allHashtags) {
+async function createCafeInfoDtos(cafe, req, allThumbnails, allReviews, allHashtags, topCountHashtags) {
   const distance = getDistance(cafe, req);
   const thumbnailObjects = getThumbnailObjects(allThumbnails, cafe);
   const reviewCount = allReviews[cafe.uuid].length;
-  const hashtags = allHashtags[cafe.uuid]
-    .map((hashtag) => hashtag.hashtag);
+  const hashtagsHashMap = new Map();
 
-  return new CafeListDto.Response(cafe, thumbnailObjects, hashtags, distance, reviewCount);
+  const hashtags = allHashtags[cafe.uuid]
+    .map((hashtag) => {
+      addInHashMap(hashtagsHashMap, hashtag);
+      return hashtag.hashtag
+    });
+  topCountHashtags = getTopCountHashtags(hashtagsHashMap);
+
+  return {cafeList : new CafeListDto.CafeInfo(cafe, thumbnailObjects, hashtags, distance, reviewCount), topCountHashtags};
+}
+
+function getTopCountHashtags(hashtagsHashMap) {
+  const entriesArray = Array.from(hashtagsHashMap.entries());
+  entriesArray.sort((first, second) => second[1] - first[1]);
+  return entriesArray.slice(0, 30)
+    .map((hashtagHashMap) => hashtagHashMap[0]);
+}
+
+function addInHashMap(hashMap, hashtag) {
+  hashMap.has(hashtag.hashtag) ? hashMap.set(hashtag.hashtag, hashMap.get(hashtag.hashtag) + 1) : hashMap.set(hashtag.hashtag, 1);
 }
 
 async function validatePageable(req, cafe) {
