@@ -9,13 +9,22 @@ import { router as cafeInfoRouter } from './src/routes/forFront/cafeInfoRoutes.j
 import { router as cafeListRouter } from './src/routes/forFront/cafeRoutes.js'
 import { router as galleryRouter} from './src/routes/forFront/galleryRoutes.js'
 import { jobGenerator } from "./src/schedule/scheduler.js";
-import {logger} from "./src/logger/winston.js";
+import { logger } from "./src/logger/winston.js";
+import heapdump from 'node-oom-heapdump';
+
+import * as path from 'path';
+
+const __filename = new URL(import.meta.url).pathname;
+const __dirname = path.dirname(__filename);
+
+heapdump({
+  path: path.resolve(__dirname, 'logs', 'heapdump.log')
+});
 
 const app = express();
-// jobGenerator('* * * * *', abc);
 
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 
 app.use('/cafes', cafeRouter);
 app.use('/cafe/rankings', cafeRankingRouter);
