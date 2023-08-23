@@ -11,7 +11,15 @@ export class CafeListDto {
       this.pageSize = req.pageSize === undefined ? null : Number(req.pageSize);
     }
   }
+
   static Response = class {
+    constructor(cafeInfoList, topCountHashtags) {
+        this.cafeInfoList = cafeInfoList;
+        this.topCountHashtags = topCountHashtags;
+    }
+  }
+
+  static CafeInfo = class {
     constructor(cafe, thumbnails, hashTags, distance, reviewCount = 0,) {
       this.uuid = cafe.uuid;
       this.address = cafe.address;

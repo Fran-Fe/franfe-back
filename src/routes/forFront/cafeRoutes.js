@@ -10,35 +10,35 @@ export const router = Router();
  * paths:
  *   /cafe/list:
  *     get:
- *       summary: get cafe info for front
+ *       summary: Get cafe information for the front-end
  *       tags: [cafe]
  *       parameters:
  *         - in: query
  *           name: userLat
- *           description: is user current Latitude
+ *           description: User's current latitude
  *           required: true
  *           schema:
  *             type: string
  *         - in: query
  *           name: userLng
- *           description: is user current Longitude
+ *           description: User's current longitude
  *           required: true
  *           schema:
  *             type: string
  *         - in: query
  *           name: radius
- *           description: is for detecting around radius as meter
+ *           description: Radius to detect cafes around, in meters
  *           schema:
  *             type: string
  *         - in: query
  *           name: search
- *           description: search value
+ *           description: Search value
  *           required: false
  *           schema:
  *             type: string
  *         - in: query
  *           name: options
- *           description: option list with string
+ *           description: List of options as strings
  *           required: false
  *           schema:
  *             type: array
@@ -46,7 +46,7 @@ export const router = Router();
  *               type: string
  *         - in: query
  *           name: hashtags
- *           description: hashtag list with string
+ *           description: List of hashtags as strings
  *           required: false
  *           schema:
  *             type: array
@@ -54,13 +54,13 @@ export const router = Router();
  *               type: string
  *         - in: query
  *           name: pageNumber
- *           description: pageNumber with string
+ *           description: Page number as string
  *           required: false
  *           schema:
  *             type: string
  *         - in: query
  *           name: pageSize
- *           description: pageSize with string
+ *           description: Page size as string
  *           required: false
  *           schema:
  *             type: string
@@ -70,37 +70,45 @@ export const router = Router();
  *           content:
  *             application/json:
  *               schema:
- *                 type: array
- *                 items:
- *                   type: object
- *                   properties:
- *                     uuid:
+ *                 type: object
+ *                 properties:
+ *                   cafeInfoList:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         uuid:
+ *                           type: string
+ *                         address:
+ *                           type: string
+ *                         placeName:
+ *                           type: string
+ *                         rating:
+ *                           type: number
+ *                         reviewCount:
+ *                           type: number
+ *                         thumbnails:
+ *                           type: array
+ *                           items:
+ *                             type: object
+ *                             properties:
+ *                               category:
+ *                                 type: integer
+ *                               bucketUrl:
+ *                                 type: string
+ *                         hashTags:
+ *                           type: array
+ *                           items:
+ *                             type: object
+ *                             properties:
+ *                               hashtag:
+ *                                 type: string
+ *                   topCountHashtags:
+ *                     type: array
+ *                     items:
  *                       type: string
- *                     address:
- *                       type: string
- *                     placeName:
- *                       type: string
- *                     rating:
- *                       type: number
- *                     reviewCount:
- *                       type: number
- *                     thumbnails:
- *                       type: array
- *                       items:
- *                         type: object
- *                         properties:
- *                           category:
- *                             type: integer
- *                           bucketUrl:
- *                             type: string
- *                     hashTags:
- *                       type: array
- *                       items:
- *                         type: object
- *                         properties:
- *                           hashtag:
- *                             type: string
  */
+
 
 
 router.get('', async (req, res, next) => {
@@ -118,5 +126,3 @@ router.get('', async (req, res, next) => {
     next(e);
   }
 })
-
-//search, hashtag, option

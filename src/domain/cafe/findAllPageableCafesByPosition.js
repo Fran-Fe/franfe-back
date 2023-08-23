@@ -17,7 +17,7 @@ export async function findByUuid(uuid, booleanValidate) {
   return cafe;
 }
 
-export function cafeService(req) {
+export function findAllPageableCafesByPosition(req) {
   const {doPage, firstId, lastId} = page(req);
 
   return findEntityByPosition(req.userLat, req.userLng, req.radius, doPage, firstId, lastId, req.options, req.hashtags, req.search);
