@@ -45,3 +45,13 @@ router.get('/photos', async (req, res, next) => {
     }
   }
 );
+
+router.post('/photos', async (req, res, next) => {
+    try {
+
+
+    } catch (error) {
+      next(error);
+    }
+  }
+);
