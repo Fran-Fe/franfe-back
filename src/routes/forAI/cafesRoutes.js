@@ -1,43 +1,7 @@
 import { Router } from 'express';
-import { getAllCafes, getAllCafesPhotos } from "../../domain/cafe/cafeTransactionService.js";
+import { getAllCafesPhotos } from "../../domain/cafe/photo/cafePhotoUrlTransactionService.js";
 
 export const router = Router();
-
-/**
- * @swagger
- * paths:
- *   /cafes:
- *     get:
- *       summary: get all cafe info for ai
- *       tags: [Cafes]
- *       responses:
- *         "200":
- *           description: A list of cafes.
- *           content:
- *             application/json:
- *               schema:
- *                 type: array
- *                 items:
- *                   type: object
- *                   properties:
- *                     uuid:
- *                       type: string
- *                     address:
- *                       type: string
- *                     placeName:
- *                       type: string
- *
- */
-router.get('', async (req, res, next) => {
-  try {
-
-    const response = await getAllCafes();
-
-    res.json(response);
-  } catch (error) {
-    next(error);
-  }
-});
 
 /**
  * @swagger
@@ -48,7 +12,7 @@ router.get('', async (req, res, next) => {
  *       tags: [Cafes]
  *       responses:
  *         "200":
- *           description: A list of cafes.
+ *           description: A list of cafes with photo URLs.
  *           content:
  *             application/json:
  *               schema:
@@ -58,17 +22,33 @@ router.get('', async (req, res, next) => {
  *                   properties:
  *                     cafeUuid:
  *                       type: string
- *                     bucketUrl:
+ *                     photos:
  *                       type: array
  *                       items:
- *                         type: string
+ *                         type: object
+ *                         properties:
+ *                           id:
+ *                             type: integer
+ *                           url:
+ *                             type: string
  *
- */
+ * */
+
 router.get('/photos', async (req, res, next) => {
     try {
       const response = await getAllCafesPhotos();
 
       res.json(response);
+
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post('/photos', async (req, res, next) => {
+    try {
+
 
     } catch (error) {
       next(error);

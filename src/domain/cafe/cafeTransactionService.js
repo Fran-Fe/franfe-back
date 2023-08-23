@@ -1,5 +1,5 @@
 import { throwApiError } from '../../errors/apiError.js';
-import { findAll, findByUuid, findAllPageableCafesByPosition } from "./findAllPageableCafesByPosition.js";
+import { findByUuid, findAllPageableCafesByPosition } from "./cafeService.js";
 import { CafeDto } from "../../routes/dtos/cafeDto.js";
 import BooleanValidate from "../../utils/booleanValidate.js";
 import { findAllByCafeUuid as findOptionByCafeUuid, validateOptionList } from "./option/cafeOptionService.js";
@@ -18,21 +18,7 @@ import {
 import { addCompareWinCount } from "./clickCount/cafeClickCountService.js";
 import { CafeListDto } from "../../routes/dtos/cafeListDto.js";
 import _ from "lodash";
-import { CafePhotoDto } from "../../routes/dtos/CafePhotoDto.js";
-import { findAllByCafeUuid } from "./photo/cafePhoto.js";
 
-
-export async function getAllCafes() {
-  try {
-
-    const cafes = await findAll();
-    return (await (cafes))
-      .map((cafe) => new CafeDto.Response(cafe));
-
-  } catch (error) {
-    throwApiError(error);
-  }
-}
 
 export async function getCafeDetailInfo(cafeUuid, isWin) {
   try {
@@ -113,29 +99,7 @@ async function validateWithHashtag(req, cafe) {
   }
 }
 
-export async function getAllCafesPhotos() {
-  try {
-    const transaction = await sequelize.transaction();
 
-    const cafeUuids = (await findAll())
-      .map((cafe) => cafe.uuid);
-
-    const res = [];
-
-    for (const cafeUuid of cafeUuids) {
-      const photoS3List = await findAllByCafeUuid(cafeUuid);
-      const photoS3UrlList = photoS3List.map((photo) => photo.bucketUrl);
-      res.push(new CafePhotoDto.Response(cafeUuid, photoS3UrlList));
-    }
-
-    await transaction.commit();
-
-    return res;
-
-  } catch (error) {
-    throwApiError(error);
-  }
-}
 
 async function addCompareWinCountOfCafe(cafeUuid, isWin) {
   if (isWin) {
