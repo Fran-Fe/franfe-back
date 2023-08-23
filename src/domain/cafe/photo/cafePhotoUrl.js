@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../../../config/connection.js";
 
-export const CafePhotoUrl = sequelize.define("cafe-photo-urls", {
+export const CafePhotoUrl = sequelize.define("cafe_photo_urls", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,

@@ -28,7 +28,7 @@ export const CafeThumbnailUrl = sequelize.define("cafe_thumbnail_urls", {
 });
 
 export function findAllByCafeUuid(cafeUuid) {
-  return CafeThumbnailS3.findAll({
+  return CafeThumbnailUrl.findAll({
     attributes: ['bucketUrl', 'cafeUuid', 'category'],
     where: {
       cafeUuid: cafeUuid,
@@ -37,7 +37,7 @@ export function findAllByCafeUuid(cafeUuid) {
 }
 
 export function findAll() {
-  return CafeThumbnailS3.findAll({
+  return CafeThumbnailUrl.findAll({
     attributes: ['bucketUrl', 'cafeUuid', 'category']
   });
 }
