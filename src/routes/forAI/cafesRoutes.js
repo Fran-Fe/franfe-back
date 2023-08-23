@@ -1,43 +1,7 @@
 import { Router } from 'express';
-import { getAllCafes, getAllCafesPhotos } from "../../domain/cafe/cafeTransactionService.js";
+import { getAllCafesPhotos } from "../../domain/cafe/photo/cafePhotoUrlTransactionService.js";
 
 export const router = Router();
-
-/**
- * @swagger
- * paths:
- *   /cafes:
- *     get:
- *       summary: get all cafe info for ai
- *       tags: [Cafes]
- *       responses:
- *         "200":
- *           description: A list of cafes.
- *           content:
- *             application/json:
- *               schema:
- *                 type: array
- *                 items:
- *                   type: object
- *                   properties:
- *                     uuid:
- *                       type: string
- *                     address:
- *                       type: string
- *                     placeName:
- *                       type: string
- *
- */
-router.get('', async (req, res, next) => {
-  try {
-
-    const response = await getAllCafes();
-
-    res.json(response);
-  } catch (error) {
-    next(error);
-  }
-});
 
 /**
  * @swagger
@@ -56,12 +20,10 @@ router.get('', async (req, res, next) => {
  *                 items:
  *                   type: object
  *                   properties:
- *                     cafeUuid:
+ *                     id:
+ *                       type: integer
+ *                     url:
  *                       type: string
- *                     bucketUrl:
- *                       type: array
- *                       items:
- *                         type: string
  *
  */
 router.get('/photos', async (req, res, next) => {
