@@ -38,15 +38,20 @@ export async function getCafeLocations(req) {
 
     const {allThumbnails, allReviews, allHashtags} = await getCachesForCafe();
 
-    const topCountHashtags = [];
+    const totalHashTags = [];
     const cafeInfos = await Promise.all(cafes.map(
       async (cafe) => {
         if (await validatePageable(req, cafe)) {
-          return await createCafeInfoDtos(cafe, req, allThumbnails, allReviews, allHashtags, topCountHashtags);
+          const cafeInfo = await createCafeInfoDtos(cafe, req, allThumbnails, allReviews, allHashtags);
+
+          totalHashTags.push(...cafeInfo.hashTags);
+
+          return cafeInfo;
         }
       }
     ));
 
+    const topCountHashtags = getTopCountHashtags(addInHashMap(new Map(), totalHashTags));
     cafeInfos.sort((a, b) => a.distance - b.distance);
 
     return new CafeListDto.Response(cafeInfos, topCountHashtags);
@@ -56,23 +61,17 @@ export async function getCafeLocations(req) {
   }
 }
 
-async function createCafeInfoDtos(cafe, req, allThumbnails, allReviews, allHashtags, topCountHashtags) {
+async function createCafeInfoDtos(cafe, req, allThumbnails, allReviews, allHashtags) {
   const distance = getDistance(cafe, req);
   const thumbnailObjects = getThumbnailObjects(allThumbnails, cafe);
-  const reviewCount = allReviews[cafe.uuid].length;
-  const hashtagsHashMap = new Map();
+  const reviewCount = (allReviews[cafe.uuid] || []).length;
 
-  const hashtags = allHashtags[cafe.uuid]
+  const hashtags = ( allHashtags[cafe.uuid] || [] )
     .map((hashtag) => {
-      addInHashMap(hashtagsHashMap, hashtag);
       return hashtag.hashtag
     });
-  topCountHashtags = getTopCountHashtags(hashtagsHashMap);
 
-  return {
-    cafeList: new CafeListDto.CafeInfo(cafe, thumbnailObjects, hashtags, distance, reviewCount),
-    topCountHashtags
-  };
+  return new CafeListDto.CafeInfo(cafe, thumbnailObjects, hashtags, distance, reviewCount);
 }
 
 function getTopCountHashtags(hashtagsHashMap) {
@@ -82,8 +81,12 @@ function getTopCountHashtags(hashtagsHashMap) {
     .map((hashtagHashMap) => hashtagHashMap[0]);
 }
 
-function addInHashMap(hashMap, hashtag) {
-  hashMap.has(hashtag.hashtag) ? hashMap.set(hashtag.hashtag, hashMap.get(hashtag.hashtag) + 1) : hashMap.set(hashtag.hashtag, 1);
+function addInHashMap(hashMap, hashtags) {
+  for (const hashtag of hashtags) {
+    hashMap.has(hashtag) ? hashMap.set(hashtag, hashMap.get(hashtag) + 1) : hashMap.set(hashtag, 1);
+  }
+
+  return hashMap;
 }
 
 async function validatePageable(req, cafe) {
@@ -105,7 +108,6 @@ async function validateWithHashtag(req, cafe) {
 
   return true;
 }
-
 
 
 async function addCompareWinCountOfCafe(cafeUuid, isWin) {
@@ -161,7 +163,7 @@ async function getCachesForCafe() {
 }
 
 function getThumbnailObjects(allThumbnails, cafe) {
-  const thumbnails = allThumbnails[cafe.uuid];
+  const thumbnails = allThumbnails[cafe.uuid] || [];
 
   if (!thumbnails || thumbnails.length === 0) {
     return [];
