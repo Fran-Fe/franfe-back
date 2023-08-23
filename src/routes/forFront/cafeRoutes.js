@@ -79,6 +79,10 @@ export const router = Router();
  *                       properties:
  *                         uuid:
  *                           type: string
+ *                         lat:
+ *                           type: number
+ *                         lng:
+ *                           type: number
  *                         address:
  *                           type: string
  *                         placeName:

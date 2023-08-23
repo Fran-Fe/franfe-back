@@ -24,6 +24,8 @@ export class CafeListDto {
       this.uuid = cafe.uuid;
       this.address = cafe.address;
       this.placeName = cafe.placeName;
+      this.lat = cafe.lat;
+      this.lng = cafe.lng
       this.rating = cafe.rating;
       this.reviewCount = reviewCount;
       this.thumbnails = thumbnails;
