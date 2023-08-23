@@ -12,7 +12,7 @@ export const router = Router();
  *       tags: [Cafes]
  *       responses:
  *         "200":
- *           description: A list of cafes.
+ *           description: A list of cafes with photo URLs.
  *           content:
  *             application/json:
  *               schema:
@@ -20,12 +20,20 @@ export const router = Router();
  *                 items:
  *                   type: object
  *                   properties:
- *                     id:
- *                       type: integer
- *                     url:
+ *                     cafeUuid:
  *                       type: string
+ *                     photos:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           id:
+ *                             type: integer
+ *                           url:
+ *                             type: string
  *
- */
+ * */
+
 router.get('/photos', async (req, res, next) => {
     try {
       const response = await getAllCafesPhotos();

@@ -1,7 +1,7 @@
 import { findAll, findOneByCafeUuid, createWhenWin, createWhenCompare } from './cafeClickCount.js';
 import CafeClickCountNotFoundError from "../../../errors/cafeClickCountNotFoundError.js";
 import ApiError from "../../../errors/apiError.js";
-import { findByUuid } from "../findAllPageableCafesByPosition.js";
+import { findByUuid } from "../cafeService.js";
 import BooleanValidate from "../../../utils/booleanValidate.js";
 
 export async function getCafeRankings() {

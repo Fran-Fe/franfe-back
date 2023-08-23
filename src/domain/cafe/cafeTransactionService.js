@@ -1,5 +1,5 @@
 import { throwApiError } from '../../errors/apiError.js';
-import { findByUuid, findAllPageableCafesByPosition } from "./findAllPageableCafesByPosition.js";
+import { findByUuid, findAllPageableCafesByPosition } from "./cafeService.js";
 import { CafeDto } from "../../routes/dtos/cafeDto.js";
 import BooleanValidate from "../../utils/booleanValidate.js";
 import { findAllByCafeUuid as findOptionByCafeUuid, validateOptionList } from "./option/cafeOptionService.js";
