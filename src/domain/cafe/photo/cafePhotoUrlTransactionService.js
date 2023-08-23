@@ -14,7 +14,7 @@ export async function getAllCafesPhotos() {
     const allPhotoUrlsGroupByCafeUuid = _.groupBy(allPhotoUrls, 'cafeUuid');
 
     for (const cafeUuid of cafeUuids) {
-      const photoUrlDtos = allPhotoUrlsGroupByCafeUuid[cafeUuid].map(photoUrl => {
+      const photoUrlDtos = (allPhotoUrlsGroupByCafeUuid[cafeUuid] || []).map(photoUrl => {
         return new CafePhotoUrlDto.CafePhoto(photoUrl.id, photoUrl.url);
       });
 
