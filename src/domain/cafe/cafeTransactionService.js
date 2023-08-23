@@ -50,13 +50,13 @@ export async function getCafeLocations(req) {
   try {
     const cafes = await findAllPageableCafesByPosition(req);
 
-    const {allThumbnails, allReviews, allHashtags} = getCachesForCafe();
+    const {allThumbnails, allReviews, allHashtags} = await getCachesForCafe();
 
     const topCountHashtags = [];
     const cafeInfos = await Promise.all(cafes.map(
       async (cafe) => {
         if (await validatePageable(req, cafe)) {
-          return createCafeInfoDtos(cafe, req, allThumbnails, allReviews, allHashtags, topCountHashtags);
+          return await createCafeInfoDtos(cafe, req, allThumbnails, allReviews, allHashtags, topCountHashtags);
         }
       }
     ));
@@ -83,7 +83,10 @@ async function createCafeInfoDtos(cafe, req, allThumbnails, allReviews, allHasht
     });
   topCountHashtags = getTopCountHashtags(hashtagsHashMap);
 
-  return {cafeList : new CafeListDto.CafeInfo(cafe, thumbnailObjects, hashtags, distance, reviewCount), topCountHashtags};
+  return {
+    cafeList: new CafeListDto.CafeInfo(cafe, thumbnailObjects, hashtags, distance, reviewCount),
+    topCountHashtags
+  };
 }
 
 function getTopCountHashtags(hashtagsHashMap) {
@@ -105,12 +108,16 @@ async function validateWithOption(req, cafe) {
   if (req.options.length > 0) {
     return await validateOptionList(req.options, cafe.uuid);
   }
+
+  return true;
 }
 
 async function validateWithHashtag(req, cafe) {
   if (req.hashtags.length > 0) {
     return await validateHashtagList(req.hashtags, cafe.uuid);
   }
+
+  return true;
 }
 
 export async function getAllCafesPhotos() {
@@ -191,5 +198,10 @@ async function getCachesForCafe() {
 
 function getThumbnailObjects(allThumbnails, cafe) {
   const thumbnails = allThumbnails[cafe.uuid];
+
+  if (!thumbnails || thumbnails.length === 0) {
+    return [];
+  }
+
   return thumbnails.map((thumbnail) => new CafeListDto.Thumbnail(thumbnail));
 }
