@@ -14,6 +14,8 @@ import heapdump from 'node-oom-heapdump';
 import cors from 'cors';
 
 import * as path from 'path';
+import NoAuthorizationHeaderError from "./src/errors/noAuthorizationHeaderError.js";
+import WrongAuthorizationHeaderError from "./src/errors/wrongAuthorizationHeaderError.js";
 
 let corsOptions = {
   origin: '*',
@@ -27,9 +29,22 @@ heapdump({
   path: path.resolve(__dirname, 'logs', 'heapdump.log')
 });
 
+function authentication(req, res, next) {
+  const authheader = req.headers.authorization;
+
+  if (!authheader) {
+    throw new NoAuthorizationHeaderError();
+  } else if (authheader !== "franfeToken") {
+    throw new WrongAuthorizationHeaderError();
+  }
+
+  next();
+}
+
 const app = express();
 
 app.use((cors(corsOptions)));
+app.use(authentication);
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));

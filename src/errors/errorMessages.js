@@ -5,6 +5,8 @@ export class Cafe {
 }
 
 export class Api {
+  static NO_AUTHORIZATION_ERROR = 'No Authorization Error';
+  static WRONG_AUTHORIZATION_ERROR = 'Wrong Authorization Error';
   static PATH_PARAMETER_IS_REQUIRED = 'Parameter Is Required';
   static QUERY_PARAMETER_IS_REQUIRED = 'Query Parameter Is Required';
   static BODY_FIELDS_ARE_REQUIRED = 'Body Fiedls Are Required';
