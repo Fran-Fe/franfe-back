@@ -66,6 +66,7 @@ async function assignCategoryIds(body) {
 
 async function assignNewCategoryId(photo, allPhotoUrls) {
   const urlId = Number(photo.urlId);
+  const categoryId = Number(photo.categoryId);
   const photoUrl = allPhotoUrls.find((item) => item.key === Number(urlId));
 
   if (photoUrl == null) {

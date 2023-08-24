@@ -9,7 +9,7 @@ export const router = Router();
  * paths:
  *   /cafes/photos:
  *     get:
- *       summary: get all photo urls for each cafes for ai
+ *       summary: post all photo urls for each cafes for ai
  *       tags: [Cafes]
  *       responses:
  *         "200":
@@ -48,7 +48,7 @@ router.get('/photos', async (req, res, next) => {
 );
 
 
-/**
+ /**
  * @swagger
  * paths:
  *   /cafes/photos:
@@ -65,14 +65,14 @@ router.get('/photos', async (req, res, next) => {
  *                 type: object
  *                 properties:
  *                   urlId:
- *                     type: string
+ *                     type: integer
  *                   categoryId:
  *                     type: integer
  *       responses:
  *         "200":
- *           description: A list of cafes with photo URLs.*
+ *           description: post categoryId successfully.
  *
- **/
+ */
 router.post('/photos', async (req, res, next) => {
     try {
       if (!req.body) {
