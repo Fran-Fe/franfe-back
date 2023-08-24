@@ -13,7 +13,7 @@ export async function getAllCafesPhotos() {
   try {
     const res = [];
 
-    const cafeUuids = await findAllCafes().map(cafe => cafe.uuid);
+    const cafeUuids = (await findAllCafes()).map(cafe => cafe.uuid)
 
     const allPhotoUrls = await findAll();
     const allPhotoUrlsGroupByCafeUuid = _.groupBy(allPhotoUrls, 'cafeUuid');

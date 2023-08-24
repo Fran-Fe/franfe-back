@@ -12,10 +12,15 @@ const options = {
     servers: [
       {
         url: "http://localhost:3000",
+        description: "Test in Local"
       },
+      {
+        url: "http://54.241.187.138:3000",
+        description: "Test in Real Server with Real DB"
+      }
     ],
   },
-  apis: ["./src/routes/forAI/*.js", "./src/routes/forFront/*.js","../src/routes/forFront/*.js","../src/routes/forAI/*.js"],
+  apis: ["./src/routes/forAI/*.js", "./src/routes/forFront/*.js", "../src/routes/forFront/*.js", "../src/routes/forAI/*.js"],
 }
 
 export const specs = swaggereJsdoc(options)
