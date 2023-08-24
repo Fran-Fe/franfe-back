@@ -32,6 +32,10 @@ heapdump({
 function authentication(req, res, next) {
   const authheader = req.headers.authorization;
 
+  if (req.path.startsWith('/swagger-html') || req.path.startsWith('/swagger-json')) {
+    return next();
+  }
+
   if (!authheader) {
     throw new NoAuthorizationHeaderError();
   } else if (authheader !== "franfeToken") {

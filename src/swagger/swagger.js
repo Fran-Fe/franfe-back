@@ -19,6 +19,15 @@ const options = {
         description: "Test in Real Server with Real DB"
       }
     ],
+    components: {
+      securitySchemes: {
+        franfeToken: {
+          type: "apiKey",
+          in: "header",
+          name: "authorization",
+        },
+      },
+    },
   },
   apis: ["./src/routes/forAI/*.js", "./src/routes/forFront/*.js", "../src/routes/forFront/*.js", "../src/routes/forAI/*.js"],
 }
