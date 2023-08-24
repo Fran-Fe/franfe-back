@@ -11,10 +11,9 @@ import { router as galleryRouter } from './src/routes/forFront/galleryRoutes.js'
 import { jobGenerator } from "./src/schedule/scheduler.js";
 import { logger } from "./src/logger/winston.js";
 import heapdump from 'node-oom-heapdump';
+import cors from 'cors';
 
 import * as path from 'path';
-
-const cors = require('cors')
 
 let corsOptions = {
   origin: '*',
