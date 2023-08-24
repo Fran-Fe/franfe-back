@@ -48,7 +48,7 @@ router.get('/photos', async (req, res, next) => {
 );
 
 
- /**
+/**
  * @swagger
  * paths:
  *   /cafes/photos:
