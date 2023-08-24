@@ -7,12 +7,18 @@ import { router as cafeRouter } from './src/routes/forAI/cafesRoutes.js'
 import { router as cafeRankingRouter } from './src/routes/forFront/cafeRankingRoutes.js'
 import { router as cafeInfoRouter } from './src/routes/forFront/cafeInfoRoutes.js'
 import { router as cafeListRouter } from './src/routes/forFront/cafeRoutes.js'
-import { router as galleryRouter} from './src/routes/forFront/galleryRoutes.js'
+import { router as galleryRouter } from './src/routes/forFront/galleryRoutes.js'
 import { jobGenerator } from "./src/schedule/scheduler.js";
 import { logger } from "./src/logger/winston.js";
 import heapdump from 'node-oom-heapdump';
+import cors from 'cors';
 
 import * as path from 'path';
+
+let corsOptions = {
+  origin: '*',
+  credential: true,
+}
 
 const __filename = new URL(import.meta.url).pathname;
 const __dirname = path.dirname(__filename);
@@ -23,8 +29,10 @@ heapdump({
 
 const app = express();
 
+app.use((cors(corsOptions)));
+
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 
 app.use('/cafes', cafeRouter);
 app.use('/cafe/rankings', cafeRankingRouter);
