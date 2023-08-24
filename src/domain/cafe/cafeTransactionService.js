@@ -13,19 +13,20 @@ import {
 } from "./review/cafeReviewService.js";
 import {
   findAll as findAllThumbnails,
-  findAllByCafeUuid as findAllThumbnailsByCafeUuid
-} from "./photo/thumbnail/cafeThumbnailS3Service.js";
+  findAllThumbnailsByCafeUuid as findAllThumbnailsByCafeUuid
+} from "./photo/cafePhotoUrlService.js"
 import { addCompareWinCount } from "./clickCount/cafeClickCountService.js";
 import { CafeListDto } from "../../routes/dtos/cafeListDto.js";
 import _ from "lodash";
+import { findAll as findAllPhotos, findById as findPhotoUrlById } from "./photo/cafePhotoUrlService.js";
 
 
 export async function getCafeDetailInfo(cafeUuid, isWin) {
   try {
     await addCompareWinCountOfCafe(cafeUuid, isWin);
-    const {cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3List} = await getCafeDetailDtoInfo(cafeUuid);
+    const {cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnails} = await getCafeDetailDtoInfo(cafeUuid);
 
-    return new CafeDto.DetailResponse(cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3List);
+    return new CafeDto.DetailResponse(cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnails);
 
   } catch (error) {
     throwApiError(error);
@@ -66,7 +67,7 @@ async function createCafeInfoDtos(cafe, req, allThumbnails, allReviews, allHasht
   const thumbnailObjects = getThumbnailObjects(allThumbnails, cafe);
   const reviewCount = (allReviews[cafe.uuid] || []).length;
 
-  const hashtags = ( allHashtags[cafe.uuid] || [] )
+  const hashtags = (allHashtags[cafe.uuid] || [])
     .map((hashtag) => {
       return hashtag.hashtag
     });
@@ -121,9 +122,9 @@ async function getCafeDetailDtoInfo(cafeUuid) {
   const cafeOptions = await getCafeOptionsDto(cafeUuid);
   const cafeHashtags = await getCafeHashtags(cafeUuid);
   const cafeReviews = await getCafeReviews(cafeUuid);
-  const cafeThumbnailS3List = await getCafeThumbnailS3(cafeUuid);
+  const cafeThumbnails = await getCafeThumbnails(cafeUuid);
 
-  return {cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnailS3List};
+  return {cafe, cafeOptions, cafeHashtags, cafeReviews, cafeThumbnails};
 }
 
 async function getCafeOptionsDto(cafeUuid) {
@@ -145,9 +146,10 @@ async function getCafeReviews(cafeUuid) {
   return Promise.all(reviewPromises);
 }
 
-async function getCafeThumbnailS3(cafeUuid) {
-  const thumbnails = await findAllThumbnailsByCafeUuid(cafeUuid);
-  return thumbnails.map((thumbnail) => new CafeDto.DetailResponse.thumbnailS3(thumbnail));
+async function getCafeThumbnails(cafeUuid) {
+  return await findAllThumbnailsByCafeUuid(cafeUuid).map((thumbnail) => {
+    return new CafeDto.DetailResponse.Thumbnail(thumbnail.url, thumbnail.categoryId);
+  });
 }
 
 function getDistance(cafe, req) {
@@ -155,7 +157,8 @@ function getDistance(cafe, req) {
 }
 
 async function getCachesForCafe() {
-  const allThumbnails = _.groupBy(await findAllThumbnails(), "cafeUuid");
+  //findAllPhotos 에서 카테고리 추가
+  const allThumbnails = _.groupBy(await findAllPhotos(), "cafeUuid");
   const allReviews = _.groupBy(await findAllCafeReviews(), "cafeUuid");
   const allHashtags = _.groupBy(await findAllHashTags(), "cafeUuid");
 

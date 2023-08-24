@@ -1,6 +1,6 @@
-const BooleanDeleted = {
+const BooleanValidate = {
   TRUE: true,
   FALSE: false,
 };
 
-export default BooleanDeleted;
+export default BooleanValidate;

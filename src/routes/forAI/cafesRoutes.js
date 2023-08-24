@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { getAllCafesPhotos } from "../../domain/cafe/photo/cafePhotoUrlTransactionService.js";
+import { getAllCafesPhotos, updatePhotoCategoryId } from "../../domain/cafe/photo/cafePhotoUrlTransactionService.js";
+import BodyIsRequiredError from "../../errors/bodyIsRequiredError.js";
 
 export const router = Router();
 
@@ -46,9 +47,15 @@ router.get('/photos', async (req, res, next) => {
   }
 );
 
+
+
 router.post('/photos', async (req, res, next) => {
     try {
+      if (!req.body) {
+        throw new BodyIsRequiredError('body is empty');
+      }
 
+      const response = await updatePhotoCategoryId(req.body);
 
     } catch (error) {
       next(error);

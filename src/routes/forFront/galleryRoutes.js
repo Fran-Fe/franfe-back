@@ -1,6 +1,8 @@
 import { Router } from 'express';
-import QueryParameterIsRequiredError from '../../errors/QueryParameterIsRequiredError.js';
-import { getGalleryThumbnails, checkGalleryRequest } from '../../domain/cafe/photo/thumbnail/cafeThumbnailTransactionService.js';
+import QueryParameterIsRequiredError from '../../errors/queryParameterIsRequiredError.js';
+import {
+  getGalleryThumbnails
+} from '../../domain/cafe/photo/cafePhotoUrlTransactionService.js';
 
 export const router = Router();
 /**
@@ -50,16 +52,22 @@ export const router = Router();
  *                           type: boolean
  *
  */
-router.get('',async (req,res,next) => {
-  try{
-    if(checkGalleryRequest(req))
-      new QueryParameterIsRequiredError(['pageSize','pageNum','category']);
+router.get('', async (req, res, next) => {
+  try {
+    if (req.query.pageNum == null || req.query.pageSize == null) {
+      new QueryParameterIsRequiredError(['pageSize', 'pageNum']);
+    }
 
-    const response = await getGalleryThumbnails(req);
+    let reqCategory = 0
+    if (req.query.category != null) {
+      reqCategory = req.query.category;
+    }
+
+    const response = await getGalleryThumbnails(req, reqCategory);
 
     res.json(response);
 
-  }catch(error){
+  } catch (error) {
     next(error)
   }
 })
