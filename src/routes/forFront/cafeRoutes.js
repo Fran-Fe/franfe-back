@@ -10,6 +10,8 @@ export const router = Router();
  * paths:
  *   /cafe/list:
  *     get:
+ *       security:
+ *         - securityToken: []
  *       summary: Get cafe information for the front-end
  *       tags: [cafe]
  *       parameters:

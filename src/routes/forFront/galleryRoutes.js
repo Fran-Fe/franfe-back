@@ -10,6 +10,8 @@ export const router = Router();
  * paths:
  *   /gallery:
  *     get:
+ *       security:
+ *         - securityToken: []
  *       summary: get thumbnails by category
  *       tags: [CafeInfo]
  *       parameters:

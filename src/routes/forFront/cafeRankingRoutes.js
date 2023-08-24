@@ -9,6 +9,8 @@ export const router = Router();
  * paths:
  *   /cafe/rankings:
  *     get:
+ *       security:
+ *         - securityToken: []
  *       summary: get all cafe rankings for front
  *       tags: [CafeRankings]
  *       responses:
@@ -61,6 +63,8 @@ router.get('', async (req,res, next) => {
  * paths:
  *   /cafe/rankings/compare:
  *     post:
+ *       security:
+ *         - securityToken: []
  *       summary: Post about compare ranking for front
  *       tags: [CafeRankings]
  *       requestBody:

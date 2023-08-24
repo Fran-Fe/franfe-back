@@ -21,7 +21,7 @@ const options = {
     ],
     components: {
       securitySchemes: {
-        franfeToken: {
+        securityToken: {
           type: "apiKey",
           in: "header",
           name: "authorization",

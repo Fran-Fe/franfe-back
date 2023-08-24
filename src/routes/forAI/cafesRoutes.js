@@ -9,6 +9,8 @@ export const router = Router();
  * paths:
  *   /cafes/photos:
  *     get:
+ *       security:
+ *         - securityToken: []
  *       summary: get all photo urls for each cafes for ai
  *       tags: [Cafes]
  *       responses:
@@ -53,6 +55,8 @@ router.get('/photos', async (req, res, next) => {
  * paths:
  *   /cafes/photos:
  *     post:
+ *       security:
+ *         - securityToken: []
  *       summary: post all photo urls for each cafes for ai
  *       tags: [Cafes]
  *       requestBody:

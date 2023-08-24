@@ -10,6 +10,8 @@ export const router = Router();
  * paths:
  *   /cafe/infos/{cafeUuid}:
  *     get:
+ *       security:
+ *         - securityToken: []
  *       summary: get detail cafe info for front
  *       tags: [CafeInfo]
  *       parameters:
