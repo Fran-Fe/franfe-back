@@ -73,12 +73,12 @@ export const router = Router();
  *                           type: string
  *                         text:
  *                           type: string
- *                   thumbnailS3List:
+ *                   cafeThumbnails:
  *                     type: array
  *                     items:
  *                       type: object
  *                       properties:
- *                         bucketUrl:
+ *                         url:
  *                           type: string
  *                         category:
  *                           type: integer

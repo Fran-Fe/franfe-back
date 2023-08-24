@@ -1,13 +1,13 @@
 import { throwApiError } from "../../../errors/apiError.js";
 import { CafePhotoUrlDto } from "../../../routes/dtos/CafePhotoUrlDto.js";
-import { findAll, findById as findPhotoUrlById, update } from "./cafePhotoUrlService.js";
+import { findAll, update } from "./cafePhotoUrlService.js";
 import { findAll as findAllCafes } from "../cafeService.js"
 import _ from "lodash";
 import { sequelize } from "../../../config/connection.js";
 import CafePhotoUrlNotFoundError from "../../../errors/cafePhotoUrlNotFoundError.js";
 import { galleryDto } from "../../../routes/dtos/galleryDto.js";
 import { findAllGalleryPageableByCategory } from "./cafePhotoUrlService.js";
-import BooleanValidate from "../../../utils/booleanValidate.js";
+import BodyFieldsAreRequiredError from "../../../errors/bodyFieldsAreRequiredError.js";
 
 export async function getAllCafesPhotos() {
   try {
@@ -39,7 +39,7 @@ export async function updatePhotoCategoryId(body) {
   try {
     const transaction = await sequelize.transaction();
 
-    assignCategoryIds(body)
+    await assignCategoryIds(body)
 
     await transaction.commit();
 
@@ -56,15 +56,20 @@ async function assignCategoryIds(body) {
   }));
 
   for (const photo of body) {
+    if (photo.urlId == null || photo.categoryId == null) {
+      throw new BodyFieldsAreRequiredError(['urlId', 'categoryId']);
+    }
+
     await assignNewCategoryId(photo, allPhotoUrls);
   }
 }
 
 async function assignNewCategoryId(photo, allPhotoUrls) {
-  const photoUrl = allPhotoUrls.find((item) => item.key === photo.urlId);
+  const urlId = Number(photo.urlId);
+  const photoUrl = allPhotoUrls.find((item) => item.key === Number(urlId));
 
   if (photoUrl == null) {
-    throw new CafePhotoUrlNotFoundError(`Not found photoUrl by id: ${photo.urlId}`);
+    throw new CafePhotoUrlNotFoundError(`Not found photoUrl by id: ${urlId}`);
   }
 
   photoUrl.value.categoryId = photo.categoryId;
@@ -72,18 +77,14 @@ async function assignNewCategoryId(photo, allPhotoUrls) {
   await update(photoUrl);
 }
 
-export async function getGalleryThumbnails(req, reqCategory){
-  try{
+export async function getGalleryThumbnails(req, reqCategory) {
+  try {
     const request = await new galleryDto.Request(req, reqCategory);
     const thumbnails = await findAllGalleryPageableByCategory(request);
-    const galleryObjects = thumbnails.map(async (thumbnail) => {
-      const photoUrl = await findPhotoUrlById(thumbnail.cafePhotoUrlId, BooleanValidate.TRUE).url;
-
-      return new galleryDto.thumbnail(thumbnail, photoUrl)
-    });
+    const galleryObjects = thumbnails.map(thumbnail => new galleryDto.thumbnail(thumbnail));
     return await new galleryDto.Response(request.category, galleryObjects);
 
-  }catch (error) {
+  } catch (error) {
     throwApiError(error);
   }
 }

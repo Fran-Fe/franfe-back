@@ -19,6 +19,7 @@ export const CafePhotoUrl = sequelize.define("cafe_photo_urls", {
   categoryId: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    defaultValue: 0,
     field: 'category_id'
   }
 }, {
@@ -27,12 +28,12 @@ export const CafePhotoUrl = sequelize.define("cafe_photo_urls", {
 });
 
 export function findAll() {
-  return CafePhotoUrl.findAll();
-}
-
-export function findById(id) {
-  return CafePhotoUrl.findOne({
-    where: {id: id}
+  return CafePhotoUrl.findAll({
+    where: {
+      categoryId: {
+        [Op.not]: 0
+      }
+    }
   });
 }
 

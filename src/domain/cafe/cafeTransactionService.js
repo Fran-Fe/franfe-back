@@ -18,7 +18,7 @@ import {
 import { addCompareWinCount } from "./clickCount/cafeClickCountService.js";
 import { CafeListDto } from "../../routes/dtos/cafeListDto.js";
 import _ from "lodash";
-import { findAll as findAllPhotos, findById as findPhotoUrlById } from "./photo/cafePhotoUrlService.js";
+import { findAll as findAllPhotos } from "./photo/cafePhotoUrlService.js";
 
 
 export async function getCafeDetailInfo(cafeUuid, isWin) {
@@ -148,7 +148,7 @@ async function getCafeReviews(cafeUuid) {
 
 async function getCafeThumbnails(cafeUuid) {
   return await findAllThumbnailsByCafeUuid(cafeUuid).map((thumbnail) => {
-    return new CafeDto.DetailResponse.Thumbnail(thumbnail.url, thumbnail.categoryId);
+    return new CafeDto.DetailResponse.Thumbnail(thumbnail);
   });
 }
 
@@ -157,7 +157,6 @@ function getDistance(cafe, req) {
 }
 
 async function getCachesForCafe() {
-  //findAllPhotos 에서 카테고리 추가
   const allThumbnails = _.groupBy(await findAllPhotos(), "cafeUuid");
   const allReviews = _.groupBy(await findAllCafeReviews(), "cafeUuid");
   const allHashtags = _.groupBy(await findAllHashTags(), "cafeUuid");

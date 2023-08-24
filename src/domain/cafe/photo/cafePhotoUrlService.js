@@ -1,23 +1,13 @@
 import {
   findAll as findAllEntities,
-  findById as findEntityById,
   findAllByCafeUuid as findAllEntitiesByCafeUuid,
   findAllGalleryPageableByCategory as findAllGalleryEntitiesPageableByCategory,
   findAllGalleryPageable as findAllGalleryEntitiesPageable,
 } from "./cafePhotoUrl.js";
-import CafePhotoUrlNotFoundError from "../../../errors/cafePhotoUrlNotFoundError.js";
 import { page } from "../../../utils/pageable.js";
 
 export async function findAll() {
   return await findAllEntities();
-}
-
-export async function findById(uuid, booleanValidate) {
-  const photoUrl = await findEntityById(uuid);
-
-  if (booleanValidate && photoUrl == null) {
-    throw new CafePhotoUrlNotFoundError(`Not found photoUrl by id: ${uuid}`);
-  }
 }
 
 export async function findAllThumbnailsByCafeUuid(cafeUuid) {
@@ -34,7 +24,7 @@ export async function findAllGalleryPageableByCategory(req) {
 
   if (category === 0) {
     return await findAllGalleryEntitiesPageable(doPage, firstId, lastId);
-  }  else {
+  } else {
     return await findAllGalleryEntitiesPageableByCategory(category, doPage, firstId, lastId);
   }
 }

@@ -48,14 +48,38 @@ router.get('/photos', async (req, res, next) => {
 );
 
 
-
+/**
+ * @swagger
+ * paths:
+ *   /cafes/photos:
+ *     post:
+ *       summary: get all photo urls for each cafes for ai
+ *       tags: [Cafes]
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   urlId:
+ *                     type: string
+ *                   categoryId:
+ *                     type: integer
+ *       responses:
+ *         "200":
+ *           description: A list of cafes with photo URLs.*
+ *
+ **/
 router.post('/photos', async (req, res, next) => {
     try {
       if (!req.body) {
         throw new BodyIsRequiredError('body is empty');
       }
 
-      const response = await updatePhotoCategoryId(req.body);
+      await updatePhotoCategoryId(req.body);
 
     } catch (error) {
       next(error);

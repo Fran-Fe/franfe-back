@@ -98,7 +98,7 @@ export const router = Router();
  *                             properties:
  *                               category:
  *                                 type: integer
- *                               bucketUrl:
+ *                               url:
  *                                 type: string
  *                         hashTags:
  *                           type: array
@@ -112,8 +112,6 @@ export const router = Router();
  *                     items:
  *                       type: string
  */
-
-
 
 router.get('', async (req, res, next) => {
   try {

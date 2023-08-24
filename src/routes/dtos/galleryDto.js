@@ -14,9 +14,9 @@ export class galleryDto{
   }
 
   static thumbnail = class{
-    constructor(thumbnail, photoUrl) {
-      this.cafeUuid = thumbnail.dataValues.cafeUuid;
-      this.url = photoUrl;
+    constructor(thumbnail) {
+      this.cafeUuid = thumbnail.cafeUuid;
+      this.url = thumbnail.url;
     }
   }
 }
