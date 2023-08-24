@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { getCafeLocations } from '../../domain/cafe/cafeTransactionService.js';
 import { CafeListDto } from '../dtos/cafeListDto.js';
-import QueryParameterIsRequiredError from "../../errors/QueryParameterIsRequiredError.js";
+import QueryParameterIsRequiredError from "../../errors/queryParameterIsRequiredError.js";
 
 export const router = Router();
 
@@ -98,7 +98,7 @@ export const router = Router();
  *                             properties:
  *                               category:
  *                                 type: integer
- *                               bucketUrl:
+ *                               url:
  *                                 type: string
  *                         hashTags:
  *                           type: array
@@ -112,8 +112,6 @@ export const router = Router();
  *                     items:
  *                       type: string
  */
-
-
 
 router.get('', async (req, res, next) => {
   try {

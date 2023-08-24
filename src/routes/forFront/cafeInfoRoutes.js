@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { getCafeDetailInfo } from "../../domain/cafe/cafeTransactionService.js";
-import PathParameterIsRequiredError from "../../errors/PathParameterIsRequiredError.js";
-import QueryParameterIsRequiredError from "../../errors/QueryParameterIsRequiredError.js";
+import PathParameterIsRequiredError from "../../errors/pathParameterIsRequiredError.js";
+import QueryParameterIsRequiredError from "../../errors/queryParameterIsRequiredError.js";
 
 export const router = Router();
 
@@ -73,12 +73,12 @@ export const router = Router();
  *                           type: string
  *                         text:
  *                           type: string
- *                   thumbnailS3List:
+ *                   cafeThumbnails:
  *                     type: array
  *                     items:
  *                       type: object
  *                       properties:
- *                         bucketUrl:
+ *                         url:
  *                           type: string
  *                         category:
  *                           type: integer

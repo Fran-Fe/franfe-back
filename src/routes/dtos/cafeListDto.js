@@ -36,8 +36,8 @@ export class CafeListDto {
   }
   static Thumbnail = class {
     constructor(thumb) {
-      this.category = thumb.category;
-      this.bucketUrl = thumb.bucketUrl;
+      this.category = thumb.categoryId;
+      this.url = thumb.url;
     }
   }
 

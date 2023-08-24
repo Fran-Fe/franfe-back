@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { chooseAsCompare, getRankings } from "../../domain/cafe/clickCount/cafeClickCountTransactionService.js";
-import PathParameterIsRequiredError from "../../errors/PathParameterIsRequiredError.js";
+import PathParameterIsRequiredError from "../../errors/pathParameterIsRequiredError.js";
 
 export const router = Router();
 

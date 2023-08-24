@@ -8,7 +8,7 @@ export class CafeDto {
   }
 
   static DetailResponse = class {
-    constructor(cafe, options, hashtags, reviews, thumbnailS3List) {
+    constructor(cafe, options, hashtags, reviews, cafeThumbnails) {
       this.uuid = cafe.uuid;
       this.address = cafe.address;
       this.lat = cafe.lat;
@@ -19,7 +19,7 @@ export class CafeDto {
       this.options = options;
       this.hashtags = hashtags;
       this.reviews = reviews;
-      this.thumbnailS3List = thumbnailS3List;
+      this.cafeThumbnails = cafeThumbnails;
     }
 
     static Option = class {
@@ -38,10 +38,10 @@ export class CafeDto {
       }
     }
 
-    static thumbnailS3 = class {
-      constructor(thumbnailS3) {
-        this.bucketUrl = thumbnailS3.bucketUrl;
-        this.category = thumbnailS3.category;
+    static Thumbnail = class {
+      constructor(thumbnail) {
+        this.url = thumbnail.url;
+        this.category = thumbnail.categoryId;
       }
     }
   }

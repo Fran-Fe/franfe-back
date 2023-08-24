@@ -7,6 +7,8 @@ export class Cafe {
 export class Api {
   static PATH_PARAMETER_IS_REQUIRED = 'Parameter Is Required';
   static QUERY_PARAMETER_IS_REQUIRED = 'Query Parameter Is Required';
+  static BODY_FIELDS_ARE_REQUIRED = 'Body Fiedls Are Required';
+  static BODY_IS_REQUIRED = 'Body Is Required';
 }
 
 
