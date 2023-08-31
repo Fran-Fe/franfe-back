@@ -24,7 +24,7 @@ export class CafeDto {
 
     static Option = class {
       constructor(option) {
-        this.option = option.option;
+        this.option = option.optionName;
         this.optionOn = option.optionOn;
       }
     }

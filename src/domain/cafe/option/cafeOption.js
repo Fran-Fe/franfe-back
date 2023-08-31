@@ -12,7 +12,7 @@ export const CafeOption = sequelize.define("cafe_options", {
     allowNull: false,
     field: 'cafe_uuid'
   },
-  option: {
+  optionName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -29,7 +29,7 @@ export const CafeOption = sequelize.define("cafe_options", {
 
 export function findAllByCafeUuidAndOptionOnIsTrue(cafeUuid) {
   return CafeOption.findAll({
-    attributes: ['cafeUuid', 'option', 'optionOn'],
+    attributes: ['cafeUuid', 'optionName', 'optionOn'],
 
     where: {
       cafeUuid: cafeUuid,
@@ -41,7 +41,7 @@ export function findAllByCafeUuidAndOptionOnIsTrue(cafeUuid) {
 
 export function findOneByCafeUuid(cafeUuid) {
   return CafeOption.findAll({
-    attributes: ['cafeUuid', 'option', 'optionOn'],
+    attributes: ['cafeUuid', 'optionName', 'optionOn'],
 
     where: {
       cafeUuid: cafeUuid,
