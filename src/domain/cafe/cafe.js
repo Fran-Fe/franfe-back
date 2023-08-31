@@ -71,7 +71,11 @@ export function findEntityByPosition(userLat, userLng, distance, doPage, firstId
   }
 
   return Cafe.findAll({
-    where: sequelize.literal(`ST_Distance_Sphere(POINT(lng, lat), POINT(${userLng},${userLat})) <= ${distance}`
-    )
+    where: {
+      [Op.and]: [
+        condition,
+        sequelize.literal(`ST_Distance_Sphere(POINT(lng, lat), POINT(${userLng}, ${userLat})) <= ${distance}`)
+      ]
+    }
   });
 }

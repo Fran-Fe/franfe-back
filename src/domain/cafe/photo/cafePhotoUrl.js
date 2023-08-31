@@ -59,9 +59,13 @@ export function findAllGalleryPageableByCategory(category, doPage, firstId, last
 
   return CafePhotoUrl.findAll({
     where: {
-      category: category,
+      [Op.and]: [
+        condition,
+        category === category
+      ]
     }
-  });
+  })
+    ;
 }
 
 export function findAllGalleryPageable(doPage, firstId, lastId) {
@@ -75,10 +79,16 @@ export function findAllGalleryPageable(doPage, firstId, lastId) {
 
   return CafePhotoUrl.findAll({
     where: {
-      category: {
-        [Op.not]: 4
-      },
+      [Op.and]: [
+        condition,
+        {
+          category: {
+            [Op.not]: 4
+          }
+        }
+      ]
     }
   });
+
 }
 
