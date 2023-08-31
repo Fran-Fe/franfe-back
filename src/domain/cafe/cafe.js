@@ -1,5 +1,6 @@
 import { DataTypes, Op, Sequelize } from "sequelize";
 import { sequelize } from "../../config/connection.js";
+import { page } from "../../utils/pageable.js";
 
 export const Cafe = sequelize.define("cafes", {
   id: {
@@ -55,14 +56,10 @@ export function findByUuid(uuid) {
   });
 }
 
-export function findEntityByPosition(userLat, userLng, distance, doPage, firstId, lastId, search) {
-  const condition = {};
+export function findEntityByPosition(req, userLat, userLng, radius, options, hashtags, search) {
+  const {offset, limit} = page(req)
 
-  if (doPage) {
-    condition.id = {
-      [Op.between]: [firstId, lastId]
-    }
-  }
+  const condition = {};
 
   if (!search) {
     condition.placeName = {
@@ -71,7 +68,16 @@ export function findEntityByPosition(userLat, userLng, distance, doPage, firstId
   }
 
   return Cafe.findAll({
-    where: sequelize.literal(`ST_Distance_Sphere(POINT(lng, lat), POINT(${userLng},${userLat})) <= ${distance}`
-    )
+    where: {
+      [Op.and]: [
+        condition,
+        sequelize.literal(`ST_Distance_Sphere(POINT(lng, lat), POINT(${userLng}, ${userLat})) <= ${radius}`)
+      ]
+    },
+    order: [
+      ['id', 'ASC']
+    ],
+    offset: offset,
+    limit: limit
   });
 }

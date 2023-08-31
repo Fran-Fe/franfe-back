@@ -4,7 +4,6 @@ import {
   findAllGalleryPageableByCategory as findAllGalleryEntitiesPageableByCategory,
   findAllGalleryPageable as findAllGalleryEntitiesPageable,
 } from "./cafePhotoUrl.js";
-import { page } from "../../../utils/pageable.js";
 
 export async function findAll() {
   return await findAllEntities();
@@ -20,11 +19,10 @@ export async function update(photo) {
 
 export async function findAllGalleryPageableByCategory(req) {
   const category = req.category;
-  const {doPage, firstId, lastId} = page(req);
 
   if (category === 0) {
-    return await findAllGalleryEntitiesPageable(doPage, firstId, lastId);
+    return await findAllGalleryEntitiesPageable(req);
   } else {
-    return await findAllGalleryEntitiesPageableByCategory(category, doPage, firstId, lastId);
+    return await findAllGalleryEntitiesPageableByCategory(category, req);
   }
 }
