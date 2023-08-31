@@ -19,7 +19,7 @@ export const CafePhotoUrl = sequelize.define("cafe_photo_urls", {
   categoryId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    defaultValue: 0,
+    defaultValue: 4,
     field: 'category_id'
   }
 }, {
@@ -31,7 +31,7 @@ export function findAll() {
   return CafePhotoUrl.findAll({
     where: {
       categoryId: {
-        [Op.not]: 0
+        [Op.not]: 4
       }
     }
   });
@@ -42,7 +42,7 @@ export function findAllByCafeUuid(cafeUuid) {
     where: {
       cafeUuid: cafeUuid,
       categoryId: {
-        [Op.not]: 0
+        [Op.not]: 4
       }
     }
   });
@@ -76,7 +76,7 @@ export function findAllGalleryPageable(doPage, firstId, lastId) {
   return CafePhotoUrl.findAll({
     where: {
       category: {
-        [Op.not]: 0
+        [Op.not]: 4
       },
     }
   });
