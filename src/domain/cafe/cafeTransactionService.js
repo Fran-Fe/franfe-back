@@ -147,7 +147,7 @@ async function getCafeReviews(cafeUuid) {
 }
 
 async function getCafeThumbnails(cafeUuid) {
-  return await findAllThumbnailsByCafeUuid(cafeUuid).map((thumbnail) => {
+  return (await findAllThumbnailsByCafeUuid(cafeUuid)).map((thumbnail) => {
     return new CafeDto.DetailResponse.Thumbnail(thumbnail);
   });
 }
