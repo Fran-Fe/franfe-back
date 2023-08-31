@@ -56,7 +56,7 @@ export function findByUuid(uuid) {
   });
 }
 
-export function findEntityByPosition(req, userLat, userLng, distance, search) {
+export function findEntityByPosition(req, userLat, userLng, radius, options, hashtags, search) {
   const {offset, limit} = page(req)
 
   const condition = {};
@@ -71,7 +71,7 @@ export function findEntityByPosition(req, userLat, userLng, distance, search) {
     where: {
       [Op.and]: [
         condition,
-        sequelize.literal(`ST_Distance_Sphere(POINT(lng, lat), POINT(${userLng}, ${userLat})) <= ${distance}`)
+        sequelize.literal(`ST_Distance_Sphere(POINT(lng, lat), POINT(${userLng}, ${userLat})) <= ${radius}`)
       ]
     },
     order: [

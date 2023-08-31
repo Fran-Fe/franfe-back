@@ -17,5 +17,5 @@ export async function findByUuid(uuid, booleanValidate) {
 }
 
 export function findAllPageableCafesByPosition(req) {
-  return findEntityByPosition(req, req.userLat, req.userLng, req.radius, doPage, firstId, lastId, req.options, req.hashtags, req.search);
+  return findEntityByPosition(req, req.userLat, req.userLng, req.radius, req.options, req.hashtags, req.search);
 }
