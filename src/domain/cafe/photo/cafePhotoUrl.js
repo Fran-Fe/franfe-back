@@ -54,7 +54,7 @@ export function findAllGalleryPageableByCategory(category, req) {
 
   return CafePhotoUrl.findAll({
     where: {
-      category: category
+      categoryId: category
     },
     order: [
       ['id', 'ASC']
@@ -69,7 +69,7 @@ export function findAllGalleryPageable(req) {
 
   return CafePhotoUrl.findAll({
     where: {
-      category: {
+      categoryId: {
         [Op.not]: 4
       }
     },
