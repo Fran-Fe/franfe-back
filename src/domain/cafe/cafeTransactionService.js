@@ -36,6 +36,7 @@ export async function getCafeDetailInfo(cafeUuid, isWin) {
 export async function getCafeLocations(req) {
   try {
     const cafes = await findAllPageableCafesByPosition(req);
+    //todo: req.options, req.hashtags
 
     const {allThumbnails, allReviews, allHashtags} = await getCachesForCafe();
 
