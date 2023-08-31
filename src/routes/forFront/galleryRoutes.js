@@ -28,7 +28,7 @@ export const router = Router();
  *           schema:
  *             type: number
  *         - in: query
- *           name: pageNum
+ *           name: pageNumber
  *           description: Which number are we going to start with
  *           required: true
  *           schema:
@@ -56,11 +56,11 @@ export const router = Router();
  */
 router.get('', async (req, res, next) => {
   try {
-    if (req.query.pageNum == null || req.query.pageSize == null) {
-      new QueryParameterIsRequiredError(['pageSize', 'pageNum']);
+    if (req.query.pageNumber == null || req.query.pageSize == null) {
+      new QueryParameterIsRequiredError(['pageSize', 'pageNumber']);
     }
 
-    let reqCategory = 0
+    let reqCategory = 4
     if (req.query.category != null) {
       reqCategory = req.query.category;
     }

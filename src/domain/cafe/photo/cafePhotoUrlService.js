@@ -20,7 +20,7 @@ export async function update(photo) {
 export async function findAllGalleryPageableByCategory(req) {
   const category = req.category;
 
-  if (category === 0) {
+  if (category === 4) {
     return await findAllGalleryEntitiesPageable(req);
   } else {
     return await findAllGalleryEntitiesPageableByCategory(category, req);
