@@ -1,5 +1,6 @@
 import { DataTypes, Op } from "sequelize";
 import { sequelize } from "../../../config/connection.js";
+import { page } from "../../../utils/pageable.js";
 
 export const CafePhotoUrl = sequelize.define("cafe_photo_urls", {
   id: {
@@ -48,46 +49,35 @@ export function findAllByCafeUuid(cafeUuid) {
   });
 }
 
-export function findAllGalleryPageableByCategory(category, doPage, firstId, lastId) {
-  const condition = {};
-
-  if (doPage) {
-    condition.id = {
-      [Op.between]: [firstId, lastId]
-    }
-  }
+export function findAllGalleryPageableByCategory(category, req) {
+  const {offset, limit} = page(req)
 
   return CafePhotoUrl.findAll({
     where: {
-      [Op.and]: [
-        condition,
-        category === category
-      ]
-    }
-  })
-    ;
+      category: category
+    },
+    order: [
+      ['id', 'ASC']
+    ],
+    offset: offset,
+    limit: limit
+  });
 }
 
-export function findAllGalleryPageable(doPage, firstId, lastId) {
-  const condition = {};
-
-  if (doPage) {
-    condition.id = {
-      [Op.between]: [firstId, lastId]
-    }
-  }
+export function findAllGalleryPageable(req) {
+  const {offset, limit} = page(req)
 
   return CafePhotoUrl.findAll({
     where: {
-      [Op.and]: [
-        condition,
-        {
-          category: {
-            [Op.not]: 4
-          }
-        }
-      ]
-    }
+      category: {
+        [Op.not]: 4
+      }
+    },
+    order: [
+      ['id', 'ASC']
+    ],
+    offset: offset,
+    limit: limit
   });
 
 }

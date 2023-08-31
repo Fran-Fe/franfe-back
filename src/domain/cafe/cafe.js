@@ -59,7 +59,7 @@ export function findByUuid(uuid) {
 export function findEntityByPosition(req, userLat, userLng, distance, search) {
   const {offset, limit} = page(req)
 
-  let condition = {};
+  const condition = {};
 
   if (!search) {
     condition.placeName = {
