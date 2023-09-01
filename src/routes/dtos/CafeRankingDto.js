@@ -13,9 +13,11 @@ export class CafeRankingDto {
   }
 
   static UserComparisonElement = class {
-    constructor(rank, cafeUuid) {
+    constructor(rank, cafeUuid, cafeName, imageUrl) {
       this.rank = rank;
       this.cafeUuid = cafeUuid;
+      this.cafeName = cafeName;
+      this.imageUrl = imageUrl;
     }
   }
 
@@ -26,9 +28,11 @@ export class CafeRankingDto {
   }
 
   static UserCompareWinElement = class {
-    constructor(rank, cafeUuid) {
+    constructor(rank, cafeUuid, cafeName, imageUrl) {
       this.rank = rank;
       this.cafeUuid = cafeUuid;
+      this.cafeName = cafeName;
+      this.imageUrl = imageUrl;
     }
   }
 }
