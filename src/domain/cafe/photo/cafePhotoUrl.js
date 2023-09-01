@@ -79,6 +79,14 @@ export function findAllGalleryPageable(req) {
     offset: offset,
     limit: limit
   });
+}
 
+export function findOneInteriorPhotoByCafeUuid(cafeUuid) {
+  return CafePhotoUrl.findOne({
+    where: {
+      cafeUuid: cafeUuid,
+      categoryId: 3
+    }
+  });
 }
 

@@ -14,8 +14,8 @@ export async function getCafeRankings() {
   }
 
   return {
-    sortDescByUserComparisonCount: cafeClickCounts.sort(sortDescByUserComparisonCount),
-    sortedDescByUserCompareWinCount: cafeClickCounts.sort(sortDescByUserCompareWinCount)
+    sortDescByUserComparisonCount: cafeClickCounts.sort(sortDescByUserComparisonCount).slice(0, 3),
+    sortedDescByUserCompareWinCount: cafeClickCounts.sort(sortDescByUserCompareWinCount).slice(0, 3)
   };
 }
 
