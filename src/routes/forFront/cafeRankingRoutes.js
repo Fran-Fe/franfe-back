@@ -33,6 +33,10 @@ export const router = Router();
  *                               type: integer
  *                             cafeUuid:
  *                               type: string
+ *                             cafeName:
+ *                               type: string
+ *                             imageUrl:
+ *                               type: string
  *                   userCompareWinRank:
  *                     type: object
  *                     properties:
@@ -44,6 +48,10 @@ export const router = Router();
  *                             rank:
  *                               type: integer
  *                             cafeUuid:
+ *                               type: string
+ *                             cafeName:
+ *                               type: string
+ *                             imageUrl:
  *                               type: string
  *
  */
