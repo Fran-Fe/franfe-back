@@ -83,7 +83,7 @@ export async function getGalleryThumbnails(req, reqCategory) {
     const request = await new galleryDto.Request(req, reqCategory);
     const thumbnails = await findAllGalleryPageableByCategory(request);
     const galleryObjects = thumbnails.map(thumbnail => new galleryDto.thumbnail(thumbnail));
-    const randomShuffledGalleryObjects = shuffleArray(galleryObjects);
+    shuffleArray(galleryObjects);
     return await new galleryDto.Response(request.category, randomShuffledGalleryObjects);
 
   } catch (error) {
