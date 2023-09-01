@@ -7,6 +7,7 @@ import { sequelize } from "../../../config/connection.js";
 import CafePhotoUrlNotFoundError from "../../../errors/cafePhotoUrlNotFoundError.js";
 import { galleryDto } from "../../../routes/dtos/galleryDto.js";
 import { findAllGalleryPageableByCategory } from "./cafePhotoUrlService.js";
+import { shuffleArray } from "../../../utils/radomShuffle.js";
 import BodyFieldsAreRequiredError from "../../../errors/bodyFieldsAreRequiredError.js";
 
 export async function getAllCafesPhotos() {
@@ -83,6 +84,7 @@ export async function getGalleryThumbnails(req, reqCategory) {
     const request = await new galleryDto.Request(req, reqCategory);
     const thumbnails = await findAllGalleryPageableByCategory(request);
     const galleryObjects = thumbnails.map(thumbnail => new galleryDto.thumbnail(thumbnail));
+    shuffleArray(galleryObjects);
     return await new galleryDto.Response(request.category, galleryObjects);
 
   } catch (error) {
